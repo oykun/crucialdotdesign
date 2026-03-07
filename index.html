@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crucial.Design — Design Partner for AI Founders</title>
+  <meta name="description" content="Most AI products don't have a design problem. They have a thinking problem. I fix the thinking first. Then I design.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Crucial.Design — Design Partner for AI Founders">
+  <meta property="og:description" content="Most AI products don't have a design problem. They have a thinking problem. I fix the thinking first. Then I design.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://crucial.design">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Crucial.Design — Design Partner for AI Founders">
+  <meta name="twitter:description" content="Most AI products don't have a design problem. They have a thinking problem. I fix the thinking first. Then I design.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400;1,9..40,500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================
+       Reset & Base
+       ======================================== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      color: #1A1A18;
+      background-color: #fff;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ========================================
+       Layout
+       ======================================== */
+    .container-narrow {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .container-wide {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .container-mid {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+
+    /* ========================================
+       Typography
+       ======================================== */
+    .section-label {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #999;
+      margin-bottom: 20px;
+    }
+
+    .section-heading {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .muted {
+      color: #777;
+    }
+
+    .accent {
+      color: #C8451B;
+    }
+
+    /* ========================================
+       Divider
+       ======================================== */
+    .divider {
+      border: none;
+      border-top: 1px solid #eee;
+      margin: 0;
+    }
+
+    /* ========================================
+       Scroll Animation
+       ======================================== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========================================
+       Navigation
+       ======================================== */
+    .nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 100px;
+      box-shadow:
+        0 0 0 0.5px rgba(0, 0, 0, 0.05),
+        0 4px 30px rgba(0, 0, 0, 0.08);
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .nav-hidden {
+      transform: translateX(-50%) translateY(calc(100% + 40px));
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .nav-inner {
+      padding: 7px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    .nav-cta-pill {
+      padding: 8px 18px 8px 8px;
+      background: #1A1A18;
+      color: #fff;
+      border-radius: 100px;
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .nav-cta-pill:hover {
+      opacity: 0.85;
+    }
+
+    .nav-cta-secondary {
+      background: transparent;
+      color: #1A1A18;
+    }
+
+    .nav-cta-secondary:hover {
+      opacity: 0.6;
+    }
+
+    /* ========================================
+       Hero
+       ======================================== */
+    .hero {
+      padding: 180px 0 140px;
+    }
+
+    .hero-image {
+      margin-top: 120px;
+      max-width: 800px;
+    }
+
+    .hero-image img {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .hero-label {
+      font-size: 14px;
+      color: #000;
+      margin-bottom: 20px;
+    }
+
+    .hero-headline {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.45;
+      margin-bottom: 20px;
+      color: #000;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      line-height: 1.45;
+      color: #000;
+      margin-bottom: 20px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 12px 32px;
+      background: #1A1A18;
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+      border: 1px solid #1A1A18;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.85;
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      padding: 12px 32px;
+      background: transparent;
+      color: #555;
+      font-size: 14px;
+      font-family: inherit;
+      border: 1px solid #ddd;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: #1A1A18;
+      color: #1A1A18;
+    }
+
+    .btn-accent {
+      display: inline-block;
+      padding: 12px 32px;
+      background: #C8451B;
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+      border: 1px solid #C8451B;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn-accent:hover {
+      opacity: 0.85;
+    }
+
+    .hero-byline {
+      font-size: 14px;
+      color: #888;
+      font-style: italic;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    .hero-avatar {
+      display: block;
+      margin-top: 32px;
+    }
+
+    .hero-avatar img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-avatar:hover img {
+      transform: scale(1.1) rotate(3deg);
+    }
+
+    .hero-byline a {
+      color: #888;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s ease;
+    }
+
+    .hero-byline a:hover {
+      color: #1A1A18;
+    }
+
+    /* ========================================
+       Selected Work
+       ======================================== */
+    .work {
+      padding: 120px 0;
+    }
+
+    .work-intro {
+      margin-bottom: 100px;
+    }
+
+    .project {
+      margin-bottom: 120px;
+    }
+
+    .project:last-child {
+      margin-bottom: 0;
+    }
+
+    .project-info {
+      max-width: 600px;
+      margin: 0 auto 40px;
+      padding: 0 24px;
+    }
+
+    .project-info p {
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .project-info strong {
+      font-weight: 700;
+      color: #1A1A18;
+    }
+
+    .project-info strong a {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Project image card */
+    .project-card {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .project-card-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .project-card-inner img {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .others-intro {
+      color: #999;
+      margin-bottom: 12px;
+    }
+
+    .others-intro strong {
+      color: #1A1A18;
+      font-weight: 700;
+    }
+
+    /* ========================================
+       Flow / How I Work
+       ======================================== */
+    .flow {
+      padding: 120px 0;
+    }
+
+    .flow-timeline {
+      position: relative;
+    }
+
+    .flow-step {
+      display: flex;
+      gap: 20px;
+      padding-bottom: 24px;
+      position: relative;
+    }
+
+    .flow-step:last-child {
+      padding-bottom: 0;
+    }
+
+    .flow-step::before {
+      content: '';
+      position: absolute;
+      left: 3px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: #ddd;
+    }
+
+    .flow-step:first-child::before {
+      top: 38px;
+    }
+
+    .flow-step:last-child::before {
+      bottom: auto;
+      height: 38px;
+    }
+
+    .flow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #000;
+      flex-shrink: 0;
+      margin-top: 35px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .flow-card {
+      flex: 1;
+      padding: 28px 0;
+    }
+
+    .flow-plan-box {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 12px;
+    }
+
+    .flow-plan-box:first-of-type {
+      margin-top: 8px;
+    }
+
+    .flow-plan-box:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .flow-title {
+      color: #000;
+      font-size: 15px;
+      font-weight: 400;
+      margin-bottom: 40px;
+      line-height: 1.55;
+    }
+
+    .flow-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 8px;
+    }
+
+    .flow-body {
+      color: #000;
+      line-height: 1.55;
+    }
+
+    .flow-body p {
+      margin-bottom: 8px;
+    }
+
+    .flow-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .flow-cta {
+      margin-top: 20px;
+    }
+
+    .flow-good-for {
+      margin-top: 16px;
+      color: #888;
+      font-style: italic;
+    }
+
+    .flow-optional {
+      color: #888;
+      font-style: italic;
+    }
+
+    .final-cta .flow-step:last-child::after {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 46px;
+      width: 2px;
+      height: 80px;
+      background: repeating-linear-gradient(
+        to bottom,
+        #ddd 0px,
+        #ddd 4px,
+        transparent 4px,
+        transparent 8px
+      );
+      mask-image: linear-gradient(to bottom, black, transparent);
+      -webkit-mask-image: linear-gradient(to bottom, black, transparent);
+    }
+
+    /* Plan options within flow card */
+    .flow-plans {
+      margin-top: 16px;
+    }
+
+    .flow-plan {
+      padding: 20px 0;
+      border-bottom: 1px dashed #eee;
+    }
+
+    .flow-plan:first-child {
+      padding-top: 0;
+    }
+
+    .flow-plan:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .flow-plan-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .flow-plan-name {
+      font-weight: 700;
+      color: #000;
+    }
+
+    .flow-plan-price {
+      font-weight: 700;
+      color: #000;
+    }
+
+    .flow-plan-desc {
+      color: #000;
+      margin-bottom: 12px;
+    }
+
+    .flow-plan-subtle {
+      color: #000;
+    }
+
+    .flow-link {
+      color: #000;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s ease;
+    }
+
+    .flow-link:hover {
+      color: #555;
+    }
+
+    .flow-note {
+      margin-top: 20px;
+      color: #888;
+      font-style: italic;
+    }
+
+    /* ========================================
+       Final CTA
+       ======================================== */
+    .final-cta {
+      padding: 120px 0 180px;
+    }
+
+    .final-cta .section-heading {
+      margin-bottom: 12px;
+    }
+
+    .final-cta-sub {
+      color: #777;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .final-cta-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .final-cta-contact {
+      color: #999;
+    }
+
+    .final-cta-contact a {
+      color: #777;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s ease;
+    }
+
+    .final-cta-contact a:hover {
+      color: #1A1A18;
+    }
+
+    /* ========================================
+       Footer
+       ======================================== */
+    .footer {
+      padding: 80px 0 100px;
+    }
+
+    .footer-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 24px 0 51px;
+    }
+
+    .footer-bio {
+      max-width: 360px;
+    }
+
+    .footer-bio p {
+      margin-bottom: 16px;
+    }
+
+    .footer-bio p:last-child {
+      margin-bottom: 0;
+    }
+
+    .footer-avatar {
+      display: block;
+      margin-top: 32px;
+    }
+
+    .footer-avatar img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .footer-avatar:hover img {
+      transform: scale(1.1) rotate(3deg);
+    }
+
+    .footer-name {
+      margin-top: 16px;
+      line-height: 1.55;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .footer-links a {
+      color: #888;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #1A1A18;
+    }
+
+    /* ========================================
+       Responsive
+       ======================================== */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 120px 0 100px;
+      }
+
+      .pricing-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .phase {
+        gap: 20px;
+      }
+
+      .final-cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .final-cta-buttons .btn-accent,
+      .final-cta-buttons .btn-secondary {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+      }
+
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ Navigation ============ -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="nav-cta-pill"><img src="https://pbs.twimg.com/profile_images/1622319002826555392/Oo9asU7d_400x400.jpg" alt="" class="nav-avatar">Book a call</a>
+      <a href="#flow" class="nav-cta-pill nav-cta-secondary">Starting at $4,987/mth</a>
+    </div>
+  </nav>
+
+  <!-- ============ Hero ============ -->
+  <section class="hero">
+    <div class="container-narrow">
+      <h1 class="hero-headline fade-in">Your AI product has a design problem.<br>It'd be the visuals, but more often, it's everything behind them.</h1>
+      <p class="hero-sub fade-in">Onboarding confuses users.<br>The AI works, but users don't trust it.<br>Nobody can figure out what to do next.<br>The screens look polished, but nothing makes sense.<br>Retention drops because nobody comes back.<br><br>This is where I come in with Crucial.Design.<br>I don't start with pixels.<br>I start with the thinking.<br>Then I design.</p>
+      <a href="https://x.com/oykun" target="_blank" rel="noopener" class="hero-avatar fade-in"><img src="https://pbs.twimg.com/profile_images/1622319002826555392/Oo9asU7d_400x400.jpg" alt="Oykun"></a>
+      <p class="hero-byline fade-in"><a href="https://x.com/oykun" target="_blank" rel="noopener">Oykun</a>. Design partner for AI founders, 25+ years.</p>
+    </div>
+    <div class="container-wide hero-image fade-in">
+      <img src="https://framerusercontent.com/images/FF5nrYtuJBNxbxGIS72JMOaEGIU.gif?width=1200&height=800" alt="Product design showcase">
+    </div>
+  </section>
+
+  <!-- ============ How I Work / Flow ============ -->
+  <section class="flow" id="flow">
+    <div class="container-narrow">
+      <h2 class="flow-title fade-in">Here's how we take your AI Product<br>from impressive tech to a product people reach for</h2>
+      <div class="flow-timeline">
+
+        <!-- Step: Say hello (optional) -->
+        <div class="flow-step fade-in">
+          <div class="flow-dot"></div>
+          <div class="flow-card">
+            <h3 class="flow-name">Say hello</h3>
+            <div class="flow-body">
+              <p>Want to chat before committing? Totally fine. <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="flow-link">Book a free call</a> or drop me a line at <a href="mailto:hey@crucial.design" class="flow-link">hey@crucial.design</a></p>
+              <p class="flow-optional">This step is optional. If you already know what you need, skip straight to picking a plan.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step: Pick a plan -->
+        <div class="flow-step fade-in">
+          <div class="flow-dot"></div>
+          <div class="flow-card">
+            <h3 class="flow-name">Pick a plan</h3>
+            <div class="flow-plan-box">
+              <div class="flow-plan-header">
+                <span class="flow-plan-name">Priority</span>
+                <span class="flow-plan-price">$6,847/mth</span>
+              </div>
+              <p class="flow-plan-desc">4 design sessions per week. Every other day including weekends.</p>
+              <a href="https://buy.stripe.com/28E14bd0G7Ix7DQ0S40gw0t" target="_blank" rel="noopener" class="btn-primary">Start with Priority</a>
+              <p class="flow-good-for">Good for funded teams who need fast, focused design output with maximum availability.</p>
+            </div>
+            <div class="flow-plan-box">
+              <div class="flow-plan-header">
+                <span class="flow-plan-name flow-plan-subtle">Standard</span>
+                <span class="flow-plan-price flow-plan-subtle">$4,987/mth</span>
+              </div>
+              <p class="flow-plan-desc">2 design sessions per week. Tuesdays and Fridays.</p>
+              <a href="https://buy.stripe.com/3cIfZ55yefaZf6i0S40gw0u" target="_blank" rel="noopener" class="flow-link">Start with Standard</a>
+              <p class="flow-good-for">Good for early-stage teams who need consistent design support at a steady pace.</p>
+            </div>
+            <p class="flow-note">Cancel or pause anytime. 75% back if not a fit after week one.</p>
+          </div>
+        </div>
+
+        <!-- Step: Connect and Sync -->
+        <div class="flow-step fade-in">
+          <div class="flow-dot"></div>
+          <div class="flow-card">
+            <h3 class="flow-name">Connect and Sync</h3>
+            <div class="flow-body">
+              <p>We set up a private Slack channel and get aligned. You share context, goals, and product vision. I start digging in.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step: Product Strategy -->
+        <div class="flow-step fade-in">
+          <div class="flow-dot"></div>
+          <div class="flow-card">
+            <h3 class="flow-name">Product Strategy</h3>
+            <div class="flow-body">
+              <p>I get into the product properly. Talk to your team, map the workflows, understand what your AI actually does and where users lose the thread. Then I tell you honestly what's broken and what to fix first.</p>
+              <p>This is where most designers go quiet and just start designing. I don't.</p>
+            </div>
+            <p class="flow-good-for">Good for early-stage founders who aren't sure what the product needs to be yet, or teams stuck between too many priorities.</p>
+          </div>
+        </div>
+
+        <!-- Step: Design Execution -->
+        <div class="flow-step fade-in">
+          <div class="flow-dot"></div>
+          <div class="flow-card">
+            <h3 class="flow-name">Design Execution</h3>
+            <div class="flow-body">
+              <p>Once we're clear on direction, I move fast. Clean, opinionated, buildable design. Every decision comes with the reasoning behind it. First delivery within 48 hours of starting.</p>
+              <p>No handoff to a junior. No account manager in between. Just me.</p>
+            </div>
+            <p class="flow-good-for">Good for funded teams who know what they're building and need a principal-level designer embedded in the product.</p>
+          </div>
+        </div>
+
+        <!-- Step: Investor Ready -->
+        <div class="flow-step fade-in">
+          <div class="flow-dot"></div>
+          <div class="flow-card">
+            <h3 class="flow-name">Investor Ready</h3>
+            <div class="flow-body">
+              <p>Sometimes the product works but it doesn't show well. Demos fall flat. Investors see potential but can't picture it. I've been in that room. I know what makes a product land in a funding conversation.</p>
+              <p>I help you close that gap.</p>
+            </div>
+            <p class="flow-good-for">Good for pre-raise teams who need the product to look and feel as strong as the underlying technology.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Selected Work ============ -->
+  <section class="work" id="work">
+    <!-- MultiOn -->
+    <div class="project fade-in">
+      <div class="project-info">
+        <p><strong>MultiOn.ai</strong> &nbsp; <strong>AI agents that act on your behalf.</strong> &nbsp; Leading AI Agent featured in Forbes, VentureBeat and more. Recently secured $20 million funding at a $100 million valuation.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-card-inner">
+          <img src="https://framerusercontent.com/images/XnfPoMImYkpBeojXJExOrCF1mo.jpg" alt="MultiOn product interface" loading="lazy">
+          <img src="https://framerusercontent.com/images/RK2jLcWjtnb81colfKBMrGDhOZI.jpg" alt="MultiOn dashboard" loading="lazy">
+          <img src="https://framerusercontent.com/images/HEbMTvX1bwVXH0ptc3dVIj0.jpg" alt="MultiOn agent interaction" loading="lazy">
+          <img src="https://framerusercontent.com/images/nwAhT8J872o5bDKgMNh3KkYCCI.jpg" alt="MultiOn settings and account" loading="lazy">
+          <img src="https://framerusercontent.com/images/RnaaB40IvewTf18J3BzWhD6NEDk.jpg" alt="MultiOn NYSE and press" loading="lazy">
+          <img src="https://framerusercontent.com/images/i7Qe0yKrbKuO7GY48YKO3oD07g.jpg" alt="MultiOn TED AI and awards" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- cubic.dev -->
+    <div class="project fade-in">
+      <div class="project-info">
+        <p><strong>cubic.dev</strong> &nbsp; <strong>Code Review For The AI Era.</strong> &nbsp; Backed by YCombinator. cubic helps modern software teams ship higher-quality code, 3x faster.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-card-inner">
+          <img src="https://framerusercontent.com/images/KtG01mh2pxqhhJE34e9yBKioAsM.jpg" alt="cubic.dev code review interface" loading="lazy">
+          <img src="https://framerusercontent.com/images/1i2PnytJRw1l66j325V4PD2go9Q.jpg" alt="cubic.dev pull request analysis" loading="lazy">
+          <img src="https://framerusercontent.com/images/hbnOwdQihyM1M2qi6K10cmOpPQ.jpg" alt="cubic.dev team collaboration" loading="lazy">
+          <img src="https://framerusercontent.com/images/ER9mNAZCjC3GsdpfWBATn86PXw.jpg" alt="cubic.dev workflow view" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- Echo -->
+    <div class="project fade-in">
+      <div class="project-info">
+        <p><strong>Echo</strong> &nbsp; <strong>NHS prescriptions without the hassle.</strong> &nbsp; Featured at the Apple App Store, BBC, Wired, The Times, TechCrunch and much more. Acquired by Lloyds Pharmacy.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-card-inner">
+          <img src="https://framerusercontent.com/images/ZH2nsoGG34i3eYB009XsQE7IvcQ.jpg" alt="Echo prescription app interface" loading="lazy">
+          <img src="https://framerusercontent.com/images/lHq68fSjvQYyTApYFlzlRDngLQ.jpg" alt="Echo press coverage" loading="lazy">
+          <img src="https://framerusercontent.com/images/cTkiGNWFJ3MOSNRcvD8cFC9tWKo.jpg" alt="Echo reviews and App Store" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- Cooin -->
+    <div class="project fade-in">
+      <div class="project-info">
+        <p><strong>Cooin App.</strong> &nbsp; <strong>Buy, Sell, Trade Crypto.</strong> &nbsp; Collaboration with Adobe to design a Crypto trading platform for web and mobile.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-card-inner">
+          <img src="https://framerusercontent.com/images/TziqG3JsGZXGaUgNwAor0RkawMg.jpg" alt="Cooin trading interface" loading="lazy">
+          <img src="https://framerusercontent.com/images/OIy63xugoXDG4Z5JAsqx7qCxes.jpg" alt="Cooin portfolio dashboard" loading="lazy">
+          <img src="https://framerusercontent.com/images/4jwoF2l2zxIYrcgFCmAzsJBx0.jpg" alt="Cooin mobile app" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- Others -->
+    <div class="project fade-in">
+      <div class="project-info">
+        <p class="others-intro"><strong>Want to see even more work?</strong> &nbsp; Sure thing, scroll down…</p>
+      </div>
+      <div class="project-card">
+        <div class="project-card-inner">
+          <img src="https://framerusercontent.com/images/3puIWKyfYZ931nNK2hblcw8to84.jpg" alt="Additional work sample" loading="lazy">
+          <img src="https://framerusercontent.com/images/8lahyIIL8ACOdFNXIDsU86Bc.jpg" alt="Additional work sample" loading="lazy">
+          <img src="https://framerusercontent.com/images/MrFwu1MXiNFs320y8hltmkEfks.jpg" alt="Additional work sample" loading="lazy">
+          <img src="https://framerusercontent.com/images/DKUyzpShLkSgITDbxATveVc.jpg" alt="Additional work sample" loading="lazy">
+          <img src="https://framerusercontent.com/images/sshBCoAktiVbn6CfeytDZv2A.jpg" alt="Additional work sample" loading="lazy">
+          <img src="https://framerusercontent.com/images/iNRfMZj5fjS1GWpBp6PuVRp65kU.jpg" alt="Additional work sample" loading="lazy">
+          <img src="https://framerusercontent.com/images/3mgKiAYDkW5dBDo3c6ZwwZ0e9w.jpg" alt="Additional work sample" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Final CTA ============ -->
+  <section class="final-cta" id="contact">
+    <div class="container-narrow">
+      <h2 class="flow-title fade-in">Stop losing users to bad design.<br>Let's change that today</h2>
+      <div class="flow-timeline">
+
+        <!-- Step: Say hello (optional) -->
+        <div class="flow-step fade-in">
+          <div class="flow-dot"></div>
+          <div class="flow-card">
+            <h3 class="flow-name">Say hello</h3>
+            <div class="flow-body">
+              <p>Want to chat before committing? Totally fine. <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="flow-link">Book a free call</a> or drop me a line at <a href="mailto:hey@crucial.design" class="flow-link">hey@crucial.design</a></p>
+              <p class="flow-optional">This step is optional. If you already know what you need, skip straight to picking a plan.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step: Pick a plan -->
+        <div class="flow-step fade-in">
+          <div class="flow-dot"></div>
+          <div class="flow-card">
+            <h3 class="flow-name">Pick a plan</h3>
+            <div class="flow-plan-box">
+              <div class="flow-plan-header">
+                <span class="flow-plan-name">Priority</span>
+                <span class="flow-plan-price">$6,847/mth</span>
+              </div>
+              <p class="flow-plan-desc">4 design sessions per week. Every other day including weekends.</p>
+              <a href="https://buy.stripe.com/28E14bd0G7Ix7DQ0S40gw0t" target="_blank" rel="noopener" class="btn-primary">Start with Priority</a>
+              <p class="flow-good-for">Good for funded teams who need fast, focused design output with maximum availability.</p>
+            </div>
+            <div class="flow-plan-box">
+              <div class="flow-plan-header">
+                <span class="flow-plan-name flow-plan-subtle">Standard</span>
+                <span class="flow-plan-price flow-plan-subtle">$4,987/mth</span>
+              </div>
+              <p class="flow-plan-desc">2 design sessions per week. Tuesdays and Fridays.</p>
+              <a href="https://buy.stripe.com/3cIfZ55yefaZf6i0S40gw0u" target="_blank" rel="noopener" class="flow-link">Start with Standard</a>
+              <p class="flow-good-for">Good for early-stage teams who need consistent design support at a steady pace.</p>
+            </div>
+            <p class="flow-note">Cancel or pause anytime. 75% back if not a fit after week one.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Footer ============ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-bio fade-in">
+        <p>I'm Oykun. 25 years shaping products.</p>
+        <p>First as a full-stack developer and designer, then design only.</p>
+        <p>I've worked at every scale, from early-stage startups to Fortune 100s and tier-1 investment banks. Complex data, complex systems, making them make sense.</p>
+        <p>I started Crucial.Design because I kept seeing the same thing: brilliant AI, terrible product experience.</p>
+        <p>Founders who'd spent months on the technology but days on the design. That gap is where I work best.</p>
+        <p>AI has the hardest and most interesting design problems right now. That's why it's all I do.</p>
+      </div>
+      <a href="https://x.com/oykun" target="_blank" rel="noopener" class="footer-avatar fade-in"><img src="https://pbs.twimg.com/profile_images/1622319002826555392/Oo9asU7d_400x400.jpg" alt="Oykun"></a>
+      <p class="footer-name fade-in"><strong>Öykün Yılmaz</strong><br>Designer & Founder, Crucial.Design</p>
+      <div class="footer-links fade-in">
+        <a href="https://x.com/oykun" target="_blank" rel="noopener">X / Twitter</a>
+        <a href="mailto:hey@crucial.design">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ========================================
+       Nav scroll effect
+       ======================================== */
+    /* ========================================
+       Scroll-triggered fade-in animations
+       ======================================== */
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    document.querySelectorAll('.fade-in').forEach(function(el) {
+      observer.observe(el);
+    });
+
+    /* ========================================
+       Hide nav when flow or contact section is in view
+       ======================================== */
+    var nav = document.getElementById('nav');
+    var flowSection = document.getElementById('flow');
+    var contactSection = document.getElementById('contact');
+    var navHideSections = new Set();
+
+    var navObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          navHideSections.add(entry.target.id);
+        } else {
+          navHideSections.delete(entry.target.id);
+        }
+      });
+      if (navHideSections.size > 0) {
+        nav.classList.add('nav-hidden');
+      } else {
+        nav.classList.remove('nav-hidden');
+      }
+    }, {
+      threshold: 0.05
+    });
+
+    navObserver.observe(flowSection);
+    navObserver.observe(contactSection);
+  </script>
+
+</body>
+</html>
