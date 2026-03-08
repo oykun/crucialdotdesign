@@ -672,20 +672,18 @@ a {
    Responsive
    ======================================== */
 @media (max-width: 768px) {
-  .nav-cta-pill {
-    font-size: 12px;
-    padding: 6px 10px 6px 6px;
+  .nav {
+    left: 16px;
+    right: 16px;
+    transform: none;
   }
 
-  .nav-avatar {
-    width: 18px;
-    height: 18px;
-    margin-right: 4px;
+  .nav-hidden {
+    transform: translateY(calc(100% + 40px));
   }
 
   .nav-inner {
-    padding: 5px;
-    gap: 3px;
+    justify-content: center;
   }
 
   .hero {
