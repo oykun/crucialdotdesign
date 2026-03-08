@@ -11,6 +11,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 body {
@@ -155,7 +156,6 @@ a {
   align-items: center;
   font-size: 13px;
   font-weight: 500;
-  flex-shrink: 0;
 }
 
 .nav-cta-pill:hover {
@@ -672,18 +672,8 @@ a {
    Responsive
    ======================================== */
 @media (max-width: 768px) {
-  .nav {
-    left: 16px;
-    right: 16px;
-    transform: none;
-  }
-
-  .nav-hidden {
-    transform: translateY(calc(100% + 40px));
-  }
-
-  .nav-inner {
-    justify-content: center;
+  .footer-links {
+    flex-wrap: wrap;
   }
 
   .hero {
