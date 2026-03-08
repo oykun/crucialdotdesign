@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Design Patterns — Crucial.Design</title>
+  <meta name="description" content="Documenting how design is evolving for AI. Design patterns, tips, and examples from the best AI products.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="AI Design Patterns — Crucial.Design">
+  <meta property="og:description" content="Documenting how design is evolving for AI. Design patterns, tips, and examples from the best AI products.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://crucial.design/ai">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Design Patterns — Crucial.Design">
+  <meta name="twitter:description" content="Documenting how design is evolving for AI. Design patterns, tips, and examples from the best AI products.">
+
+  <link rel="icon" type="image/jpeg" href="../images/avatar.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400;1,9..40,500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../ai-patterns.css">
+</head>
+<body>
+
+  <!-- ============ Navigation ============ -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="nav-cta-pill"><img src="../images/avatar.jpg" alt="" class="nav-avatar">Book a call</a>
+      <a href="/#flow" class="nav-cta-pill nav-cta-secondary">From $4,987/mth</a>
+    </div>
+  </nav>
+
+  <!-- ============ Article Header ============ -->
+  <section class="article-hero">
+    <div class="container-narrow">
+      <h1 class="article-title fade-in">AI Design Patterns</h1>
+      <p class="article-subtitle fade-in">Documenting how design is evolving for AI</p>
+      <p class="article-date fade-in"><em>Updated on Jun, 1st 2025</em></p>
+    </div>
+  </section>
+
+  <!-- ============ Article Content ============ -->
+  <article class="article-content">
+    <div class="container-mid">
+
+      <!-- Open Input Pattern -->
+      <section class="pattern-section fade-in">
+        <h2 class="pattern-title">Open input</h2>
+
+        <div class="pattern-body">
+          <p>The <strong>Open Input</strong> (or Open Text) pattern has become central in AI product design, the familiar blank field where users type anything to interact with a system.</p>
+
+          <p>It feels simple and natural, lowering the barrier for anyone to access powerful AI tools without technical knowledge. But while the interaction looks easy, it carries real complexity.</p>
+
+          <p>Users often get stuck after a few tries, unsure what to type next. Many don't have prompt-crafting skills, and without guidance, they can hit walls of frustration, inconsistency, or ambiguity.</p>
+
+          <p>This pattern works beautifully when the user knows what they want (like in search or customer support). But in open-ended tools like ChatGPT, the blank canvas can overwhelm, creating what's often called <em>blank prompt paralysis</em>.</p>
+
+          <p>The future of open input isn't about replacing it, it's about evolving it. Adding templates, nudges, filters, and better next steps will make this flexible interaction smarter, smoother, and more supportive.</p>
+        </div>
+
+        <div class="pattern-tips">
+          <h3 class="tips-title">Design Tips:</h3>
+          <ul>
+            <li>Don't leave a blank canvas. Use placeholder text, example prompts, or icebreakers.</li>
+            <li>Reduce anxiety. Templates and quick-start buttons help users get moving.</li>
+            <li>Be clear. Show what kinds of inputs work and what the system can handle.</li>
+            <li>Show what "good" looks like. Nudge users toward better prompts after vague or failed attempts.</li>
+            <li>Design the next step. What happens after the first input? Help them refine, explore, or go deeper.</li>
+            <li>Keep it flexible but offer optional guardrails: filters, toggles, preset options.</li>
+            <li>Handle errors with care. When the AI misfires, guide users on how to adjust.</li>
+            <li>Signal privacy. Let users know their inputs are safe.</li>
+            <li>Make it feel like a conversation, not a form. The tone and visuals matter.</li>
+          </ul>
+        </div>
+
+        <div class="pattern-examples">
+          <h3 class="examples-title">Examples:</h3>
+
+          <div class="example-item fade-in">
+            <div class="example-image">
+              <img src="../images/ai/chatgpt.jpg" alt="ChatGPT Open Input interface" loading="lazy">
+            </div>
+            <p class="example-caption"><a href="https://chatgpt.com/" target="_blank" rel="noopener" class="example-link">ChatGPT</a> has a very clean Open Input pattern which supports file input. To help users for prompting, they have suggestion pills below the input.</p>
+          </div>
+
+          <div class="example-item fade-in">
+            <div class="example-image">
+              <img src="../images/ai/perplexity.jpg" alt="Perplexity Open Input interface" loading="lazy">
+            </div>
+            <p class="example-caption"><a href="https://www.perplexity.ai/" target="_blank" rel="noopener" class="example-link">Perplexity</a> has a bit more features baked into the Open Input such as
+              <br>- Focus mode to customise your sources and purpose,
+              <br>- File attachment to process on the documents
+              <br>- Pro Search switch to allocate more process power and encourage users to upgrade to paid account</p>
+          </div>
+
+          <div class="example-item fade-in">
+            <div class="example-image">
+              <img src="../images/ai/sana.jpg" alt="Sana.ai Open Input interface" loading="lazy">
+            </div>
+            <p class="example-caption"><a href="https://sana.ai/" target="_blank" rel="noopener" class="example-link">Sana.ai</a> keeps the Open Input at the bottom as in the conversation page and separates File and Images which is an unusual choice since other ai products treats images as file and combine them. Sana.ai also has "Sources" selection represented as @ and Options which gives user integration options.</p>
+          </div>
+
+          <div class="example-item fade-in">
+            <div class="example-image">
+              <img src="../images/ai/claude-home.jpg" alt="Claude.ai home page Open Input" loading="lazy">
+            </div>
+            <div class="example-image">
+              <img src="../images/ai/claude-conversation.jpg" alt="Claude.ai conversation page Open Input" loading="lazy">
+            </div>
+            <p class="example-caption"><a href="https://claude.ai/" target="_blank" rel="noopener" class="example-link">Claude.ai</a> has 2 Open Input by keeping it clean on the home page and bringing additional features into the input in the conversation page. It offers file attachment like others do, one unique offer Claude gives is the "Take a screenshot" feature represented with the camera icon.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Follow up card -->
+      <section class="pattern-section fade-in">
+        <h2 class="pattern-title">Follow up card</h2>
+        <p class="pattern-coming-soon">coming soon...</p>
+      </section>
+
+    </div>
+  </article>
+
+  <!-- ============ CTA Circle ============ -->
+  <section class="ai-cta">
+    <div class="ai-cta-circle fade-in">
+      <p class="ai-cta-text">Need design experience<br>for your AI product?</p>
+      <a href="/" class="ai-cta-button">crucial.design</a>
+    </div>
+  </section>
+
+  <!-- ============ Footer Nav ============ -->
+  <footer class="ai-footer">
+    <div class="ai-footer-inner fade-in">
+      <a href="/" class="ai-footer-link ai-footer-logo">C/D</a>
+      <a href="/#work" class="ai-footer-link">Work</a>
+      <a href="/#flow" class="ai-footer-link">Pricing</a>
+      <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="ai-footer-link">Contact</a>
+      <span class="ai-footer-separator"></span>
+      <a href="/ai" class="ai-footer-link ai-footer-active">AI Patterns</a>
+      <a href="/" class="ai-footer-link">Labs</a>
+    </div>
+  </footer>
+
+  <script src="../main.js"></script>
+
+</body>
+</html>
