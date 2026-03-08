@@ -7,6 +7,11 @@
   box-sizing: border-box;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
@@ -59,7 +64,6 @@ a {
    Typography
    ======================================== */
 .section-label {
-  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: #999;
@@ -67,7 +71,6 @@ a {
 }
 
 .section-heading {
-  font-size: 14px;
   font-weight: 700;
   line-height: 1.7;
   margin-bottom: 16px;
@@ -154,8 +157,8 @@ a {
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
-  font-size: 13px;
   font-weight: 500;
+  flex-shrink: 0;
 }
 
 .nav-cta-pill:hover {
@@ -165,6 +168,7 @@ a {
 .nav-cta-secondary {
   background: transparent;
   color: #1A1A18;
+  padding: 8px 24px 8px 18px;
 }
 
 .nav-cta-secondary:hover {
@@ -189,13 +193,11 @@ a {
 }
 
 .hero-label {
-  font-size: 14px;
   color: #000;
   margin-bottom: 20px;
 }
 
 .hero-headline {
-  font-size: 14px;
   font-weight: 700;
   line-height: 1.45;
   margin-bottom: 20px;
@@ -207,7 +209,6 @@ a {
 }
 
 .hero-sub {
-  font-size: 14px;
   line-height: 1.45;
   color: #000;
   margin-bottom: 20px;
@@ -218,7 +219,6 @@ a {
   padding: 12px 32px;
   background: #1A1A18;
   color: #fff;
-  font-size: 14px;
   font-family: inherit;
   border: 1px solid #1A1A18;
   border-radius: 100px;
@@ -235,7 +235,6 @@ a {
   padding: 12px 32px;
   background: transparent;
   color: #555;
-  font-size: 14px;
   font-family: inherit;
   border: 1px solid #ddd;
   border-radius: 100px;
@@ -253,7 +252,6 @@ a {
   padding: 12px 32px;
   background: #C8451B;
   color: #fff;
-  font-size: 14px;
   font-family: inherit;
   border: 1px solid #C8451B;
   border-radius: 100px;
@@ -266,7 +264,6 @@ a {
 }
 
 .hero-byline {
-  font-size: 14px;
   color: #888;
   font-style: italic;
   margin-top: 12px;
@@ -442,14 +439,12 @@ a {
 
 .flow-title {
   color: #000;
-  font-size: 15px;
   font-weight: 400;
   margin-bottom: 40px;
   line-height: 1.55;
 }
 
 .flow-name {
-  font-size: 15px;
   font-weight: 700;
   color: #000;
   margin-bottom: 8px;
@@ -672,6 +667,14 @@ a {
    Responsive
    ======================================== */
 @media (max-width: 768px) {
+  .nav-inner {
+    padding: 7px 14px 7px 7px;
+  }
+
+  .footer-inner {
+    padding: 0 24px;
+  }
+
   .footer-links {
     flex-wrap: wrap;
   }

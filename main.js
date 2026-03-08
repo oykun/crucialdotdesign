@@ -18,10 +18,11 @@ document.querySelectorAll('.fade-in').forEach(function(el) {
 });
 
 /* ========================================
-   Hide nav when flow or contact section is in view
+   Hide nav when pricing or contact section is in view
    ======================================== */
 var nav = document.getElementById('nav');
-var flowSection = document.getElementById('flow');
+var pricingSection = document.getElementById('pricing');
+var pricingCtaSection = document.getElementById('pricing-cta');
 var contactSection = document.getElementById('contact');
 var navHideSections = new Set();
 
@@ -42,5 +43,6 @@ var navObserver = new IntersectionObserver(function(entries) {
   threshold: 0.05
 });
 
-navObserver.observe(flowSection);
+navObserver.observe(pricingSection);
+navObserver.observe(pricingCtaSection);
 navObserver.observe(contactSection);
