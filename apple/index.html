@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="scroll-behavior: smooth;">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,17 +24,12 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400;1,9..40,500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="../apple.css">
+  <link rel="stylesheet" href="../apple.css?v=2">
 </head>
 <body>
 
-  <!-- ============ Navigation ============ -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="nav-cta-pill"><img src="../images/avatar.jpg" alt="" class="nav-avatar">Book a call</a>
-      <a href="/#flow" class="nav-cta-pill nav-cta-secondary">From $4,987/mth</a>
-    </div>
-  </nav>
+  <div class="apple-side-label apple-side-left"><a href="/">crucial.design</a></div>
+  <div class="apple-side-label apple-side-right">apple inspiration</div>
 
   <!-- ============ Apple Gallery ============ -->
   <section class="apple-gallery">
@@ -79,6 +74,43 @@
   </section>
 
   <script src="../main.js"></script>
+  <script>
+    (function() {
+      var imgs = document.querySelectorAll('.apple-gallery-inner img');
+      var maxScale = window.innerWidth <= 768 ? 1.25 : 1.5;
+      var minScale = 1;
+      var ticking = false;
+
+      function update() {
+        var vh = window.innerHeight;
+        var centre = vh / 2;
+        var buffer = vh * 1.5;
+
+        for (var i = 0; i < imgs.length; i++) {
+          var rect = imgs[i].getBoundingClientRect();
+          if (rect.bottom < -buffer || rect.top > vh + buffer) continue;
+          var imgCentre = rect.top + rect.height / 2;
+          var distance = Math.abs(centre - imgCentre);
+          var range = vh * 0.8;
+          var t = Math.max(0, 1 - distance / range);
+          var scale = minScale + (maxScale - minScale) * t * t;
+          imgs[i].style.transform = 'scale(' + scale + ')';
+        }
+
+        ticking = false;
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      update();
+    })();
+  </script>
 
 </body>
 </html>
