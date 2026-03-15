@@ -1,0 +1,294 @@
+/* ========================================
+   Onboarding Page
+   ======================================== */
+
+.onboarding {
+  padding: 140px 0 120px;
+}
+
+.onboarding-intro {
+  margin-bottom: 80px;
+}
+
+.onboarding-intro h1 {
+  font-weight: 700;
+  line-height: 1.45;
+  margin-bottom: 12px;
+}
+
+.onboarding-intro p {
+  color: #555;
+  line-height: 1.7;
+}
+
+/* Sections */
+.onboarding-section {
+  margin-bottom: 80px;
+}
+
+.onboarding-section:last-child {
+  margin-bottom: 0;
+}
+
+.onboarding-section-number {
+  color: #ccc;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.onboarding-section h2 {
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.onboarding-section h3 {
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #000;
+}
+
+.onboarding-body {
+  color: #333;
+  line-height: 1.7;
+}
+
+.onboarding-body p {
+  margin-bottom: 12px;
+}
+
+.onboarding-body p:last-child {
+  margin-bottom: 0;
+}
+
+.onboarding-body strong {
+  font-weight: 700;
+  color: #000;
+}
+
+.onboarding-body em {
+  font-style: italic;
+}
+
+.onboarding-body a {
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.onboarding-body a:hover {
+  color: #555;
+}
+
+/* Lists */
+.onboarding-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+
+.onboarding-body ul li {
+  padding-left: 16px;
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.onboarding-body ul li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: #999;
+  font-weight: 700;
+}
+
+/* Option cards */
+.onboarding-option {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 12px;
+}
+
+.onboarding-option:last-of-type {
+  margin-bottom: 0;
+}
+
+.onboarding-option h3 {
+  margin-bottom: 12px;
+}
+
+.onboarding-option p {
+  margin-bottom: 8px;
+}
+
+.onboarding-option p:last-child {
+  margin-bottom: 0;
+}
+
+.onboarding-option ul {
+  margin: 8px 0;
+}
+
+/* Plan boxes */
+.onboarding-plan {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 12px;
+}
+
+.onboarding-plan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.onboarding-plan-name {
+  font-weight: 700;
+  color: #000;
+}
+
+.onboarding-plan-price {
+  font-weight: 700;
+  color: #000;
+}
+
+.onboarding-plan-desc {
+  color: #555;
+}
+
+/* Info table */
+.onboarding-table {
+  margin: 16px 0;
+}
+
+.onboarding-table-row {
+  display: flex;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.onboarding-table-row:last-child {
+  border-bottom: none;
+}
+
+.onboarding-table-label {
+  font-weight: 700;
+  color: #000;
+  min-width: 140px;
+  flex-shrink: 0;
+}
+
+.onboarding-table-value {
+  color: #333;
+}
+
+/* Divider between sections */
+.onboarding-divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 0 0 80px;
+}
+
+/* Note / aside */
+.onboarding-note {
+  color: #888;
+  font-style: italic;
+  margin-top: 16px;
+}
+
+/* Payment details */
+.onboarding-bank {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin: 16px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #555;
+}
+
+.onboarding-bank strong {
+  color: #000;
+  font-weight: 700;
+}
+
+/* Footer sign-off */
+.onboarding-signoff {
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.onboarding-signoff img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.onboarding-signoff-text {
+  color: #333;
+  line-height: 1.55;
+}
+
+.onboarding-signoff-text strong {
+  color: #000;
+  font-weight: 700;
+}
+
+.onboarding-signoff-text a {
+  color: #888;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.onboarding-signoff-text a:hover {
+  color: #000;
+}
+
+/* ========================================
+   Responsive
+   ======================================== */
+@media (max-width: 768px) {
+  .onboarding {
+    padding: 100px 0 80px;
+  }
+
+  .onboarding-intro {
+    margin-bottom: 60px;
+  }
+
+  .onboarding-section {
+    margin-bottom: 60px;
+  }
+
+  .onboarding-divider {
+    margin-bottom: 60px;
+  }
+
+  .onboarding-table-row {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .onboarding-table-label {
+    min-width: auto;
+  }
+
+  .onboarding-plan-header {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .onboarding-signoff {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
