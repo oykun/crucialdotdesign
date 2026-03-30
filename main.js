@@ -104,6 +104,9 @@ if (contactSection) navObserver.observe(contactSection);
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
+  // Render greeting immediately
+  renderMessages();
+
   function showTyping() {
     var el = document.createElement('div');
     el.className = 'chat-typing';
