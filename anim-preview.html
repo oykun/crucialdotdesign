@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hero animation — pick a shape</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: -apple-system, system-ui, sans-serif;
+    background: #fafaf8;
+    color: #1A1A18;
+    margin: 0;
+    padding: 48px 32px;
+  }
+  h1 { font-size: 20px; font-weight: 600; margin: 0 0 8px; }
+  h2 { font-size: 16px; font-weight: 600; margin: 56px 0 16px; color: #333; }
+  p.sub { color: #666; margin: 0 0 40px; font-size: 14px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .card canvas {
+    width: 100%;
+    height: 160px;
+    display: block;
+  }
+  .grid-wide {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+    gap: 24px;
+  }
+  .grid-wide .card canvas {
+    height: 300px;
+  }
+  .label {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #555;
+    font-weight: 500;
+  }
+  .num {
+    color: #C8451B;
+    font-weight: 700;
+    margin-right: 6px;
+  }
+</style>
+</head>
+<body>
+  <h1>Hero animation — pick a style</h1>
+  <p class="sub">All variants morph from "complex" to "simple" and loop. Mix and match — the metaphor can be a network resolving, particles aligning, blocks settling, anything.</p>
+
+  <h2>Network — dots with connecting lines</h2>
+  <div class="grid" id="grid"></div>
+
+  <h2>User journey — lost vs guided (the strongest narrative)</h2>
+  <div class="grid-wide" id="grid4"></div>
+
+  <h2>Other styles — dots only, blocks, bars, reveals</h2>
+  <div class="grid" id="grid2"></div>
+
+<script>
+const variants = [
+  { name: "Polygon (current)", n: 18, build: polygon },
+  { name: "Hexagon + spokes", n: 19, build: hexSpokes },
+  { name: "Grid 4×4", n: 16, build: gridShape },
+  { name: "Concentric circles", n: 18, build: concentric },
+  { name: "Single point", n: 18, build: singlePoint },
+  { name: "Horizontal line", n: 18, build: line },
+  { name: "Triangle", n: 18, build: triangle },
+  { name: "Cross / plus", n: 17, build: cross },
+  { name: "Spiral", n: 24, build: spiral },
+  { name: "Letter C", n: 18, build: letterC },
+  { name: "Square outline", n: 20, build: square },
+  { name: "Star (5-point)", n: 20, build: star },
+];
+
+function polygon(N, W, H) {
+  const cx = W/2, cy = H/2, r = Math.min(W, H) * 0.36;
+  const pts = [];
+  for (let i = 0; i < N; i++) {
+    const a = (i/N)*Math.PI*2 - Math.PI/2;
+    pts.push({ x: cx + Math.cos(a)*r, y: cy + Math.sin(a)*r });
+  }
+  const edges = [];
+  for (let i = 0; i < N; i++) edges.push([i, (i+1)%N]);
+  return { pts, edges };
+}
+function hexSpokes(N, W, H) {
+  const cx = W/2, cy = H/2, r = Math.min(W, H)*0.36;
+  const pts = [{x:cx, y:cy}];
+  const ring = N - 1;
+  for (let i = 0; i < ring; i++) {
+    const a = (i/ring)*Math.PI*2 - Math.PI/2;
+    pts.push({ x: cx + Math.cos(a)*r, y: cy + Math.sin(a)*r });
+  }
+  const edges = [];
+  for (let i = 1; i <= ring; i++) {
+    edges.push([0, i]);
+    edges.push([i, i === ring ? 1 : i+1]);
+  }
+  return { pts, edges };
+}
+function gridShape(N, W, H) {
+  const side = Math.round(Math.sqrt(N));
+  const sw = Math.min(W, H) * 0.7;
+  const x0 = W/2 - sw/2, y0 = H/2 - sw/2, step = sw/(side-1);
+  const pts = [];
+  for (let r = 0; r < side; r++)
+    for (let c = 0; c < side; c++)
+      pts.push({ x: x0 + c*step, y: y0 + r*step });
+  const edges = [];
+  for (let r = 0; r < side; r++)
+    for (let c = 0; c < side; c++) {
+      const i = r*side + c;
+      if (c < side-1) edges.push([i, i+1]);
+      if (r < side-1) edges.push([i, i+side]);
+    }
+  return { pts, edges };
+}
+function concentric(N, W, H) {
+  const cx = W/2, cy = H/2;
+  const r1 = Math.min(W, H)*0.18, r2 = Math.min(W, H)*0.4;
+  const inner = 6, outer = N - inner;
+  const pts = [];
+  for (let i = 0; i < inner; i++) {
+    const a = (i/inner)*Math.PI*2 - Math.PI/2;
+    pts.push({ x: cx + Math.cos(a)*r1, y: cy + Math.sin(a)*r1 });
+  }
+  for (let i = 0; i < outer; i++) {
+    const a = (i/outer)*Math.PI*2 - Math.PI/2;
+    pts.push({ x: cx + Math.cos(a)*r2, y: cy + Math.sin(a)*r2 });
+  }
+  const edges = [];
+  for (let i = 0; i < inner; i++) edges.push([i, (i+1)%inner]);
+  for (let i = 0; i < outer; i++) edges.push([inner+i, inner+((i+1)%outer)]);
+  return { pts, edges };
+}
+function singlePoint(N, W, H) {
+  const cx = W/2, cy = H/2;
+  const pts = [];
+  for (let i = 0; i < N; i++) pts.push({ x: cx, y: cy });
+  return { pts, edges: [] };
+}
+function line(N, W, H) {
+  const y = H/2, x0 = W*0.15, x1 = W*0.85, step = (x1-x0)/(N-1);
+  const pts = [];
+  for (let i = 0; i < N; i++) pts.push({ x: x0 + i*step, y });
+  const edges = [];
+  for (let i = 0; i < N-1; i++) edges.push([i, i+1]);
+  return { pts, edges };
+}
+function triangle(N, W, H) {
+  const cx = W/2, cy = H/2, r = Math.min(W, H)*0.4;
+  const corners = [
+    { x: cx, y: cy - r },
+    { x: cx + r*Math.cos(Math.PI/6), y: cy + r*Math.sin(Math.PI/6) },
+    { x: cx - r*Math.cos(Math.PI/6), y: cy + r*Math.sin(Math.PI/6) },
+  ];
+  const perSide = Math.floor(N/3);
+  const pts = [];
+  for (let s = 0; s < 3; s++) {
+    const a = corners[s], b = corners[(s+1)%3];
+    for (let i = 0; i < perSide; i++) {
+      const t = i/perSide;
+      pts.push({ x: a.x + (b.x-a.x)*t, y: a.y + (b.y-a.y)*t });
+    }
+  }
+  while (pts.length < N) pts.push({...corners[0]});
+  const edges = [];
+  for (let i = 0; i < pts.length; i++) edges.push([i, (i+1)%pts.length]);
+  return { pts, edges };
+}
+function cross(N, W, H) {
+  const cx = W/2, cy = H/2, len = Math.min(W, H)*0.36;
+  const arm = Math.floor((N-1)/4);
+  const pts = [{x:cx, y:cy}];
+  const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+  for (const [dx, dy] of dirs) {
+    for (let i = 1; i <= arm; i++) {
+      const t = i/arm;
+      pts.push({ x: cx + dx*len*t, y: cy + dy*len*t });
+    }
+  }
+  while (pts.length < N) pts.push({x:cx, y:cy});
+  const edges = [];
+  for (let d = 0; d < 4; d++) {
+    edges.push([0, 1 + d*arm]);
+    for (let i = 1; i < arm; i++) edges.push([1 + d*arm + i - 1, 1 + d*arm + i]);
+  }
+  return { pts, edges };
+}
+function spiral(N, W, H) {
+  const cx = W/2, cy = H/2, maxR = Math.min(W, H)*0.42;
+  const pts = [];
+  for (let i = 0; i < N; i++) {
+    const t = i/(N-1);
+    const a = t * Math.PI * 3;
+    const r = maxR * t;
+    pts.push({ x: cx + Math.cos(a)*r, y: cy + Math.sin(a)*r });
+  }
+  const edges = [];
+  for (let i = 0; i < N-1; i++) edges.push([i, i+1]);
+  return { pts, edges };
+}
+function letterC(N, W, H) {
+  const cx = W/2, cy = H/2, r = Math.min(W, H)*0.4;
+  const pts = [];
+  for (let i = 0; i < N; i++) {
+    const t = i/(N-1);
+    const a = -Math.PI*0.75 + t*Math.PI*1.5;
+    pts.push({ x: cx + Math.cos(a)*r, y: cy + Math.sin(a)*r });
+  }
+  const edges = [];
+  for (let i = 0; i < N-1; i++) edges.push([i, i+1]);
+  return { pts, edges };
+}
+function square(N, W, H) {
+  const cx = W/2, cy = H/2, s = Math.min(W, H)*0.7;
+  const x0 = cx - s/2, y0 = cy - s/2;
+  const corners = [
+    { x: x0, y: y0 }, { x: x0+s, y: y0 },
+    { x: x0+s, y: y0+s }, { x: x0, y: y0+s },
+  ];
+  const perSide = Math.floor(N/4);
+  const pts = [];
+  for (let i = 0; i < 4; i++) {
+    const a = corners[i], b = corners[(i+1)%4];
+    for (let j = 0; j < perSide; j++) {
+      const t = j/perSide;
+      pts.push({ x: a.x + (b.x-a.x)*t, y: a.y + (b.y-a.y)*t });
+    }
+  }
+  while (pts.length < N) pts.push({...corners[0]});
+  const edges = [];
+  for (let i = 0; i < pts.length; i++) edges.push([i, (i+1)%pts.length]);
+  return { pts, edges };
+}
+function star(N, W, H) {
+  const cx = W/2, cy = H/2;
+  const R = Math.min(W, H)*0.42, r = R*0.45;
+  const pts = [];
+  for (let i = 0; i < 10; i++) {
+    const a = (i/10)*Math.PI*2 - Math.PI/2;
+    const rad = i%2 === 0 ? R : r;
+    pts.push({ x: cx + Math.cos(a)*rad, y: cy + Math.sin(a)*rad });
+  }
+  while (pts.length < N) pts.push({...pts[0]});
+  const edges = [];
+  for (let i = 0; i < 10; i++) edges.push([i, (i+1)%10]);
+  return { pts, edges };
+}
+
+function seeded(seed) {
+  const x = Math.sin(seed * 9301 + 49297) * 233280;
+  return x - Math.floor(x);
+}
+function easeInOut(t) {
+  return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2;
+}
+
+function makeAnim(canvas, variant) {
+  const ctx = canvas.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  let W = 0, H = 0;
+  let dots = [], messyEdges = [], cleanEdges = [], N = variant.n;
+
+  function layout() {
+    const target = variant.build(N, W, H);
+    const cleanPts = target.pts;
+    cleanEdges = target.edges;
+    dots = [];
+    for (let i = 0; i < N; i++) {
+      dots.push({
+        clean: cleanPts[i],
+        messy: { x: 16 + seeded(i+1)*(W-32), y: 14 + seeded(i+101)*(H-28) },
+        x: 0, y: 0
+      });
+    }
+    messyEdges = [];
+    for (let k = 0; k < Math.floor(N*1.6); k++) {
+      const a = Math.floor(seeded(k+201)*N);
+      const b = Math.floor(seeded(k+401)*N);
+      if (a !== b) messyEdges.push([a, b]);
+    }
+  }
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width = Math.round(W*dpr);
+    canvas.height = Math.round(H*dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    layout();
+  }
+  const start = performance.now();
+  const MORPH = 2800, PAUSE = 900, CYCLE = (MORPH+PAUSE)*2;
+  function frame(now) {
+    const elapsed = (now - start) % CYCLE;
+    let t;
+    if (elapsed < MORPH) t = elapsed/MORPH;
+    else if (elapsed < MORPH+PAUSE) t = 1;
+    else if (elapsed < MORPH*2+PAUSE) t = 1 - (elapsed-MORPH-PAUSE)/MORPH;
+    else t = 0;
+    const et = easeInOut(t);
+
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < N; i++) {
+      const d = dots[i];
+      d.x = d.messy.x + (d.clean.x - d.messy.x)*et;
+      d.y = d.messy.y + (d.clean.y - d.messy.y)*et;
+    }
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(200,69,27," + (0.45*(1-et)) + ")";
+    ctx.beginPath();
+    for (const [a, b] of messyEdges) {
+      ctx.moveTo(dots[a].x, dots[a].y);
+      ctx.lineTo(dots[b].x, dots[b].y);
+    }
+    ctx.stroke();
+    ctx.strokeStyle = "rgba(26,26,24," + (0.85*et) + ")";
+    ctx.beginPath();
+    for (const [a, b] of cleanEdges) {
+      ctx.moveTo(dots[a].x, dots[a].y);
+      ctx.lineTo(dots[b].x, dots[b].y);
+    }
+    ctx.stroke();
+    ctx.fillStyle = "#1A1A18";
+    for (const d of dots) {
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, 2.6, 0, Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  resize();
+  window.addEventListener("resize", resize);
+  requestAnimationFrame(frame);
+}
+
+const gridEl = document.getElementById("grid");
+variants.forEach((v, i) => {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = '<canvas></canvas><div class="label"><span class="num">' + (i+1) + '</span>' + v.name + '</div>';
+  gridEl.appendChild(card);
+  makeAnim(card.querySelector("canvas"), v);
+});
+
+/* ============ Other styles ============ */
+function runAnim(canvas, initFn, drawFn) {
+  const ctx = canvas.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  let W = 0, H = 0, state = null;
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width = Math.round(W*dpr);
+    canvas.height = Math.round(H*dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    state = initFn(W, H);
+  }
+  const start = performance.now();
+  const MORPH = 2800, PAUSE = 900, CYCLE = (MORPH+PAUSE)*2;
+  function frame(now) {
+    const elapsed = (now - start) % CYCLE;
+    let t;
+    if (elapsed < MORPH) t = elapsed/MORPH;
+    else if (elapsed < MORPH+PAUSE) t = 1;
+    else if (elapsed < MORPH*2+PAUSE) t = 1 - (elapsed-MORPH-PAUSE)/MORPH;
+    else t = 0;
+    const et = easeInOut(t);
+    ctx.clearRect(0, 0, W, H);
+    drawFn(ctx, et, W, H, state);
+    requestAnimationFrame(frame);
+  }
+  resize();
+  window.addEventListener("resize", resize);
+  requestAnimationFrame(frame);
+}
+
+function messyPos(i, W, H, padX = 16, padY = 14) {
+  return { x: padX + seeded(i+1)*(W-padX*2), y: padY + seeded(i+101)*(H-padY*2) };
+}
+
+/* 1. Dots only — collapse into clean grid */
+function init_dotsGrid(W, H) {
+  const N = 20, side = 5, rows = 4;
+  const sw = Math.min(W, H)*0.7, sh = sw*0.55;
+  const x0 = W/2 - sw/2, y0 = H/2 - sh/2;
+  const stepX = sw/(side-1), stepY = sh/(rows-1);
+  const dots = [];
+  for (let r = 0; r < rows; r++)
+    for (let c = 0; c < side; c++) {
+      const i = dots.length;
+      dots.push({ clean: { x: x0+c*stepX, y: y0+r*stepY }, messy: messyPos(i, W, H) });
+    }
+  return { dots };
+}
+function draw_dotsOnly(ctx, et, W, H, s) {
+  ctx.fillStyle = "#1A1A18";
+  for (const d of s.dots) {
+    const x = d.messy.x + (d.clean.x-d.messy.x)*et;
+    const y = d.messy.y + (d.clean.y-d.messy.y)*et;
+    ctx.beginPath();
+    ctx.arc(x, y, 3, 0, Math.PI*2);
+    ctx.fill();
+  }
+}
+
+/* 2. Dots only — collapse to single point */
+function init_dotsPoint(W, H) {
+  const N = 30;
+  const cx = W/2, cy = H/2;
+  const dots = [];
+  for (let i = 0; i < N; i++) dots.push({ clean: {x:cx, y:cy}, messy: messyPos(i, W, H) });
+  return { dots };
+}
+
+/* 3. Blocks — random rotated squares settle into a clean grid */
+function init_blocks(W, H) {
+  const cols = 6, rows = 4, N = cols*rows;
+  const sw = Math.min(W, H)*0.78, sh = sw*0.55;
+  const x0 = W/2 - sw/2, y0 = H/2 - sh/2;
+  const stepX = sw/(cols-1), stepY = sh/(rows-1);
+  const items = [];
+  for (let r = 0; r < rows; r++)
+    for (let c = 0; c < cols; c++) {
+      const i = items.length;
+      items.push({
+        clean: { x: x0+c*stepX, y: y0+r*stepY },
+        messy: messyPos(i, W, H, 18, 18),
+        rotMessy: (seeded(i+501)-0.5)*Math.PI,
+        size: 8
+      });
+    }
+  return { items };
+}
+function draw_blocks(ctx, et, W, H, s) {
+  ctx.fillStyle = "#1A1A18";
+  for (const it of s.items) {
+    const x = it.messy.x + (it.clean.x-it.messy.x)*et;
+    const y = it.messy.y + (it.clean.y-it.messy.y)*et;
+    const rot = it.rotMessy * (1-et);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rot);
+    ctx.fillRect(-it.size/2, -it.size/2, it.size, it.size);
+    ctx.restore();
+  }
+}
+
+/* 4. Bars — random heights equalize into clean row */
+function init_bars(W, H) {
+  const N = 14;
+  const margin = W*0.1;
+  const usable = W - margin*2;
+  const step = usable/(N-1);
+  const baseY = H*0.78;
+  const cleanH = H*0.45;
+  const items = [];
+  for (let i = 0; i < N; i++) {
+    items.push({
+      x: margin + i*step,
+      messyH: 8 + seeded(i+701)*(H*0.65),
+      messyY: baseY - 4 - seeded(i+801)*(H*0.15),
+      cleanH, cleanY: baseY,
+      w: 6
+    });
+  }
+  return { items };
+}
+function draw_bars(ctx, et, W, H, s) {
+  ctx.fillStyle = "#1A1A18";
+  for (const it of s.items) {
+    const h = it.messyH + (it.cleanH - it.messyH)*et;
+    const y = it.messyY + (it.cleanY - it.messyY)*et;
+    ctx.fillRect(it.x - it.w/2, y - h, it.w, h);
+  }
+}
+
+/* 5. Tilted squares — only rotation resolves (positions stay) */
+function init_tilted(W, H) {
+  const cols = 7, rows = 4;
+  const sw = W*0.78, sh = H*0.7;
+  const x0 = W/2 - sw/2, y0 = H/2 - sh/2;
+  const stepX = sw/(cols-1), stepY = sh/(rows-1);
+  const items = [];
+  for (let r = 0; r < rows; r++)
+    for (let c = 0; c < cols; c++) {
+      const i = items.length;
+      items.push({
+        x: x0+c*stepX, y: y0+r*stepY,
+        rot: (seeded(i+901)-0.5)*Math.PI,
+        size: 9
+      });
+    }
+  return { items };
+}
+function draw_tilted(ctx, et, W, H, s) {
+  ctx.fillStyle = "#1A1A18";
+  for (const it of s.items) {
+    const rot = it.rot*(1-et);
+    ctx.save();
+    ctx.translate(it.x, it.y);
+    ctx.rotate(rot);
+    ctx.fillRect(-it.size/2, -it.size/2, it.size, it.size);
+    ctx.restore();
+  }
+}
+
+/* 6. Cloud — wide cluster shrinks into a tight point */
+function init_cloud(W, H) {
+  const N = 50;
+  const cx = W/2, cy = H/2;
+  const dots = [];
+  for (let i = 0; i < N; i++) {
+    const a = seeded(i+1)*Math.PI*2;
+    const r = seeded(i+201)*Math.min(W, H)*0.45;
+    dots.push({
+      messy: { x: cx + Math.cos(a)*r, y: cy + Math.sin(a)*r },
+      clean: { x: cx + (seeded(i+301)-0.5)*6, y: cy + (seeded(i+401)-0.5)*6 }
+    });
+  }
+  return { dots };
+}
+
+/* 7. Pixel grid — random alpha resolves into letter "C" */
+function init_pixelC(W, H) {
+  const cols = 14, rows = 9;
+  const cellW = W*0.04, cellH = cellW;
+  const totalW = cellW*cols, totalH = cellH*rows;
+  const x0 = W/2 - totalW/2, y0 = H/2 - totalH/2;
+  // hand-drawn "C"
+  const C = [
+    "...11111....",
+    "..1.....1...",
+    ".1...........",
+    "1............",
+    "1............",
+    "1............",
+    ".1...........",
+    "..1.....1...",
+    "...11111....",
+  ];
+  const cells = [];
+  for (let r = 0; r < rows; r++)
+    for (let c = 0; c < cols; c++) {
+      const inC = (C[r] && C[r][c] === '1');
+      cells.push({
+        x: x0 + c*cellW, y: y0 + r*cellH,
+        w: cellW-1, h: cellH-1,
+        messyA: seeded(r*cols+c+1),
+        cleanA: inC ? 1 : 0
+      });
+    }
+  return { cells };
+}
+function draw_pixelC(ctx, et, W, H, s) {
+  for (const c of s.cells) {
+    const a = c.messyA + (c.cleanA - c.messyA)*et;
+    if (a < 0.02) continue;
+    ctx.fillStyle = "rgba(26,26,24," + a + ")";
+    ctx.fillRect(c.x, c.y, c.w, c.h);
+  }
+}
+
+/* 8. Size normalization — varied dot sizes equalize, no movement */
+function init_sizes(W, H) {
+  const cols = 8, rows = 4;
+  const sw = W*0.78, sh = H*0.7;
+  const x0 = W/2 - sw/2, y0 = H/2 - sh/2;
+  const stepX = sw/(cols-1), stepY = sh/(rows-1);
+  const dots = [];
+  for (let r = 0; r < rows; r++)
+    for (let c = 0; c < cols; c++) {
+      const i = dots.length;
+      dots.push({ x: x0+c*stepX, y: y0+r*stepY, messyR: 1 + seeded(i+1101)*8, cleanR: 3 });
+    }
+  return { dots };
+}
+function draw_sizes(ctx, et, W, H, s) {
+  ctx.fillStyle = "#1A1A18";
+  for (const d of s.dots) {
+    const r = d.messyR + (d.cleanR - d.messyR)*et;
+    ctx.beginPath();
+    ctx.arc(d.x, d.y, r, 0, Math.PI*2);
+    ctx.fill();
+  }
+}
+
+/* 9. Radial bars (sun) — random lengths equalize into a clean ring */
+function init_sun(W, H) {
+  const N = 24;
+  const cx = W/2, cy = H/2;
+  const r0 = Math.min(W, H)*0.12;
+  const cleanLen = Math.min(W, H)*0.22;
+  const bars = [];
+  for (let i = 0; i < N; i++) {
+    const a = (i/N)*Math.PI*2;
+    bars.push({
+      a, cx, cy, r0,
+      messyLen: 4 + seeded(i+1201)*Math.min(W, H)*0.36,
+      cleanLen
+    });
+  }
+  return { bars };
+}
+function draw_sun(ctx, et, W, H, s) {
+  ctx.strokeStyle = "#1A1A18";
+  ctx.lineWidth = 2;
+  ctx.lineCap = "round";
+  for (const b of s.bars) {
+    const len = b.messyLen + (b.cleanLen - b.messyLen)*et;
+    const x1 = b.cx + Math.cos(b.a)*b.r0;
+    const y1 = b.cy + Math.sin(b.a)*b.r0;
+    const x2 = b.cx + Math.cos(b.a)*(b.r0+len);
+    const y2 = b.cy + Math.sin(b.a)*(b.r0+len);
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+  }
+}
+
+/* 10. Noisy waveform smooths into a flat line */
+function init_wave(W, H) {
+  const N = 60;
+  const x0 = W*0.1, x1 = W*0.9;
+  const cy = H/2;
+  const amp = H*0.32;
+  const points = [];
+  for (let i = 0; i < N; i++) {
+    const t = i/(N-1);
+    points.push({
+      x: x0 + (x1-x0)*t,
+      messyY: cy + (seeded(i+1301)-0.5)*amp*2,
+      cleanY: cy
+    });
+  }
+  return { points };
+}
+function draw_wave(ctx, et, W, H, s) {
+  ctx.strokeStyle = "#1A1A18";
+  ctx.lineWidth = 2;
+  ctx.lineJoin = "round";
+  ctx.beginPath();
+  for (let i = 0; i < s.points.length; i++) {
+    const p = s.points[i];
+    const y = p.messyY + (p.cleanY - p.messyY)*et;
+    if (i === 0) ctx.moveTo(p.x, y);
+    else ctx.lineTo(p.x, y);
+  }
+  ctx.stroke();
+}
+
+const otherIdeas = [
+  { name: "Dots only — grid",        init: init_dotsGrid, draw: draw_dotsOnly },
+  { name: "Dots only — single point",init: init_dotsPoint, draw: draw_dotsOnly },
+  { name: "Blocks — settle to grid", init: init_blocks,    draw: draw_blocks },
+  { name: "Bars — equalize",         init: init_bars,      draw: draw_bars },
+  { name: "Tilted squares — align",  init: init_tilted,    draw: draw_tilted },
+  { name: "Cloud — collapse to point",init: init_cloud,    draw: draw_dotsOnly },
+  { name: "Pixel reveal — letter C", init: init_pixelC,    draw: draw_pixelC },
+  { name: "Sizes — normalize",       init: init_sizes,     draw: draw_sizes },
+  { name: "Radial bars — sun",       init: init_sun,       draw: draw_sun },
+  { name: "Wave — smooth to line",   init: init_wave,      draw: draw_wave },
+];
+
+const gridEl2 = document.getElementById("grid2");
+otherIdeas.forEach((v, i) => {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = '<canvas></canvas><div class="label"><span class="num">' + (i+13) + '</span>' + v.name + '</div>';
+  gridEl2.appendChild(card);
+  runAnim(card.querySelector("canvas"), v.init, v.draw);
+});
+
+/* ============ UI mockups (literal) ============ */
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.arcTo(x+w, y, x+w, y+h, r);
+  ctx.arcTo(x+w, y+h, x, y+h, r);
+  ctx.arcTo(x, y+h, x, y, r);
+  ctx.arcTo(x, y, x+w, y, r);
+  ctx.closePath();
+}
+
+function makeMessy(blocks, ix, iy, iw, ih, seedBase) {
+  return blocks.map((c, i) => ({
+    clean: c,
+    messy: {
+      x: ix + seeded(i+seedBase)*(iw - 50),
+      y: iy + seeded(i+seedBase+100)*(ih - 24),
+      w: 14 + seeded(i+seedBase+200)*60,
+      h: 5 + seeded(i+seedBase+300)*22
+    },
+    rot: (seeded(i+seedBase+400)-0.5)*0.7
+  }));
+}
+
+/* Web app */
+function init_webApp(W, H) {
+  const fw = W*0.86;
+  const fh = H*0.84;
+  const fx = (W-fw)/2;
+  const fy = (H-fh)/2;
+  const chromeH = Math.max(16, fh*0.07);
+  const ix = fx + fw*0.025;
+  const iy = fy + chromeH + fh*0.04;
+  const iw = fw - fw*0.05;
+  const ih = fh - chromeH - fh*0.07;
+
+  const sbW = iw*0.22;
+  const headerH = ih*0.09;
+  const mx = ix + sbW + iw*0.025;
+  const mw = iw - sbW - iw*0.025;
+  const blocks = [];
+  // Top header bar
+  blocks.push({ x: ix, y: iy, w: iw, h: headerH });
+  // Sidebar items (5)
+  for (let i = 0; i < 5; i++) {
+    blocks.push({ x: ix+iw*0.015, y: iy+headerH+ih*0.06+i*ih*0.09, w: sbW-iw*0.03, h: ih*0.05 });
+  }
+  // Main page title
+  blocks.push({ x: mx, y: iy+headerH+ih*0.06, w: mw*0.45, h: ih*0.07 });
+  // KPI row (3)
+  const kpiY = iy+headerH+ih*0.2;
+  const kpiH = ih*0.18;
+  for (let i = 0; i < 3; i++) {
+    blocks.push({ x: mx+i*(mw*0.34), y: kpiY, w: mw*0.31, h: kpiH });
+  }
+  // Big chart card
+  blocks.push({ x: mx, y: kpiY+kpiH+ih*0.05, w: mw, h: ih*0.32 });
+
+  return {
+    frame: { x: fx, y: fy, w: fw, h: fh, chromeH },
+    frameType: 'web',
+    blocks: makeMessy(blocks, ix, iy, iw, ih, 11)
+  };
+}
+
+/* iOS app */
+function init_phoneApp(W, H) {
+  const ph = H*0.92;
+  const pw = ph*0.5;
+  const px = (W-pw)/2;
+  const py = (H-ph)/2;
+  const radius = pw*0.11;
+  const statusH = ph*0.04;
+  const tabH = ph*0.08;
+  const ix = px + pw*0.07;
+  const iy = py + statusH + ph*0.04;
+  const iw = pw - pw*0.14;
+  const ih = ph - statusH - tabH - ph*0.09;
+
+  const blocks = [];
+  // Nav title (centered, narrow)
+  blocks.push({ x: ix+iw*0.2, y: iy, w: iw*0.6, h: ih*0.05 });
+  // Search bar
+  blocks.push({ x: ix, y: iy+ih*0.1, w: iw, h: ih*0.06 });
+  // 4 list rows
+  for (let i = 0; i < 4; i++) {
+    blocks.push({ x: ix, y: iy+ih*0.22+i*ih*0.13, w: iw, h: ih*0.1 });
+  }
+  // Featured card
+  blocks.push({ x: ix, y: iy+ih*0.78, w: iw, h: ih*0.18 });
+  // Tab bar icons (4)
+  for (let i = 0; i < 4; i++) {
+    blocks.push({ x: px+pw*0.12+i*pw*0.22, y: py+ph-tabH+ph*0.018, w: pw*0.13, h: ph*0.035 });
+  }
+
+  return {
+    frame: { x: px, y: py, w: pw, h: ph, radius },
+    frameType: 'phone',
+    blocks: makeMessy(blocks, ix, iy, iw, ih, 21)
+  };
+}
+
+function draw_uiBlocks(ctx, et, W, H, s) {
+  const f = s.frame;
+
+  if (s.frameType === 'web') {
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(f.x, f.y, f.w, f.h);
+    ctx.strokeStyle = "#ddd";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(f.x, f.y, f.w, f.h);
+    // chrome bar
+    ctx.fillStyle = "#f3f1ec";
+    ctx.fillRect(f.x, f.y, f.w, f.chromeH);
+    ctx.beginPath();
+    ctx.moveTo(f.x, f.y + f.chromeH);
+    ctx.lineTo(f.x + f.w, f.y + f.chromeH);
+    ctx.strokeStyle = "#e2e0db";
+    ctx.stroke();
+    // 3 dots
+    ctx.fillStyle = "#d0cdc6";
+    for (let i = 0; i < 3; i++) {
+      ctx.beginPath();
+      ctx.arc(f.x + 10 + i*11, f.y + f.chromeH/2, 2.8, 0, Math.PI*2);
+      ctx.fill();
+    }
+  } else {
+    ctx.fillStyle = "#fff";
+    roundRect(ctx, f.x, f.y, f.w, f.h, f.radius);
+    ctx.fill();
+    ctx.strokeStyle = "#ddd";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    // notch / pill
+    ctx.fillStyle = "#1A1A18";
+    const nw = f.w*0.3, nh = f.h*0.018;
+    roundRect(ctx, f.x + (f.w-nw)/2, f.y + f.h*0.018, nw, nh, nh/2);
+    ctx.fill();
+  }
+
+  // Animated content blocks
+  ctx.fillStyle = "#1A1A18";
+  for (const b of s.blocks) {
+    const x = b.messy.x + (b.clean.x - b.messy.x)*et;
+    const y = b.messy.y + (b.clean.y - b.messy.y)*et;
+    const w = b.messy.w + (b.clean.w - b.messy.w)*et;
+    const h = b.messy.h + (b.clean.h - b.messy.h)*et;
+    const rot = b.rot * (1 - et);
+    ctx.save();
+    ctx.translate(x + w/2, y + h/2);
+    ctx.rotate(rot);
+    ctx.fillRect(-w/2, -h/2, w, h);
+    ctx.restore();
+  }
+}
+
+/* ============ User journey — lost vs guided ============ */
+function runAnimRaw(canvas, initFn, drawFn) {
+  const ctx = canvas.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  let W = 0, H = 0, state = null;
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width = Math.round(W*dpr);
+    canvas.height = Math.round(H*dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    state = initFn(W, H);
+  }
+  const start = performance.now();
+  function frame(now) {
+    ctx.clearRect(0, 0, W, H);
+    drawFn(ctx, now - start, W, H, state);
+    requestAnimationFrame(frame);
+  }
+  resize();
+  window.addEventListener("resize", resize);
+  requestAnimationFrame(frame);
+}
+
+function pathPos(nodes, path, t) {
+  const segCount = path.length - 1;
+  const seg = Math.min(Math.floor(t * segCount), segCount - 1);
+  const localT = (t * segCount) - seg;
+  const a = nodes[path[seg]];
+  const b = nodes[path[seg + 1]];
+  return {
+    x: a.x + (b.x - a.x) * easeInOut(localT),
+    y: a.y + (b.y - a.y) * easeInOut(localT),
+    seg
+  };
+}
+
+/* Hopping: dot jumps from node to node in a parabolic arc,
+   with a brief hold on landing. */
+function hopPos(nodes, path, t, arcHeight) {
+  if (arcHeight == null) arcHeight = 16;
+  const segCount = path.length - 1;
+  const seg = Math.min(Math.floor(t * segCount), segCount - 1);
+  const localT = (t * segCount) - seg;
+  const holdFrac = 0.18; // hold on landing
+  let moveT;
+  if (localT < 1 - holdFrac) {
+    moveT = localT / (1 - holdFrac);
+  } else {
+    moveT = 1;
+  }
+  const e = easeInOut(moveT);
+  const a = nodes[path[seg]];
+  const b = nodes[path[seg + 1]];
+  const x = a.x + (b.x - a.x) * e;
+  const y = a.y + (b.y - a.y) * e;
+  // parabolic arc, 0 at endpoints, max at middle
+  const arc = Math.sin(moveT * Math.PI) * arcHeight;
+  // tiny squash on landing
+  const justLanded = localT >= 1 - holdFrac;
+  const landPulse = justLanded ? Math.max(0, 1 - (localT - (1 - holdFrac)) / holdFrac) : 0;
+  return { x, y: y - arc, seg, moveT, landPulse };
+}
+
+/* Side-by-side: messy left, clean right */
+function init_journeySplit(W, H) {
+  const pad = 16;
+  const labelH = 18;
+  const halfW = (W - pad*3) / 2;
+  const innerH = H - pad*2 - labelH;
+  const left  = { x: pad,                 y: pad + labelH, w: halfW, h: innerH };
+  const right = { x: pad*2 + halfW,       y: pad + labelH, w: halfW, h: innerH };
+
+  const M = 9;
+  const messyNodes = [];
+  for (let i = 0; i < M; i++) {
+    messyNodes.push({
+      x: left.x + 24 + seeded(i+1)*(left.w - 48),
+      y: left.y + 24 + seeded(i+101)*(left.h - 48)
+    });
+  }
+  const messyEdges = [];
+  for (let k = 0; k < Math.floor(M*1.6); k++) {
+    const a = Math.floor(seeded(k+201)*M);
+    const b = Math.floor(seeded(k+301)*M);
+    if (a !== b) messyEdges.push([a, b]);
+  }
+  // wandering, with backtracks (visits same nodes twice)
+  const messyPath = [0, 3, 6, 2, 6, 8, 4, 1, 5, 7, 8];
+
+  const C = 4;
+  const cleanNodes = [];
+  for (let i = 0; i < C; i++) {
+    cleanNodes.push({
+      x: right.x + 32 + (right.w - 64) * (i / (C-1)),
+      y: right.y + right.h/2
+    });
+  }
+  const cleanPath = [0, 1, 2, 3];
+
+  return { left, right, messyNodes, messyEdges, messyPath, cleanNodes, cleanPath };
+}
+
+function drawFrame(ctx, frame, label) {
+  if (label) {
+    ctx.fillStyle = "#888";
+    ctx.font = "italic 13px -apple-system, system-ui, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(label, frame.x + frame.w/2, frame.y - 8);
+  }
+}
+
+function draw_journeySplit(ctx, elapsed, W, H, s) {
+  drawFrame(ctx, s.left, "Before — user lost");
+  drawFrame(ctx, s.right, "After — clear path");
+
+  // ----- LEFT (messy) -----
+  // background spaghetti edges
+  ctx.strokeStyle = "rgba(180, 180, 180, 0.5)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  for (const [a, b] of s.messyEdges) {
+    ctx.moveTo(s.messyNodes[a].x, s.messyNodes[a].y);
+    ctx.lineTo(s.messyNodes[b].x, s.messyNodes[b].y);
+  }
+  ctx.stroke();
+  // step nodes
+  for (const n of s.messyNodes) {
+    ctx.fillStyle = "#bbb";
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 4, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // user dot hopping, turns red as it gets lost
+  const messyCycle = 7500;
+  const mt = (elapsed % messyCycle) / messyCycle;
+  const frustrated = mt > 0.45;
+  const stuck = mt > 0.9;
+  const effectiveT = stuck ? 0.9 : mt;
+  const pos = hopPos(s.messyNodes, s.messyPath, effectiveT, 14);
+
+  // trail connects visited nodes (snaps on landing)
+  ctx.strokeStyle = frustrated ? "rgba(200,69,27,0.85)" : "rgba(26,26,24,0.85)";
+  ctx.lineWidth = 2;
+  ctx.lineCap = "round";
+  ctx.beginPath();
+  ctx.moveTo(s.messyNodes[s.messyPath[0]].x, s.messyNodes[s.messyPath[0]].y);
+  for (let i = 1; i <= pos.seg; i++) {
+    const n = s.messyNodes[s.messyPath[i]];
+    ctx.lineTo(n.x, n.y);
+  }
+  ctx.stroke();
+
+  // wiggle when stuck
+  let ux = pos.x, uy = pos.y;
+  if (stuck) {
+    ux += Math.sin(elapsed * 0.04) * 1.5;
+    uy += Math.cos(elapsed * 0.05) * 1.5;
+  }
+  // halo when frustrated
+  if (frustrated) {
+    ctx.fillStyle = "rgba(200, 69, 27, 0.18)";
+    ctx.beginPath();
+    ctx.arc(ux, uy, 11, 0, Math.PI*2);
+    ctx.fill();
+  }
+  // squash when landing
+  const mr = 5.5 + pos.landPulse * 1.8;
+  const mrY = 5.5 - pos.landPulse * 1.2;
+  ctx.fillStyle = frustrated ? "#C8451B" : "#1A1A18";
+  ctx.beginPath();
+  ctx.ellipse(ux, uy, mr, mrY, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // ----- RIGHT (clean) -----
+  // path background
+  ctx.strokeStyle = "#e5e3dc";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(s.cleanNodes[0].x, s.cleanNodes[0].y);
+  for (let i = 1; i < s.cleanNodes.length; i++) {
+    ctx.lineTo(s.cleanNodes[i].x, s.cleanNodes[i].y);
+  }
+  ctx.stroke();
+  for (const n of s.cleanNodes) {
+    ctx.fillStyle = "#1A1A18";
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 5, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  const cleanCycle = 3750;
+  const ct = (elapsed % cleanCycle) / cleanCycle;
+  const cpos = hopPos(s.cleanNodes, s.cleanPath, ct, 18);
+  // trail snaps at each landed node
+  ctx.strokeStyle = "#1A1A18";
+  ctx.lineWidth = 3;
+  ctx.lineCap = "round";
+  ctx.beginPath();
+  ctx.moveTo(s.cleanNodes[s.cleanPath[0]].x, s.cleanNodes[s.cleanPath[0]].y);
+  for (let i = 1; i <= cpos.seg; i++) {
+    const n = s.cleanNodes[s.cleanPath[i]];
+    ctx.lineTo(n.x, n.y);
+  }
+  ctx.stroke();
+  // happy halo
+  ctx.fillStyle = "rgba(26, 26, 24, 0.12)";
+  ctx.beginPath();
+  ctx.arc(cpos.x, cpos.y, 10, 0, Math.PI*2);
+  ctx.fill();
+  const cr = 5.5 + cpos.landPulse * 1.8;
+  const crY = 5.5 - cpos.landPulse * 1.2;
+  ctx.fillStyle = "#1A1A18";
+  ctx.beginPath();
+  ctx.ellipse(cpos.x, cpos.y, cr, crY, 0, 0, Math.PI*2);
+  ctx.fill();
+}
+
+/* Storyboard: messy plays, then clean plays, repeat */
+function init_journeyStory(W, H) {
+  const pad = 24;
+  const frame = { x: pad, y: pad + 18, w: W - pad*2, h: H - pad*2 - 18 };
+
+  const M = 10;
+  const messyNodes = [];
+  for (let i = 0; i < M; i++) {
+    messyNodes.push({
+      x: frame.x + 30 + seeded(i+501)*(frame.w - 60),
+      y: frame.y + 30 + seeded(i+601)*(frame.h - 60)
+    });
+  }
+  const messyEdges = [];
+  for (let k = 0; k < Math.floor(M*1.7); k++) {
+    const a = Math.floor(seeded(k+701)*M);
+    const b = Math.floor(seeded(k+801)*M);
+    if (a !== b) messyEdges.push([a, b]);
+  }
+  const messyPath = [0, 4, 7, 2, 7, 9, 3, 6, 1, 8, 5, 9];
+
+  const C = 5;
+  const cleanNodes = [];
+  for (let i = 0; i < C; i++) {
+    const t = i/(C-1);
+    cleanNodes.push({
+      x: frame.x + 40 + (frame.w - 80) * t,
+      y: frame.y + frame.h/2 + Math.sin(t * Math.PI) * -8
+    });
+  }
+  const cleanPath = [0, 1, 2, 3, 4];
+
+  return { frame, messyNodes, messyEdges, messyPath, cleanNodes, cleanPath };
+}
+
+function draw_journeyStory(ctx, elapsed, W, H, s) {
+  drawFrame(ctx, s.frame, "");
+
+  const messyDur = 5500;
+  const swap    = 600;
+  const cleanDur = 3500;
+  const cycle = messyDur + swap + cleanDur + 700;
+  const t = elapsed % cycle;
+
+  let phase, pt;
+  if (t < messyDur)                      { phase = 'messy'; pt = t / messyDur; }
+  else if (t < messyDur + swap)          { phase = 'swap';  pt = (t - messyDur) / swap; }
+  else if (t < messyDur + swap + cleanDur) { phase = 'clean'; pt = (t - messyDur - swap) / cleanDur; }
+  else                                    { phase = 'hold'; pt = 1; }
+
+  const messyAlpha = phase === 'messy' ? 1 : phase === 'swap' ? (1 - pt) : 0;
+  const cleanAlpha = phase === 'clean' || phase === 'hold' ? 1 : phase === 'swap' ? pt : 0;
+
+  // ---- messy layer ----
+  if (messyAlpha > 0.01) {
+    ctx.globalAlpha = messyAlpha;
+    ctx.strokeStyle = "rgba(180,180,180,0.55)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (const [a, b] of s.messyEdges) {
+      ctx.moveTo(s.messyNodes[a].x, s.messyNodes[a].y);
+      ctx.lineTo(s.messyNodes[b].x, s.messyNodes[b].y);
+    }
+    ctx.stroke();
+    ctx.fillStyle = "#bbb";
+    for (const n of s.messyNodes) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 4, 0, Math.PI*2);
+      ctx.fill();
+    }
+    if (phase === 'messy') {
+      const frustrated = pt > 0.5;
+      const pos = hopPos(s.messyNodes, s.messyPath, pt, 18);
+      ctx.strokeStyle = frustrated ? "rgba(200,69,27,0.85)" : "rgba(26,26,24,0.85)";
+      ctx.lineWidth = 2.2;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(s.messyNodes[s.messyPath[0]].x, s.messyNodes[s.messyPath[0]].y);
+      for (let i = 1; i <= pos.seg; i++) {
+        const n = s.messyNodes[s.messyPath[i]];
+        ctx.lineTo(n.x, n.y);
+      }
+      ctx.stroke();
+      if (frustrated) {
+        ctx.fillStyle = "rgba(200,69,27,0.18)";
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, 12, 0, Math.PI*2);
+        ctx.fill();
+      }
+      const r = 6 + pos.landPulse * 2;
+      const rY = 6 - pos.landPulse * 1.4;
+      ctx.fillStyle = frustrated ? "#C8451B" : "#1A1A18";
+      ctx.beginPath();
+      ctx.ellipse(pos.x, pos.y, r, rY, 0, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  // ---- clean layer ----
+  if (cleanAlpha > 0.01) {
+    ctx.globalAlpha = cleanAlpha;
+    ctx.strokeStyle = "#e5e3dc";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(s.cleanNodes[0].x, s.cleanNodes[0].y);
+    for (let i = 1; i < s.cleanNodes.length; i++) {
+      ctx.lineTo(s.cleanNodes[i].x, s.cleanNodes[i].y);
+    }
+    ctx.stroke();
+    ctx.fillStyle = "#1A1A18";
+    for (const n of s.cleanNodes) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 5, 0, Math.PI*2);
+      ctx.fill();
+    }
+    if (phase === 'clean') {
+      const pos = hopPos(s.cleanNodes, s.cleanPath, pt, 22);
+      ctx.strokeStyle = "#1A1A18";
+      ctx.lineWidth = 3;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(s.cleanNodes[s.cleanPath[0]].x, s.cleanNodes[s.cleanPath[0]].y);
+      for (let i = 1; i <= pos.seg; i++) {
+        const n = s.cleanNodes[s.cleanPath[i]];
+        ctx.lineTo(n.x, n.y);
+      }
+      ctx.stroke();
+      ctx.fillStyle = "rgba(26,26,24,0.12)";
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, 11, 0, Math.PI*2);
+      ctx.fill();
+      const r = 6 + pos.landPulse * 2;
+      const rY = 6 - pos.landPulse * 1.4;
+      ctx.fillStyle = "#1A1A18";
+      ctx.beginPath();
+      ctx.ellipse(pos.x, pos.y, r, rY, 0, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+}
+
+/* ============ FINAL: ring layout, one continuous user journey ============ */
+/* Disney-style hop: anticipation crouch → fast rise → hang → slow fall → squash landing → brief ready pause */
+function hopPosMs(nodes, path, elapsedMs, antMs, jumpMs, holdMs, arcHeight) {
+  if (arcHeight == null) arcHeight = 16;
+  const segDur = antMs + jumpMs + holdMs;
+  const totalDur = segDur * (path.length - 1);
+  const done = elapsedMs >= totalDur;
+  const t = Math.min(elapsedMs, Math.max(0, totalDur - 1));
+  const seg = Math.min(Math.floor(t / segDur), path.length - 2);
+  const inSeg = t - seg * segDur;
+
+  const a = nodes[path[seg]];
+  const b = nodes[path[seg + 1]];
+
+  let x, y, scaleX = 1, scaleY = 1, moveT = 0, landPulse = 0, phase = 'hold';
+
+  if (inSeg < antMs) {
+    // ANTICIPATION — crouch in place, peaks mid-anticipation
+    phase = 'ant';
+    const aT = inSeg / antMs;
+    const crouch = Math.sin(aT * Math.PI); // 0 → 1 → 0
+    scaleX = 1 + crouch * 0.35;
+    scaleY = 1 - crouch * 0.45;
+    x = a.x;
+    y = a.y;
+  } else if (inSeg < antMs + jumpMs) {
+    // JUMP — single C¹-smooth motion. One warped time drives both
+    // horizontal and vertical, so there is no velocity seam at the apex.
+    phase = 'jump';
+    moveT = (inSeg - antMs) / jumpMs;
+    // Warp: fast off the ground, slow into the landing (du/dt=0 at t=1).
+    // Apex of sin(u·π) lands near t≈0.34 → Disney "faster up, slower down".
+    const u = 1 - Math.pow(1 - moveT, 1.8);
+    const h = Math.sin(u * Math.PI); // smooth 0 → 1 → 0, no kink
+    x = a.x + (b.x - a.x) * u;
+    y = a.y + (b.y - a.y) * u - h * arcHeight;
+    // Stretch in the air, slight horizontal squeeze
+    scaleY = 1 + h * 0.16;
+    scaleX = 1 - h * 0.09;
+  } else {
+    // LANDING SQUASH + READY — squash decays over first third of hold
+    phase = 'land';
+    const hT = (inSeg - antMs - jumpMs) / holdMs;
+    x = b.x;
+    y = b.y;
+    moveT = 1;
+    const squash = Math.max(0, 1 - hT * 3);
+    scaleX = 1 + squash * 0.35;
+    scaleY = 1 - squash * 0.4;
+    landPulse = squash;
+  }
+
+  return { x, y, scaleX, scaleY, seg, moveT, landPulse, done, totalDur, phase };
+}
+
+function init_journeyRingFinal(W, H) {
+  const pad = 16;
+  const centerGap = 64; // breathing room between mess and clean path
+  const labelH = 20;
+  const halfW = (W - pad*2 - centerGap) / 2;
+  const innerH = H - pad*2 - labelH;
+  const left  = { x: pad,                       y: pad + labelH, w: halfW, h: innerH };
+  const right = { x: pad + halfW + centerGap,   y: pad + labelH, w: halfW, h: innerH };
+
+  const M = 9;
+  const messyNodes = layoutMessy('ring', left, M);
+  const messyEdges = [];
+  for (let k = 0; k < Math.floor(M*1.6); k++) {
+    const a = Math.floor(seeded(k+201+M)*M);
+    const b = Math.floor(seeded(k+301+M)*M);
+    if (a !== b) messyEdges.push([a, b]);
+  }
+  const C = 4;
+  const cleanNodes = [];
+  for (let i = 0; i < C; i++) {
+    cleanNodes.push({
+      x: right.x + 32 + (right.w - 64) * (i / (C-1)),
+      y: right.y + right.h/2
+    });
+  }
+  // Combined for pathing: messy indices 0..8, clean indices 9..12
+  const allNodes = [...messyNodes, ...cleanNodes];
+  // Journey: wander messy (with confusion) → jump across to clean → traverse clean
+  const path = [0, 4, 2, 6, 1, 5, 3, 7, 8, 9, 10, 11, 12];
+  // Build one shared drop schedule so every dot + every edge gets its own
+  // distinct fall moment (no two items fall together, no attached feel).
+  const totalItems = messyNodes.length + messyEdges.length;
+  const DROP_SPREAD = 1800;             // ms over which all items detach
+  const step = DROP_SPREAD / totalItems;
+  const slots = [];
+  for (let i = 0; i < totalItems; i++) {
+    const jitter = (seeded(i + 1501 + M) - 0.5) * step * 0.8;
+    slots.push(i * step + jitter);
+  }
+  // Fisher–Yates shuffle using seeded()
+  for (let i = slots.length - 1; i > 0; i--) {
+    const j = Math.floor(seeded(i + 1701 + M) * (i + 1));
+    const tmp = slots[i]; slots[i] = slots[j]; slots[j] = tmp;
+  }
+  const fall = messyNodes.map((_, i) => ({
+    delay: Math.max(0, slots[i]),
+    drift: (seeded(i + 801 + M) - 0.5) * 60,
+    spin:  (seeded(i + 901 + M) - 0.5) * 4,
+  }));
+  const edgeFall = messyEdges.map((_, i) => ({
+    delay: Math.max(0, slots[messyNodes.length + i]),
+    drift: (seeded(i + 1201 + M) - 0.5) * 50,
+    spin:  (seeded(i + 1301 + M) - 0.5) * 3,
+  }));
+  return { left, right, messyNodes, cleanNodes, allNodes, messyEdges, path, fall, edgeFall };
+}
+
+function moodForSeg(seg, totalSegs) {
+  // seg 0-3: exploring (black)
+  // seg 4-8: frustrated red (wandering + the big leap across)
+  // seg 9-10: calm black (clean path)
+  // seg 11+: final, green
+  if (seg >= totalSegs - 1) return { dot: '#3fa24a', halo: 'rgba(63,162,74,0.22)', trail: '#3fa24a' };
+  if (seg >= 9)              return { dot: '#1A1A18', halo: 'rgba(26,26,24,0.12)', trail: '#1A1A18' };
+  if (seg >= 4)              return { dot: '#C8451B', halo: 'rgba(200,69,27,0.22)', trail: 'rgba(200,69,27,0.9)' };
+  return                            { dot: '#1A1A18', halo: 'rgba(26,26,24,0.12)', trail: 'rgba(26,26,24,0.85)' };
+}
+
+function draw_journeyRingFinal(ctx, elapsed, W, H, s) {
+  // Disney timing: anticipation crouch → fast up, slow down → brief landing squash
+  const antMs = 130;
+  const jumpMs = 440;
+  const holdMs = 280;
+  const endHoldMs = 3600;   // post-journey: fall + email CTA
+  const segCount = s.path.length - 1;
+  const journeyDur = segCount * (antMs + jumpMs + holdMs);
+  // Play once and HOLD — no looping.
+  const cycleT = Math.min(elapsed, journeyDur + endHoldMs);
+
+  // How far into the post-journey phase (ms). 0 during the journey itself.
+  const postT = Math.max(0, cycleT - journeyDur);
+
+  // --- Per messy node: falling offset + alpha ---
+  const FALL_DUR = 1100;
+  const G = 0.0016; // pixels / ms²
+  const nodeFX = [];
+  for (let i = 0; i < s.messyNodes.length; i++) {
+    const f = s.fall[i];
+    const t = postT - f.delay;
+    if (t <= 0) {
+      nodeFX.push({ dx: 0, dy: 0, alpha: 1, rot: 0, fell: false });
+    } else {
+      const dy = 0.5 * G * t * t;            // gravity
+      const dx = (f.drift * t) / FALL_DUR;   // light sideways drift
+      const rot = (f.spin * t) / 1000;
+      // Fade out over the last 400ms of fall
+      const alpha = Math.max(0, 1 - Math.max(0, (t - (FALL_DUR - 400))) / 400);
+      nodeFX.push({ dx, dy, alpha, rot, fell: t > 0 });
+    }
+  }
+
+  // Global alpha for the messy side (starts full, fades as dots drop)
+  const messyAlive = nodeFX.reduce((a, fx) => a + fx.alpha, 0) / nodeFX.length;
+
+  // Labels
+  drawFrame(ctx, s.left, "users get stuck");
+  drawFrame(ctx, s.right, "users flow through");
+
+  // ---- Messy side: edges fall independently of dots (own delays/spin) ----
+  ctx.lineWidth = 1;
+  for (let i = 0; i < s.messyEdges.length; i++) {
+    const [ai, bi] = s.messyEdges[i];
+    const a = s.messyNodes[ai];
+    const b = s.messyNodes[bi];
+    const ef = s.edgeFall[i];
+    const t = postT - ef.delay;
+    let dx = 0, dy = 0, rot = 0, alpha = 0.5;
+    if (t > 0) {
+      dy = 0.5 * G * t * t;
+      dx = (ef.drift * t) / FALL_DUR;
+      rot = (ef.spin * t) / 1000;
+      alpha = 0.5 * Math.max(0, 1 - Math.max(0, t - (FALL_DUR - 400)) / 400);
+    }
+    if (alpha <= 0.01) continue;
+    const mx = (a.x + b.x) / 2;
+    const my = (a.y + b.y) / 2;
+    ctx.save();
+    ctx.translate(mx + dx, my + dy);
+    ctx.rotate(rot);
+    ctx.strokeStyle = "rgba(180,180,180," + alpha + ")";
+    ctx.beginPath();
+    ctx.moveTo(a.x - mx, a.y - my);
+    ctx.lineTo(b.x - mx, b.y - my);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // ---- Messy side: dots ----
+  for (let i = 0; i < s.messyNodes.length; i++) {
+    const n = s.messyNodes[i];
+    const fx = nodeFX[i];
+    if (fx.alpha <= 0.01) continue;
+    ctx.save();
+    ctx.translate(n.x + fx.dx, n.y + fx.dy);
+    ctx.rotate(fx.rot);
+    ctx.fillStyle = "rgba(187,187,187," + fx.alpha + ")";
+    ctx.beginPath();
+    ctx.arc(0, 0, 4, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // ---- Clean side background ----
+  ctx.strokeStyle = "#e5e3dc";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(s.cleanNodes[0].x, s.cleanNodes[0].y);
+  for (let i = 1; i < s.cleanNodes.length; i++) {
+    ctx.lineTo(s.cleanNodes[i].x, s.cleanNodes[i].y);
+  }
+  ctx.stroke();
+  for (const n of s.cleanNodes) {
+    ctx.fillStyle = "#1A1A18";
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 5, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  const pos = hopPosMs(s.allNodes, s.path, cycleT, antMs, jumpMs, holdMs, 18);
+  const mood = moodForSeg(pos.seg, segCount);
+
+  // Trail: draw each completed segment in its own mood color.
+  // Segments that touch a fallen messy node fade with that node.
+  ctx.lineWidth = 2.4;
+  ctx.lineCap = "round";
+  const lastCompleted = pos.moveT >= 1 ? pos.seg : pos.seg - 1;
+  for (let i = 0; i <= lastCompleted; i++) {
+    const segMood = moodForSeg(i, segCount);
+    const ai = s.path[i], bi = s.path[i + 1];
+    const fa = ai < s.messyNodes.length ? nodeFX[ai] : null;
+    const fb = bi < s.messyNodes.length ? nodeFX[bi] : null;
+    const segAlpha = Math.min(fa ? fa.alpha : 1, fb ? fb.alpha : 1);
+    if (segAlpha <= 0.01) continue;
+    const a = s.allNodes[ai];
+    const b = s.allNodes[bi];
+    const ax = a.x + (fa ? fa.dx : 0);
+    const ay = a.y + (fa ? fa.dy : 0);
+    const bx = b.x + (fb ? fb.dx : 0);
+    const by = b.y + (fb ? fb.dy : 0);
+    ctx.globalAlpha = segAlpha;
+    ctx.strokeStyle = segMood.trail;
+    ctx.beginPath();
+    ctx.moveTo(ax, ay);
+    ctx.lineTo(bx, by);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+
+  // User dot — hide once it's parked on the final clean node and the
+  // "let's talk" headline has taken over (avoid a lonely dot sitting there).
+  const dotFade = postT < 1600 ? 1 : Math.max(0, 1 - (postT - 1600) / 500);
+  if (dotFade > 0.01) {
+    ctx.globalAlpha = dotFade;
+    ctx.fillStyle = mood.halo;
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, 12, 0, Math.PI*2);
+    ctx.fill();
+    ctx.save();
+    ctx.translate(pos.x, pos.y);
+    ctx.scale(pos.scaleX, pos.scaleY);
+    ctx.fillStyle = mood.dot;
+    ctx.beginPath();
+    ctx.arc(0, 0, 6, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+
+  // ---- CTA — email only, centered on the LEFT side ----
+  const textIn = Math.max(0, Math.min(1, (postT - 900) / 500));
+  if (textIn > 0) {
+    const cx = s.left.x + s.left.w / 2;
+    const cy = s.left.y + s.left.h / 2;
+    const lift = (1 - textIn) * 8;
+    ctx.globalAlpha = textIn;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "#000000";
+    ctx.font = '400 15px "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif';
+    const label = "hey@crucial.design";
+    const ty = cy + lift;
+    ctx.fillText(label, cx, ty);
+    // underline
+    const m = ctx.measureText(label);
+    const uy = ty + 8;
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(cx - m.width / 2, uy);
+    ctx.lineTo(cx + m.width / 2, uy);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+}
+
+/* Alternate messy layouts for the split view */
+function layoutMessy(name, f, N) {
+  const nodes = [];
+  if (name === 'cluster') {
+    const centers = [
+      { x: f.x + f.w*0.25, y: f.y + f.h*0.28 },
+      { x: f.x + f.w*0.72, y: f.y + f.h*0.36 },
+      { x: f.x + f.w*0.42, y: f.y + f.h*0.78 },
+    ];
+    for (let i = 0; i < N; i++) {
+      const c = centers[i % 3];
+      nodes.push({
+        x: c.x + (seeded(i*3.1+1)-0.5)*28,
+        y: c.y + (seeded(i*2.7+11)-0.5)*22
+      });
+    }
+  } else if (name === 'ring') {
+    const cx = f.x + f.w/2, cy = f.y + f.h/2;
+    const r = Math.min(f.w, f.h)*0.36;
+    for (let i = 0; i < N; i++) {
+      const a = (i/N)*Math.PI*2 + (seeded(i+1)-0.5)*0.6;
+      const rr = r * (0.7 + seeded(i+101)*0.45);
+      nodes.push({ x: cx + Math.cos(a)*rr, y: cy + Math.sin(a)*rr });
+    }
+  } else if (name === 'zigzag') {
+    for (let i = 0; i < N; i++) {
+      const row = i / (N-1);
+      nodes.push({
+        x: f.x + f.w*0.18 + ((i % 2) * f.w*0.62) + (seeded(i+1)-0.5)*22,
+        y: f.y + 22 + row * (f.h - 44)
+      });
+    }
+  } else if (name === 'dense') {
+    // More nodes, more chaos
+    for (let i = 0; i < N; i++) {
+      nodes.push({
+        x: f.x + 14 + seeded(i*5.3+1)*(f.w - 28),
+        y: f.y + 14 + seeded(i*4.1+11)*(f.h - 28)
+      });
+    }
+  } else { // 'scatter' default
+    for (let i = 0; i < N; i++) {
+      nodes.push({
+        x: f.x + 24 + seeded(i+1)*(f.w - 48),
+        y: f.y + 24 + seeded(i+101)*(f.h - 48)
+      });
+    }
+  }
+  return nodes;
+}
+
+function makeSplitInit(layoutName, N, messyPath) {
+  return function(W, H) {
+    const pad = 16;
+    const labelH = 18;
+    const halfW = (W - pad*3) / 2;
+    const innerH = H - pad*2 - labelH;
+    const left  = { x: pad,           y: pad + labelH, w: halfW, h: innerH };
+    const right = { x: pad*2 + halfW, y: pad + labelH, w: halfW, h: innerH };
+
+    const messyNodes = layoutMessy(layoutName, left, N);
+    const messyEdges = [];
+    for (let k = 0; k < Math.floor(N*1.6); k++) {
+      const a = Math.floor(seeded(k+201+N)*N);
+      const b = Math.floor(seeded(k+301+N)*N);
+      if (a !== b) messyEdges.push([a, b]);
+    }
+
+    const C = 4;
+    const cleanNodes = [];
+    for (let i = 0; i < C; i++) {
+      cleanNodes.push({
+        x: right.x + 32 + (right.w - 64) * (i / (C-1)),
+        y: right.y + right.h/2
+      });
+    }
+    const cleanPath = [0, 1, 2, 3];
+    return { left, right, messyNodes, messyEdges, messyPath, cleanNodes, cleanPath };
+  };
+}
+
+/* ============ Single-flow: mess morphs into order in one motion ============ */
+function init_journeyMorph(W, H) {
+  const pad = 24, labelH = 20;
+  const frame = { x: pad, y: pad + labelH, w: W - pad*2, h: H - pad*2 - labelH };
+
+  const N = 8;
+  const messyNodes = [];
+  for (let i = 0; i < N; i++) {
+    messyNodes.push({
+      x: frame.x + 30 + seeded(i*3.1+1)*(frame.w - 60),
+      y: frame.y + 28 + seeded(i*2.7+11)*(frame.h - 56)
+    });
+  }
+  const cleanNodes = [];
+  for (let i = 0; i < N; i++) {
+    cleanNodes.push({
+      x: frame.x + 40 + (frame.w - 80) * (i / (N-1)),
+      y: frame.y + frame.h/2
+    });
+  }
+  const messyEdges = [];
+  for (let k = 0; k < Math.floor(N*1.8); k++) {
+    const a = Math.floor(seeded(k+501)*N);
+    const b = Math.floor(seeded(k+601)*N);
+    if (a !== b) messyEdges.push([a, b]);
+  }
+  const path = [];
+  for (let i = 0; i < N; i++) path.push(i);
+  return { frame, messyNodes, cleanNodes, messyEdges, path };
+}
+
+function draw_journeyMorph(ctx, elapsed, W, H, s) {
+  drawFrame(ctx, s.frame, "Mess → order — one continuous motion");
+
+  const cycle = 9000;
+  const t = (elapsed % cycle) / cycle;
+
+  // order value: hold messy briefly, morph, hold clean briefly
+  let order;
+  if (t < 0.12)      order = 0;
+  else if (t < 0.72) order = easeInOut((t - 0.12) / 0.6);
+  else               order = 1;
+
+  // Current positions of all nodes
+  const nodes = s.messyNodes.map((m, i) => ({
+    x: m.x + (s.cleanNodes[i].x - m.x) * order,
+    y: m.y + (s.cleanNodes[i].y - m.y) * order
+  }));
+
+  // Cluttered background edges fade out with order
+  if (order < 0.98) {
+    ctx.globalAlpha = 1 - order;
+    ctx.strokeStyle = "rgba(180,180,180,0.55)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (const [a, b] of s.messyEdges) {
+      ctx.moveTo(nodes[a].x, nodes[a].y);
+      ctx.lineTo(nodes[b].x, nodes[b].y);
+    }
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  // Clean path background fades in
+  if (order > 0.02) {
+    ctx.globalAlpha = order;
+    ctx.strokeStyle = "#e5e3dc";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(nodes[s.path[0]].x, nodes[s.path[0]].y);
+    for (let i = 1; i < s.path.length; i++) {
+      ctx.lineTo(nodes[s.path[i]].x, nodes[s.path[i]].y);
+    }
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  // Node dots — color lerps gray → black with order
+  const nc = Math.round(187 - (187-26)*order);
+  ctx.fillStyle = `rgb(${nc},${nc},${nc - Math.round(2*order)})`;
+  for (const n of nodes) {
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 4 + order*0.8, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // User dot hops through the whole path during the cycle
+  const userT = Math.min(1, t / 0.95);
+  const pos = hopPos(nodes, s.path, userT, 18);
+
+  const frustrated = order < 0.55;
+
+  // Trail
+  ctx.strokeStyle = frustrated ? "rgba(200,69,27,0.85)" : "rgba(26,26,24,0.85)";
+  ctx.lineWidth = 2.4;
+  ctx.lineCap = "round";
+  ctx.beginPath();
+  ctx.moveTo(nodes[s.path[0]].x, nodes[s.path[0]].y);
+  for (let i = 1; i <= pos.seg; i++) {
+    ctx.lineTo(nodes[s.path[i]].x, nodes[s.path[i]].y);
+  }
+  ctx.stroke();
+
+  // Halo
+  if (frustrated) {
+    ctx.fillStyle = "rgba(200,69,27,0.2)";
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, 12, 0, Math.PI*2);
+    ctx.fill();
+  } else {
+    ctx.fillStyle = "rgba(26,26,24,0.12)";
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, 11, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  const r  = 6 + pos.landPulse * 2;
+  const rY = 6 - pos.landPulse * 1.4;
+  ctx.fillStyle = frustrated ? "#C8451B" : "#1A1A18";
+  ctx.beginPath();
+  ctx.ellipse(pos.x, pos.y, r, rY, 0, 0, Math.PI*2);
+  ctx.fill();
+}
+
+const journeyVariants = [
+  { name: "Side-by-side — scattered", init: init_journeySplit, draw: draw_journeySplit },
+  { name: "Storyboard — plays before, then after", init: init_journeyStory, draw: draw_journeyStory },
+  { name: "Side-by-side — 3 clusters",  init: makeSplitInit('cluster', 9,  [0,4,1,7,2,5,8,3,6,2,0]),      draw: draw_journeySplit },
+  { name: "Side-by-side — ring layout (FINAL) ★", init: init_journeyRingFinal, draw: draw_journeyRingFinal },
+  { name: "Side-by-side — zigzag",      init: makeSplitInit('zigzag',  9,  [0,3,1,4,2,5,7,4,6,8,5]),      draw: draw_journeySplit },
+  { name: "Side-by-side — dense chaos", init: makeSplitInit('dense',   12, [0,5,2,8,3,10,6,1,9,4,11,7,3]),draw: draw_journeySplit },
+  { name: "Single flow — mess → order (one motion)", init: init_journeyMorph, draw: draw_journeyMorph },
+];
+const gridEl4 = document.getElementById("grid4");
+journeyVariants.forEach((v, i) => {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = '<canvas></canvas><div class="label"><span class="num">' + (i+25) + '</span>' + v.name + '</div>';
+  gridEl4.appendChild(card);
+  const cv = card.querySelector("canvas");
+  runAnimRaw(cv, v.init, v.draw);
+  // Variant #28 → whole canvas is a mailto link.
+  if (v.init === init_journeyRingFinal) {
+    cv.style.cursor = "pointer";
+    cv.title = "hey@crucial.design";
+    cv.addEventListener("click", () => {
+      window.location.href = "mailto:hey@crucial.design";
+    });
+  }
+});
+
+</script>
+</body>
+</html>
