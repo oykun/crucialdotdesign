@@ -562,7 +562,7 @@ if (contactSection) navObserver.observe(contactSection);
     return x - Math.floor(x);
   }
 
-  var M = 5;           // messy dots
+  var M = 3;           // messy dots
   var messy = [];
   var target = { x: 0, y: 0 };
   var loopSeed = 0;
@@ -608,8 +608,9 @@ if (contactSection) navObserver.observe(contactSection);
   }
   buildPath();
 
-  var antMs = 90, jumpMs = 320, holdMs = 180;
-  var endHoldMs = 700;
+  var antMs = 110, jumpMs = 500, holdMs = 260;
+  var endHoldMs = 1200;
+  var fadeDur = 300; // fade out before reshuffle, fade in after
 
   function getNode(i) {
     return i < M ? messy[i] : target;
@@ -635,15 +636,15 @@ if (contactSection) navObserver.observe(contactSection);
     // Messy nodes
     for (var i = 0; i < M; i++) {
       var mn = messy[i];
-      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.fillStyle = 'rgba(0,0,0,0.5)';
       ctx.beginPath();
-      ctx.arc(mn.x, mn.y, 1.4, 0, Math.PI * 2);
+      ctx.arc(mn.x, mn.y, 2, 0, Math.PI * 2);
       ctx.fill();
     }
     // Target
-    ctx.fillStyle = 'rgba(255,255,255,0.55)';
+    ctx.fillStyle = 'rgba(0,0,0,0.7)';
     ctx.beginPath();
-    ctx.arc(target.x, target.y, 1.8, 0, Math.PI * 2);
+    ctx.arc(target.x, target.y, 2.5, 0, Math.PI * 2);
     ctx.fill();
   }
 
@@ -669,18 +670,27 @@ if (contactSection) navObserver.observe(contactSection);
     }
     lastT = t;
 
+    // Global fade: fade out near end, fade in at start
+    var globalAlpha = 1;
+    if (t > loopDur - fadeDur) {
+      globalAlpha = Math.max(0, (loopDur - t) / fadeDur);
+    } else if (t < fadeDur) {
+      globalAlpha = t / fadeDur;
+    }
+    ctx.globalAlpha = globalAlpha;
+
     // ---- Draw messy nodes ----
     for (var i = 0; i < M; i++) {
       var mn = messy[i];
-      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.fillStyle = 'rgba(0,0,0,0.5)';
       ctx.beginPath();
-      ctx.arc(mn.x, mn.y, 1.4, 0, Math.PI * 2);
+      ctx.arc(mn.x, mn.y, 2, 0, Math.PI * 2);
       ctx.fill();
     }
     // Target dot
-    ctx.fillStyle = 'rgba(255,255,255,0.55)';
+    ctx.fillStyle = 'rgba(0,0,0,0.7)';
     ctx.beginPath();
-    ctx.arc(target.x, target.y, 1.8, 0, Math.PI * 2);
+    ctx.arc(target.x, target.y, 2.5, 0, Math.PI * 2);
     ctx.fill();
 
     // ---- Active dot ----
@@ -716,8 +726,8 @@ if (contactSection) navObserver.observe(contactSection);
 
     // If finished, park on target with a gentle green glow
     var onTarget = finished || (seg === segs - 1 && inSeg >= antMs + jumpMs);
-    var color = onTarget ? '#6bd17a' : '#ffffff';
-    var haloColor = onTarget ? 'rgba(107,209,122,0.35)' : 'rgba(255,255,255,0.25)';
+    var color = onTarget ? '#3fa24a' : '#1A1A18';
+    var haloColor = onTarget ? 'rgba(63,162,74,0.25)' : 'rgba(0,0,0,0.12)';
 
     if (finished) {
       x = target.x; y = target.y; sx = 1; sy = 1;
@@ -732,10 +742,11 @@ if (contactSection) navObserver.observe(contactSection);
     ctx.scale(sx, sy);
     ctx.fillStyle = color;
     ctx.beginPath();
-    ctx.arc(0, 0, 2.4, 0, Math.PI * 2);
+    ctx.arc(0, 0, 2.5, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
 
+    ctx.globalAlpha = 1;
     requestAnimationFrame(frame);
   }
 
