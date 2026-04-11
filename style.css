@@ -293,7 +293,7 @@ a {
   width: 100%;
   max-width: 920px;
   height: 280px;
-  margin: 0 0 40px 0;
+  margin: 0 0 100px 0;
 }
 
 .hero-headline {
@@ -397,6 +397,77 @@ a {
 }
 
 /* ========================================
+   Metrics
+   ======================================== */
+.metrics {
+  padding: 80px 0;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.metric {
+  padding: 0 36px;
+  border-left: 1px solid #e0dfdd;
+}
+
+.metric:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.metric:last-child {
+  padding-right: 0;
+}
+
+.metric-number {
+  font-size: 2.75rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 8px;
+  color: #1A1A18;
+}
+
+.metric-label {
+  font-size: 14px;
+  color: #888;
+  line-height: 1.45;
+}
+
+@media (max-width: 768px) {
+  .metrics {
+    padding: 60px 0;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .metric {
+    border-left: none;
+    padding: 32px 0;
+    border-bottom: 1px solid #e0dfdd;
+  }
+
+  .metric:first-child {
+    padding-top: 0;
+  }
+
+  .metric:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .metric-number {
+    font-size: 2.25rem;
+  }
+}
+
+/* ========================================
    Selected Work
    ======================================== */
 .work {
@@ -462,6 +533,41 @@ a {
 .others-intro strong {
   color: #1A1A18;
   font-weight: 700;
+}
+
+/* ========================================
+   Services Ticker
+   ======================================== */
+.ticker {
+  padding: 20px 0;
+  overflow: hidden;
+}
+
+.ticker-slot {
+  font-size: 13px;
+  color: #999;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  min-height: 1.4em;
+}
+
+.ticker-ch {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.ticker-ch-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .ticker-slot {
+    font-size: 11px;
+    white-space: normal;
+  }
 }
 
 /* ========================================

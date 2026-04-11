@@ -48,6 +48,13 @@
 </head>
 <body>
 
+  <!-- ============ Services Ticker ============ -->
+  <div class="ticker">
+    <div class="container-narrow">
+      <div class="ticker-slot" data-ticker></div>
+    </div>
+  </div>
+
   <!-- ============ Navigation ============ -->
   <nav class="nav" id="nav">
     <div class="nav-pod" id="nav-pod" role="button" tabindex="0" aria-label="Open menu" aria-expanded="false">
@@ -338,6 +345,63 @@
   </footer>
 
   <script src="main.js?v=2"></script>
+  <script>
+    (function(){
+      var phrases = [
+        'Product Strategy      UX & UI Design      Design Systems      AI Products',
+        'Web Apps      Mobile Apps      Pitch Decks      Prototyping',
+        '500+ Projects      25 Years      Billions Generated'
+      ];
+
+      function randDelay(){
+        return Math.floor(Math.random() * 500) + 'ms';
+      }
+
+      function wrapLetters(text){
+        return text.split('').map(function(ch){
+          if(ch === ' ') return '<span class="ticker-ch" style="transition-delay:'+randDelay()+'">&nbsp;</span>';
+          return '<span class="ticker-ch" style="transition-delay:'+randDelay()+'">'+ch+'</span>';
+        }).join('');
+      }
+
+      function initTicker(slot, offset){
+        var idx = offset % phrases.length;
+        var busy = false;
+
+        slot.innerHTML = wrapLetters(phrases[idx]);
+        requestAnimationFrame(function(){
+          slot.querySelectorAll('.ticker-ch').forEach(function(el){ el.classList.add('ticker-ch-in'); });
+        });
+
+        function flipTo(text){
+          if(busy) return;
+          busy = true;
+          slot.querySelectorAll('.ticker-ch').forEach(function(el){
+            el.style.transitionDelay = randDelay();
+            el.classList.remove('ticker-ch-in');
+          });
+          setTimeout(function(){
+            slot.innerHTML = wrapLetters(text);
+            requestAnimationFrame(function(){
+              requestAnimationFrame(function(){
+                slot.querySelectorAll('.ticker-ch').forEach(function(el){ el.classList.add('ticker-ch-in'); });
+                busy = false;
+              });
+            });
+          }, 700);
+        }
+
+        setInterval(function(){
+          idx = (idx + 1) % phrases.length;
+          flipTo(phrases[idx]);
+        }, 5000);
+      }
+
+      document.querySelectorAll('[data-ticker]').forEach(function(slot, i){
+        initTicker(slot, i);
+      });
+    })();
+  </script>
 
 </body>
 </html>
