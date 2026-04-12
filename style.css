@@ -517,7 +517,7 @@ a {
 .project-card-inner {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 0;
 }
 
 .project-card-inner img {
