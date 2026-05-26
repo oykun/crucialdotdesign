@@ -48,10 +48,13 @@
 </head>
 <body>
 
-  <!-- ============ Services Ticker ============ -->
-  <div class="ticker">
+  <!-- ============ Top status line ============ -->
+  <div class="topline">
     <div class="container-narrow">
-      <div class="ticker-slot" data-ticker></div>
+      <div class="topline-bar">
+        <span class="topline-title">Design partner for AI founders</span>
+        <a class="topline-btn" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener"><span class="topline-dot" aria-hidden="true"></span>Booking June · 2 spots</a>
+      </div>
     </div>
   </div>
 
@@ -60,13 +63,13 @@
     <div class="nav-pod" id="nav-pod" role="button" tabindex="0" aria-label="Open menu" aria-expanded="false">
       <canvas class="nav-trigger-canvas" id="nav-trigger-canvas" aria-hidden="true"></canvas>
       <div class="nav-pod-body">
-        <p class="nav-pod-headline">Got an AI that<br>deserves great design?</p>
+        <p class="nav-pod-headline">Your AI works.<br>The experience doesn't.</p>
         <a class="nav-panel-booking" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">
           <div class="nav-panel-booking-logo">
             <img src="images/avatar.jpg" alt="">
           </div>
           <div class="nav-panel-booking-text">
-            <p class="nav-panel-booking-title">Intro call</p>
+            <p class="nav-panel-booking-title">Let's sort it</p>
             <p class="nav-panel-booking-sub">15 min</p>
           </div>
         </a>
@@ -77,15 +80,110 @@
 
   <!-- ============ Hero ============ -->
   <section class="hero">
+    <div class="container-wide hero-image fade-in">
+      <img src="images/hero-showcase.gif" alt="Product design showcase">
+    </div>
     <div class="container-narrow">
-      <canvas class="hero-anim" aria-hidden="true"></canvas>
       <h1 class="hero-headline fade-in">Your AI is impressive.<br>But most of your users never get to see it.<br>They get lost before they reach the value.</h1>
       <p class="hero-sub fade-in">They land and start guessing.<br>One path. Then another. Then another.<br>Each one dead-ends somewhere confusing.<br>Most give up before they reach the value.<br><br>The few who push through are your retention number.<br>The rest churn silently.<br><br>This is where I come in with Crucial.Design.<br>I find the straight line from confusion to clarity.<br>I don't start with pixels. I start with the thinking. Then I design.</p>
       <a href="https://x.com/oykun" target="_blank" rel="noopener" class="hero-avatar fade-in"><img src="images/avatar.jpg" alt="Oykun"></a>
       <p class="hero-byline fade-in"><a href="https://x.com/oykun" target="_blank" rel="noopener">Oykun</a>. Design partner for AI founders, 25+ years.</p>
     </div>
-    <div class="container-wide hero-image fade-in">
-      <img src="images/hero-showcase.gif" alt="Product design showcase">
+  </section>
+
+  <!-- ============ Selected Work ============ -->
+  <section class="work" id="work">
+    <!-- Arcade -->
+    <div class="project fade-in">
+      <div class="project-info">
+        <p><strong>Arcade.dev</strong> &nbsp; <strong>The only MCP runtime for secure, reliable AI agent deployments.</strong> &nbsp; $12M seed-funded. Built by former Okta and AI infrastructure engineers to solve secure authentication, the missing layer that lets AI agents take action.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-card-inner">
+          <img src="images/arcade001.jpg" alt="Arcade product interface" loading="lazy">
+          <img src="images/arcade002.jpg" alt="Arcade dashboard" loading="lazy">
+          <img src="images/arcade003.jpg" alt="Arcade deployment view" loading="lazy">
+          <img src="images/arcade004.jpg" alt="Arcade agent management" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- MultiOn -->
+    <div class="project fade-in">
+      <div class="project-info">
+        <p><strong>MultiOn.ai</strong> &nbsp; <strong>AI agents that act on your behalf.</strong> &nbsp; Leading AI Agent featured in Forbes, VentureBeat and more. Recently secured $20 million funding at a $100 million valuation.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-card-inner">
+          <img src="images/multion-1.jpg" alt="MultiOn product interface" loading="lazy">
+          <img src="images/multion-2.jpg" alt="MultiOn dashboard" loading="lazy">
+          <img src="images/multion-3.jpg" alt="MultiOn agent interaction" loading="lazy">
+          <img src="images/multion-4.jpg" alt="MultiOn settings and account" loading="lazy">
+          <img src="images/multion-5.jpg" alt="MultiOn NYSE and press" loading="lazy">
+          <img src="images/multion-6.jpg" alt="MultiOn TED AI and awards" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- cubic.dev -->
+    <div class="project fade-in">
+      <div class="project-info">
+        <p><strong>cubic.dev</strong> &nbsp; <strong>Code Review For The AI Era.</strong> &nbsp; Backed by YCombinator. cubic helps modern software teams ship higher-quality code, 3x faster.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-card-inner">
+          <img src="images/cubic-1.jpg" alt="cubic.dev code review interface" loading="lazy">
+          <img src="images/cubic-2.jpg" alt="cubic.dev pull request analysis" loading="lazy">
+          <img src="images/cubic-3.jpg" alt="cubic.dev team collaboration" loading="lazy">
+          <img src="images/cubic-4.jpg" alt="cubic.dev workflow view" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- Echo -->
+    <div class="project fade-in">
+      <div class="project-info">
+        <p><strong>Echo</strong> &nbsp; <strong>NHS prescriptions without the hassle.</strong> &nbsp; Featured at the Apple App Store, BBC, Wired, The Times, TechCrunch and much more. Acquired by Lloyds Pharmacy.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-card-inner">
+          <img src="images/echo-1.jpg" alt="Echo prescription app interface" loading="lazy">
+          <img src="images/echo-2.jpg" alt="Echo press coverage" loading="lazy">
+          <img src="images/echo-3.jpg" alt="Echo reviews and App Store" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- Cooin -->
+    <div class="project fade-in">
+      <div class="project-info">
+        <p><strong>Cooin App.</strong> &nbsp; <strong>Buy, Sell, Trade Crypto.</strong> &nbsp; Collaboration with Adobe to design a Crypto trading platform for web and mobile.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-card-inner">
+          <img src="images/cooin-1.jpg" alt="Cooin trading interface" loading="lazy">
+          <img src="images/cooin-2.jpg" alt="Cooin portfolio dashboard" loading="lazy">
+          <img src="images/cooin-3.jpg" alt="Cooin mobile app" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- Others -->
+    <div class="project fade-in">
+      <div class="project-info">
+        <p class="others-intro"><strong>Want to see even more work?</strong> &nbsp; Sure thing, scroll down…</p>
+      </div>
+      <div class="project-card">
+        <div class="project-card-inner">
+          <img src="images/work-extra-1.jpg" alt="Additional work sample" loading="lazy">
+          <img src="images/work-extra-2.jpg" alt="Additional work sample" loading="lazy">
+          <img src="images/work-extra-3.jpg" alt="Additional work sample" loading="lazy">
+          <img src="images/work-extra-4.jpg" alt="Additional work sample" loading="lazy">
+          <img src="images/work-extra-5.jpg" alt="Additional work sample" loading="lazy">
+          <img src="images/work-extra-6.jpg" alt="Additional work sample" loading="lazy">
+          <img src="images/work-extra-7.jpg" alt="Additional work sample" loading="lazy">
+        </div>
+      </div>
     </div>
   </section>
 
@@ -190,154 +288,6 @@
     </div>
   </section>
 
-  <!-- ============ Selected Work ============ -->
-  <section class="work" id="work">
-    <!-- Arcade -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>Arcade.dev</strong> &nbsp; <strong>The only MCP runtime for secure, reliable AI agent deployments.</strong> &nbsp; $12M seed-funded. Built by former Okta and AI infrastructure engineers to solve secure authentication, the missing layer that lets AI agents take action.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/arcade001.jpg" alt="Arcade product interface" loading="lazy">
-          <img src="images/arcade002.jpg" alt="Arcade dashboard" loading="lazy">
-          <img src="images/arcade003.jpg" alt="Arcade deployment view" loading="lazy">
-          <img src="images/arcade004.jpg" alt="Arcade agent management" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- MultiOn -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>MultiOn.ai</strong> &nbsp; <strong>AI agents that act on your behalf.</strong> &nbsp; Leading AI Agent featured in Forbes, VentureBeat and more. Recently secured $20 million funding at a $100 million valuation.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/multion-1.jpg" alt="MultiOn product interface" loading="lazy">
-          <img src="images/multion-2.jpg" alt="MultiOn dashboard" loading="lazy">
-          <img src="images/multion-3.jpg" alt="MultiOn agent interaction" loading="lazy">
-          <img src="images/multion-4.jpg" alt="MultiOn settings and account" loading="lazy">
-          <img src="images/multion-5.jpg" alt="MultiOn NYSE and press" loading="lazy">
-          <img src="images/multion-6.jpg" alt="MultiOn TED AI and awards" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- cubic.dev -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>cubic.dev</strong> &nbsp; <strong>Code Review For The AI Era.</strong> &nbsp; Backed by YCombinator. cubic helps modern software teams ship higher-quality code, 3x faster.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/cubic-1.jpg" alt="cubic.dev code review interface" loading="lazy">
-          <img src="images/cubic-2.jpg" alt="cubic.dev pull request analysis" loading="lazy">
-          <img src="images/cubic-3.jpg" alt="cubic.dev team collaboration" loading="lazy">
-          <img src="images/cubic-4.jpg" alt="cubic.dev workflow view" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- Echo -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>Echo</strong> &nbsp; <strong>NHS prescriptions without the hassle.</strong> &nbsp; Featured at the Apple App Store, BBC, Wired, The Times, TechCrunch and much more. Acquired by Lloyds Pharmacy.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/echo-1.jpg" alt="Echo prescription app interface" loading="lazy">
-          <img src="images/echo-2.jpg" alt="Echo press coverage" loading="lazy">
-          <img src="images/echo-3.jpg" alt="Echo reviews and App Store" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- Cooin -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>Cooin App.</strong> &nbsp; <strong>Buy, Sell, Trade Crypto.</strong> &nbsp; Collaboration with Adobe to design a Crypto trading platform for web and mobile.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/cooin-1.jpg" alt="Cooin trading interface" loading="lazy">
-          <img src="images/cooin-2.jpg" alt="Cooin portfolio dashboard" loading="lazy">
-          <img src="images/cooin-3.jpg" alt="Cooin mobile app" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- Others -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p class="others-intro"><strong>Want to see even more work?</strong> &nbsp; Sure thing, scroll down…</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/work-extra-1.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-2.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-3.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-4.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-5.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-6.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-7.jpg" alt="Additional work sample" loading="lazy">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ Final CTA ============ -->
-  <section class="final-cta" id="contact">
-    <div class="container-narrow">
-      <h2 class="flow-title fade-in">Your AI is good enough. The experience around it isn't.<br>Let's fix that.</h2>
-      <div class="flow-timeline">
-
-        <!-- Step: Say hello (optional) -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Say hello</h3>
-            <div class="flow-body">
-              <p>Want to chat before committing? Totally fine. <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="flow-link">Book a free call</a> or drop me a line at <a href="mailto:hey@crucial.design" class="flow-link">hey@crucial.design</a></p>
-              <p class="flow-optional">This step is optional. If you already know what you need, skip straight to picking a plan.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step: Pick a plan -->
-        <div class="flow-step fade-in" id="pricing-cta">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Pick a plan</h3>
-
-            <div class="flow-plan-box">
-              <div class="flow-plan-header">
-                <span class="flow-plan-name">Priority</span>
-                <span class="flow-plan-price">$6,847/mth</span>
-              </div>
-              <p class="flow-plan-desc">4 design sessions per week. Every other day including weekends.</p>
-              <a href="https://buy.stripe.com/28E14bd0G7Ix7DQ0S40gw0t" target="_blank" rel="noopener" class="btn-primary">Start with Priority</a>
-              <p class="flow-good-for">Good for teams moving fast who need a design partner keeping pace with them.</p>
-            </div>
-            <div class="flow-plan-box">
-              <div class="flow-plan-header">
-                <span class="flow-plan-name flow-plan-subtle">Standard</span>
-                <span class="flow-plan-price flow-plan-subtle">$4,987/mth</span>
-              </div>
-              <p class="flow-plan-desc">2 design sessions per week. Tuesdays and Fridays.</p>
-              <a href="https://buy.stripe.com/3cIfZ55yefaZf6i0S40gw0u" target="_blank" rel="noopener" class="flow-link">Start with Standard</a>
-              <p class="flow-good-for">Good for teams who want the same quality and thinking at a steadier rhythm.</p>
-            </div>
-            <p class="flow-note">Cancel or pause anytime. 75% back if not a fit after week one.</p>
-            <p class="flow-oneoff">Prefer a one-off project? <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="flow-link">Book a call</a> or <a href="mailto:hey@crucial.design" class="flow-link">email</a> to discuss.</p>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- ============ Footer ============ -->
   <footer class="footer">
     <div class="footer-inner">
@@ -360,63 +310,6 @@
   </footer>
 
   <script src="main.js?v=2"></script>
-  <script>
-    (function(){
-      var phrases = [
-        'Product Strategy      UX & UI Design      Design Systems      AI Products',
-        'Web Apps      Mobile Apps      Pitch Decks      Prototyping',
-        '500+ Projects      25 Years      Billions Generated'
-      ];
-
-      function randDelay(){
-        return Math.floor(Math.random() * 500) + 'ms';
-      }
-
-      function wrapLetters(text){
-        return text.split('').map(function(ch){
-          if(ch === ' ') return '<span class="ticker-ch" style="transition-delay:'+randDelay()+'">&nbsp;</span>';
-          return '<span class="ticker-ch" style="transition-delay:'+randDelay()+'">'+ch+'</span>';
-        }).join('');
-      }
-
-      function initTicker(slot, offset){
-        var idx = offset % phrases.length;
-        var busy = false;
-
-        slot.innerHTML = wrapLetters(phrases[idx]);
-        requestAnimationFrame(function(){
-          slot.querySelectorAll('.ticker-ch').forEach(function(el){ el.classList.add('ticker-ch-in'); });
-        });
-
-        function flipTo(text){
-          if(busy) return;
-          busy = true;
-          slot.querySelectorAll('.ticker-ch').forEach(function(el){
-            el.style.transitionDelay = randDelay();
-            el.classList.remove('ticker-ch-in');
-          });
-          setTimeout(function(){
-            slot.innerHTML = wrapLetters(text);
-            requestAnimationFrame(function(){
-              requestAnimationFrame(function(){
-                slot.querySelectorAll('.ticker-ch').forEach(function(el){ el.classList.add('ticker-ch-in'); });
-                busy = false;
-              });
-            });
-          }, 700);
-        }
-
-        setInterval(function(){
-          idx = (idx + 1) % phrases.length;
-          flipTo(phrases[idx]);
-        }, 5000);
-      }
-
-      document.querySelectorAll('[data-ticker]').forEach(function(slot, i){
-        initTicker(slot, i);
-      });
-    })();
-  </script>
 
 </body>
 </html>
