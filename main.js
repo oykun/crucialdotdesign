@@ -68,8 +68,11 @@ if (contactSection) navObserver.observe(contactSection);
   }
 
   pod.addEventListener('click', function(e) {
-    // Don't intercept clicks on links inside the open pod
-    if (e.target.closest && e.target.closest('a')) return;
+    var link = e.target.closest && e.target.closest('a');
+    if (link) {
+      if (link.getAttribute('href').startsWith('#')) closePod();
+      return;
+    }
     if (pod.classList.contains('is-open')) return;
     e.preventDefault();
     e.stopPropagation();
