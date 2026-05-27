@@ -42,7 +42,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400;1,9..40,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,300;1,14..32,400;1,14..32,500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -52,8 +52,7 @@
   <div class="topline">
     <div class="container-narrow">
       <div class="topline-bar">
-        <span class="topline-title">Design partner for AI founders</span>
-        <a class="topline-btn" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener"><span class="topline-dot" aria-hidden="true"></span>Booking June · 2 spots</a>
+        <a class="topline-btn" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener"><span class="topline-dot" aria-hidden="true"></span>2 spots open this June for AI founders who need <span class="topline-flip" data-topline-flip></span></a>
       </div>
     </div>
   </div>
@@ -311,6 +310,48 @@
   </footer>
 
   <script src="main.js?v=2"></script>
+  <script>
+    (function(){
+      var words = ['product design','branding','web design','UX strategy','design systems'];
+      var slot = document.querySelector('[data-topline-flip]');
+      if(!slot) return;
+      var idx = 0;
+      var busy = false;
+
+      function randDelay(){ return Math.floor(Math.random() * 400) + 'ms'; }
+
+      function wrapLetters(text){
+        return text.split('').map(function(ch){
+          if(ch === ' ') return '<span class="topline-ch" style="transition-delay:'+randDelay()+'">&nbsp;</span>';
+          return '<span class="topline-ch" style="transition-delay:'+randDelay()+'">'+ch+'</span>';
+        }).join('');
+      }
+
+      slot.innerHTML = wrapLetters(words[0]);
+      requestAnimationFrame(function(){
+        slot.querySelectorAll('.topline-ch').forEach(function(el){ el.classList.add('topline-ch-in'); });
+      });
+
+      setInterval(function(){
+        if(busy) return;
+        busy = true;
+        slot.querySelectorAll('.topline-ch').forEach(function(el){
+          el.style.transitionDelay = randDelay();
+          el.classList.remove('topline-ch-in');
+        });
+        setTimeout(function(){
+          idx = (idx + 1) % words.length;
+          slot.innerHTML = wrapLetters(words[idx]);
+          requestAnimationFrame(function(){
+            requestAnimationFrame(function(){
+              slot.querySelectorAll('.topline-ch').forEach(function(el){ el.classList.add('topline-ch-in'); });
+              busy = false;
+            });
+          });
+        }, 600);
+      }, 2500);
+    })();
+  </script>
 
 </body>
 </html>
