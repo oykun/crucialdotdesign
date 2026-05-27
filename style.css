@@ -218,7 +218,7 @@ a {
 }
 
 .nav-pod-headline {
-  font-size: 14px;
+  font-size: inherit;
   line-height: 1.4;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.7);
@@ -267,21 +267,21 @@ a {
 }
 
 .nav-panel-booking-title {
-  font-size: 13px;
+  font-size: inherit;
   font-weight: 600;
   color: #000;
   margin-bottom: 1px;
 }
 
 .nav-panel-booking-sub {
-  font-size: 11px;
+  font-size: inherit;
   color: rgba(0, 0, 0, 0.45);
 }
 
 /* Email link */
 .nav-panel-email {
   display: inline-block;
-  font-size: 13px;
+  font-size: inherit;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.55);
   padding: 2px 4px;
@@ -296,7 +296,7 @@ a {
 
 .nav-panel-link {
   display: inline-block;
-  font-size: 13px;
+  font-size: inherit;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.55);
   padding: 2px 4px;
@@ -459,16 +459,14 @@ a {
 }
 
 .metric-number {
-  font-size: 2.75rem;
   font-weight: 500;
-  letter-spacing: -0.03em;
   line-height: 1;
   margin-bottom: 8px;
   color: #1A1A18;
 }
 
 .metric-label {
-  font-size: 14px;
+  font-size: inherit;
   color: #888;
   line-height: 1.45;
 }
@@ -499,7 +497,7 @@ a {
   }
 
   .metric-number {
-    font-size: 2.25rem;
+    font-size: inherit;
   }
 }
 
@@ -587,7 +585,7 @@ a {
 }
 
 .topline-context {
-  font-size: 15px;
+  font-size: inherit;
   color: #000;
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -611,7 +609,7 @@ a {
   gap: 7px;
   background: #fff;
   color: #333;
-  font-size: 13px;
+  font-size: inherit;
   font-weight: 600;
   letter-spacing: 0.01em;
   padding: 12px 32px 12px 24px;
@@ -720,11 +718,7 @@ a {
 }
 
 @media (max-width: 768px) {
-  .topline-context {
-    font-size: 12px;
-  }
   .topline-btn {
-    font-size: 11px;
     padding: 8px 14px 8px 12px;
   }
 }
@@ -983,7 +977,8 @@ a {
 .footer-photo {
   display: block;
   width: 160px;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
   margin: 0 -12px;
   transform: rotate(var(--rot, 0deg)) translate(var(--x, 0), var(--y, 0));
   transition: transform 0.35s ease, z-index 0s, box-shadow 0.35s ease;
@@ -1004,6 +999,20 @@ a {
   height: 200px;
   object-fit: cover;
   display: block;
+}
+
+@media (max-width: 480px) {
+  .footer-photos {
+    padding: 20px 16px;
+    margin-bottom: 48px;
+  }
+  .footer-photo {
+    margin: 0 -8px;
+    border-radius: 6px;
+  }
+  .footer-photo img {
+    height: 140px;
+  }
 }
 
 .footer-inner {
@@ -1144,7 +1153,7 @@ a {
 }
 
 .chat-trigger-label {
-  font-size: 14px;
+  font-size: inherit;
   font-weight: 500;
   color: #1A1A18;
   white-space: nowrap;
@@ -1196,7 +1205,7 @@ a {
 }
 
 .chat-header-title {
-  font-size: 13px;
+  font-size: inherit;
   color: #999;
 }
 
@@ -1205,7 +1214,7 @@ a {
   border: none;
   cursor: pointer;
   color: #999;
-  font-size: 18px;
+  font-size: inherit;
   line-height: 1;
   padding: 0;
   transition: color 0.2s ease;
@@ -1230,7 +1239,7 @@ a {
   max-width: 85%;
   padding: 10px 14px;
   border-radius: 12px;
-  font-size: 14px;
+  font-size: inherit;
   line-height: 1.5;
   word-wrap: break-word;
 }
@@ -1289,7 +1298,7 @@ a {
   border: none;
   background: transparent;
   font-family: inherit;
-  font-size: 14px;
+  font-size: inherit;
   color: #1A1A18;
   outline: none;
   padding: 4px 0;
@@ -1320,7 +1329,7 @@ a {
 }
 
 .chat-error {
-  font-size: 13px;
+  font-size: inherit;
   color: #C8451B;
   padding: 8px 14px;
   align-self: flex-start;
@@ -1340,7 +1349,7 @@ a {
   border-radius: 100px;
   padding: 6px 14px;
   font-family: inherit;
-  font-size: 13px;
+  font-size: inherit;
   color: #555;
   cursor: pointer;
   transition: border-color 0.2s ease, color 0.2s ease;
