@@ -970,7 +970,40 @@ a {
    Footer
    ======================================== */
 .footer {
-  padding: 80px 0 100px;
+  padding: 80px 0 200px;
+}
+
+.footer-photos {
+  display: flex;
+  justify-content: center;
+  padding: 30px 24px;
+  margin-bottom: 80px;
+}
+
+.footer-photo {
+  display: block;
+  width: 160px;
+  flex-shrink: 0;
+  margin: 0 -12px;
+  transform: rotate(var(--rot, 0deg)) translate(var(--x, 0), var(--y, 0));
+  transition: transform 0.35s ease, z-index 0s, box-shadow 0.35s ease;
+  z-index: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.footer-photo:hover {
+  transform: rotate(0deg) translate(0, -8px) scale(1.08);
+  z-index: 10;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.footer-photo img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
 }
 
 .footer-inner {
