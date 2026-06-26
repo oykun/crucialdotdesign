@@ -527,54 +527,40 @@ if (contactSection) navObserver.observe(contactSection);
     return;
   }
 
-  // Slots, front (0) to back. Cards stay centred and travel along the z-axis:
-  // a fresh card rises in from the front, the stack recedes straight back into
-  // depth (smaller + fainter), and the oldest fades into the centre.
-  // d = translateZ in px (perspective lives on .hero-deck).
+  // Slots, front (0) to back. Pure 2D depth — each card recedes by scaling down
+  // and fading, newest at full size in front. No 3D, so Safari renders it cleanly.
   var SLOTS = [
-    { d:     0, y: 0, r: 0, o: 1,    z: 60 },
-    { d:  -220, y: 0, r: 0, o: 0.9,  z: 50 },
-    { d:  -460, y: 0, r: 0, o: 0.62, z: 40 },
-    { d:  -720, y: 0, r: 0, o: 0.38, z: 30 },
-    { d: -1000, y: 0, r: 0, o: 0.18, z: 20 }
+    { s: 1.00, o: 1,    z: 60 },
+    { s: 0.91, o: 0.72, z: 50 },
+    { s: 0.83, o: 0.46, z: 40 },
+    { s: 0.76, o: 0.26, z: 30 },
+    { s: 0.70, o: 0.12, z: 20 }
   ];
-  var GONE  = { d: -1320, y: 0, r: 0, o: 0, z: 10 };  // vanished into the depth
+  var GONE = { s: 0.64, o: 0, z: 10 };   // faded away
   var VISIBLE = SLOTS.length;
-  var SPARES = 4;        // ready cards parked off-stage so quick bursts never stall
-  var SETTLE_MS = 460;   // time for a faded card to recycle (>= CSS transition)
-
-  // Snappy, uneven rhythm: some cards land sooner, some later, but lively.
-  function nextDelay() {
-    return Math.random() < 0.45 ? rand(420, 760) : rand(900, 1500);
-  }
+  var SETTLE_MS = 480;                    // recycle delay (>= CSS transition)
 
   function rand(min, max) { return min + Math.random() * (max - min); }
 
-  // Each entrance is fresh: a different rise height, sideways nudge and forward
-  // depth, so no two appearances feel the same. Cards stay straight throughout.
-  function randomEnter() {
-    return {
-      d: rand(110, 240),     // forward in depth
-      x: rand(-45, 45),      // sideways nudge
-      y: rand(40, 90),       // how far below it starts (kept modest so it never clips)
-      r: 0,                  // no tilt — cards stay straight throughout
-      o: 0,
-      z: 70
-    };
+  // Snappy, uneven rhythm: some land sooner, some later.
+  function nextDelay() {
+    return Math.random() < 0.45 ? rand(560, 900) : rand(1100, 1700);
   }
-  // A small persistent position scatter each card keeps for its whole life, so
-  // the stack sits around the centre rather than perfectly concentric. No tilt
-  // here — cards rest perfectly straight.
+
+  // Entrance: starts a little below centre and slightly larger, fading in.
+  function randomEnter() {
+    return { y: rand(40, 90), s: 1.06, o: 0, z: 70 };
+  }
+  // A small persistent scatter each card keeps for its whole life, so the stack
+  // sits around the centre rather than perfectly concentric.
   function randomJitter() {
-    return { jx: rand(-50, 50), jy: rand(-42, 42) };
+    return { jx: rand(-46, 46), jy: rand(-20, 20) };
   }
 
   function transformFor(slot, jit) {
-    var x = (slot.x || 0) + (jit ? jit.jx : 0);
+    var x = jit ? jit.jx : 0;
     var y = (slot.y || 0) + (jit ? jit.jy : 0);
-    var r = (slot.r || 0);            // slots/rest are straight; only entrance set
-    return 'translate(calc(-50% + ' + x + 'px), calc(-50% + ' + y + 'px)) ' +
-           'translateZ(' + slot.d + 'px) rotate(' + r + 'deg)';
+    return 'translate(calc(-50% + ' + x + 'px), calc(-50% + ' + y + 'px)) scale(' + slot.s + ')';
   }
 
   function place(card, slot, animate) {
@@ -609,7 +595,6 @@ if (contactSection) navObserver.observe(contactSection);
   });
 
   var order = [];        // visible cards, front -> back, length VISIBLE
-  var readyQueue = [];   // spare cards parked at their entrance, ready to drop in
   var pointer = 0;       // next image index to deal
   var timer = null;
 
@@ -643,12 +628,11 @@ if (contactSection) navObserver.observe(contactSection);
     return src;
   }
 
-  // Park a card off-stage at a fresh, randomised entrance, ready to become front.
+  // Park a card off-stage at a fresh entrance, ready to become the next front.
   function arm(card) {
     card.jit = randomJitter();
     setImage(card, nextSrc());
     place(card, randomEnter(), false);
-    readyQueue.push(card);
   }
 
   // Build the visible stack (front -> back).
@@ -659,27 +643,23 @@ if (contactSection) navObserver.observe(contactSection);
     place(c, SLOTS[i], false);
     order.push(c);
   }
-  // Build the pool of parked spare cards.
-  for (var s = 0; s < SPARES; s++) {
-    arm(createCard());
-  }
+  // One parked spare, ready to drop in as the next front card.
+  var enterCard = createCard();
+  arm(enterCard);
 
   function tick() {
-    if (!readyQueue.length) return;     // nothing ready yet — just a longer pause
-    var nextCard = readyQueue.shift();
-    var leaving = order.pop();          // current back card fades out
-    order.unshift(nextCard);            // parked card becomes the new front
+    var leaving = order.pop();          // back card fades away
+    var fresh = enterCard;              // the parked spare becomes the new front
+    order.unshift(fresh);
 
-    // Fresh card rises (tilted, from below) into the front slot.
-    place(nextCard, SLOTS[0], true);
-    // Everyone else recedes one slot back into depth.
+    place(fresh, SLOTS[0], true);       // rises from below into the front slot
     for (var i = 1; i < order.length; i++) {
-      place(order[i], SLOTS[i], true);
+      place(order[i], SLOTS[i], true);  // everyone else recedes one slot
     }
-    // Oldest card drifts into the depth and fades away.
-    place(leaving, GONE, true);
+    place(leaving, GONE, true);         // oldest fades away
 
-    // Once it has faded, re-arm it as a fresh parked card.
+    // Recycle the faded card into the parked position with a fresh image.
+    enterCard = leaving;
     setTimeout(function() { arm(leaving); }, SETTLE_MS);
   }
 

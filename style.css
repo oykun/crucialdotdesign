@@ -327,17 +327,16 @@ a {
   border-radius: 12px;
 }
 
-/* Hero deck — stack of work cards receding into z-depth at centre.
+/* Hero deck — stack of work cards that recede (scale down) toward the centre.
    Full page width so cards entering / scattering off-centre are never clipped;
-   overflow is clipped only at the viewport edge to avoid horizontal scroll. */
+   overflow is clipped only at the viewport edge to avoid horizontal scroll.
+   Deliberately 2D only (no perspective / preserve-3d) for solid Safari support. */
 .hero-deck {
   position: relative;
   width: 100vw;
   margin-left: calc(50% - 50vw);
   height: clamp(380px, 56vw, 680px);
   overflow: hidden;
-  perspective: 1500px;
-  perspective-origin: center center;
 }
 
 .hero-deck-fallback {
@@ -359,7 +358,6 @@ a {
   height: clamp(240px, 36vw, 460px);
   width: auto;            /* derived from aspect-ratio set inline per image */
   transform-origin: center;
-  transform-style: preserve-3d;   /* let the inner layer drift in real z-depth */
   will-change: transform, opacity;
   transition: transform 0.42s cubic-bezier(0.2, 1, 0.3, 1),
               opacity 0.42s cubic-bezier(0.2, 1, 0.3, 1);
