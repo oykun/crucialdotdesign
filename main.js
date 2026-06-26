@@ -488,3 +488,232 @@ if (contactSection) navObserver.observe(contactSection);
   if (pricingEl) chatNavObserver.observe(pricingEl);
   if (contactEl) chatNavObserver.observe(contactEl);
 })();
+
+/* ========================================
+   Hero deck: shuffling stack of work cards
+   A continuous loop where the front card slides away, the rest
+   promote forward, and a fresh card eases in at the back —
+   the "intelligent canvas" stacked-card feel.
+   ======================================== */
+(function() {
+  var deck = document.getElementById('hero-deck');
+  if (!deck) return;
+
+  // Cards in the deck. Ordered to alternate landscape / portrait / square shapes.
+  var IMAGES = [
+    'images/motion/motion07.jpg',
+    'images/motion/motion02.jpg',
+    'images/motion/motion04.jpg',
+    'images/motion/motion10.jpg',
+    'images/motion/motion15.jpg',
+    'images/motion/motion12.jpg',
+    'images/motion/motion08.jpg',
+    'images/motion/motion03.jpg',
+    'images/motion/motion05.jpg',
+    'images/motion/motion11.jpg',
+    'images/motion/motion14.jpg',
+    'images/motion/motion06.jpg',
+    'images/motion/motion09.jpg',
+    'images/motion/motion13.jpg',
+    'images/motion/motion01.jpg'
+  ];
+
+  var heroImage = deck.closest('.hero-image');
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // No motion (or too few images): fall back to the static still.
+  if (reduceMotion || IMAGES.length < 2) {
+    if (heroImage) heroImage.classList.add('no-deck');
+    return;
+  }
+
+  // Slots, front (0) to back. Cards stay centred and travel along the z-axis:
+  // a fresh card rises in from the front, the stack recedes straight back into
+  // depth (smaller + fainter), and the oldest fades into the centre.
+  // d = translateZ in px (perspective lives on .hero-deck).
+  var SLOTS = [
+    { d:     0, y: 0, r: 0, o: 1,    z: 60 },
+    { d:  -220, y: 0, r: 0, o: 0.9,  z: 50 },
+    { d:  -460, y: 0, r: 0, o: 0.62, z: 40 },
+    { d:  -720, y: 0, r: 0, o: 0.38, z: 30 },
+    { d: -1000, y: 0, r: 0, o: 0.18, z: 20 }
+  ];
+  var GONE  = { d: -1320, y: 0, r: 0, o: 0, z: 10 };  // vanished into the depth
+  var VISIBLE = SLOTS.length;
+  var SPARES = 4;        // ready cards parked off-stage so quick bursts never stall
+  var SETTLE_MS = 460;   // time for a faded card to recycle (>= CSS transition)
+
+  // Snappy, uneven rhythm: some cards land sooner, some later, but lively.
+  function nextDelay() {
+    return Math.random() < 0.45 ? rand(420, 760) : rand(900, 1500);
+  }
+
+  function rand(min, max) { return min + Math.random() * (max - min); }
+
+  // Each entrance is fresh: a different rise height, sideways nudge and forward
+  // depth, so no two appearances feel the same. Cards stay straight throughout.
+  function randomEnter() {
+    return {
+      d: rand(110, 240),     // forward in depth
+      x: rand(-55, 55),      // sideways nudge
+      y: rand(65, 145),      // how far below it starts
+      r: 0,                  // no tilt — cards stay straight throughout
+      o: 0,
+      z: 70
+    };
+  }
+  // A small persistent position scatter each card keeps for its whole life, so
+  // the stack sits around the centre rather than perfectly concentric. No tilt
+  // here — cards rest perfectly straight.
+  function randomJitter() {
+    return { jx: rand(-50, 50), jy: rand(-42, 42) };
+  }
+
+  function transformFor(slot, jit) {
+    var x = (slot.x || 0) + (jit ? jit.jx : 0);
+    var y = (slot.y || 0) + (jit ? jit.jy : 0);
+    var r = (slot.r || 0);            // slots/rest are straight; only entrance set
+    return 'translate(calc(-50% + ' + x + 'px), calc(-50% + ' + y + 'px)) ' +
+           'translateZ(' + slot.d + 'px) rotate(' + r + 'deg)';
+  }
+
+  function place(card, slot, animate) {
+    if (!animate) card.classList.add('no-anim');
+    card.style.transform = transformFor(slot, card.jit);
+    card.style.opacity = slot.o;
+    card.style.zIndex = slot.z;
+    if (!animate) {
+      // Force reflow so the snap takes effect before re-enabling transitions.
+      void card.offsetWidth;
+      card.classList.remove('no-anim');
+    }
+  }
+
+  // Cache each image's natural aspect ratio so cards keep exact proportions.
+  var ratios = {};
+  function applyAspect(card, src) {
+    if (ratios[src]) { card.style.aspectRatio = ratios[src]; return; }
+    var probe = new Image();
+    probe.onload = function() {
+      ratios[src] = probe.naturalWidth + ' / ' + probe.naturalHeight;
+      if (card.dataset.src === src) card.style.aspectRatio = ratios[src];
+    };
+    probe.src = src;
+  }
+
+  // Preload (also warms the ratio cache).
+  IMAGES.forEach(function(src) {
+    var im = new Image();
+    im.onload = function() { ratios[src] = im.naturalWidth + ' / ' + im.naturalHeight; };
+    im.src = src;
+  });
+
+  var order = [];        // visible cards, front -> back, length VISIBLE
+  var readyQueue = [];   // spare cards parked at their entrance, ready to drop in
+  var pointer = 0;       // next image index to deal
+  var timer = null;
+
+  function setImage(card, src) {
+    card.dataset.src = src;
+    card.querySelector('img').src = src;
+    applyAspect(card, src);
+  }
+
+  function createCard() {
+    var card = document.createElement('div');
+    card.className = 'hero-deck-card';
+    var inner = document.createElement('div');
+    inner.className = 'hero-deck-inner';
+    var img = document.createElement('img');
+    img.alt = '';
+    inner.appendChild(img);
+    card.appendChild(inner);
+    deck.appendChild(card);
+    // Desynced, randomised vertical drift so no two cards move in lockstep —
+    // always running, so cards are never completely still.
+    inner.style.setProperty('--fdur', rand(5, 8).toFixed(2) + 's');
+    inner.style.setProperty('--fdelay', (-rand(0, 7)).toFixed(2) + 's');
+    inner.style.setProperty('--fy', ((Math.random() < 0.5 ? -1 : 1) * rand(18, 32)).toFixed(0) + 'px');
+    return card;
+  }
+
+  function nextSrc() {
+    var src = IMAGES[pointer % IMAGES.length];
+    pointer++;
+    return src;
+  }
+
+  // Park a card off-stage at a fresh, randomised entrance, ready to become front.
+  function arm(card) {
+    card.jit = randomJitter();
+    setImage(card, nextSrc());
+    place(card, randomEnter(), false);
+    readyQueue.push(card);
+  }
+
+  // Build the visible stack (front -> back).
+  for (var i = 0; i < VISIBLE; i++) {
+    var c = createCard();
+    c.jit = randomJitter();
+    setImage(c, nextSrc());
+    place(c, SLOTS[i], false);
+    order.push(c);
+  }
+  // Build the pool of parked spare cards.
+  for (var s = 0; s < SPARES; s++) {
+    arm(createCard());
+  }
+
+  function tick() {
+    if (!readyQueue.length) return;     // nothing ready yet — just a longer pause
+    var nextCard = readyQueue.shift();
+    var leaving = order.pop();          // current back card fades out
+    order.unshift(nextCard);            // parked card becomes the new front
+
+    // Fresh card rises (tilted, from below) into the front slot.
+    place(nextCard, SLOTS[0], true);
+    // Everyone else recedes one slot back into depth.
+    for (var i = 1; i < order.length; i++) {
+      place(order[i], SLOTS[i], true);
+    }
+    // Oldest card drifts into the depth and fades away.
+    place(leaving, GONE, true);
+
+    // Once it has faded, re-arm it as a fresh parked card.
+    setTimeout(function() { arm(leaving); }, SETTLE_MS);
+  }
+
+  var running = false;
+  function schedule() {
+    timer = setTimeout(function() {
+      if (!running) return;
+      tick();
+      schedule();
+    }, nextDelay());
+  }
+  function start() {
+    if (running) return;
+    running = true;
+    schedule();
+  }
+  function stop() {
+    running = false;
+    if (timer) { clearTimeout(timer); timer = null; }
+  }
+
+  // Pause while the tab is hidden.
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) stop(); else start();
+  });
+
+  // Pause when the hero scrolls out of view.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) start(); else stop();
+      });
+    }, { threshold: 0.05 }).observe(deck);
+  } else {
+    start();
+  }
+})();

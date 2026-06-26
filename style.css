@@ -327,6 +327,81 @@ a {
   border-radius: 12px;
 }
 
+/* Hero deck — stack of work cards receding into z-depth at centre */
+.hero-deck {
+  position: relative;
+  width: 100%;
+  height: clamp(360px, 54vw, 640px);
+  overflow: hidden;
+  perspective: 1500px;
+  perspective-origin: center center;
+}
+
+.hero-deck-fallback {
+  display: none;
+}
+
+/* Shown when JS is off or reduced motion is preferred */
+.hero-image.no-deck .hero-deck {
+  display: none;
+}
+.hero-image.no-deck .hero-deck-fallback {
+  display: block;
+}
+
+.hero-deck-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: clamp(240px, 36vw, 460px);
+  width: auto;            /* derived from aspect-ratio set inline per image */
+  transform-origin: center;
+  transform-style: preserve-3d;   /* let the inner layer drift in real z-depth */
+  will-change: transform, opacity;
+  transition: transform 0.42s cubic-bezier(0.2, 1, 0.3, 1),
+              opacity 0.42s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.hero-deck-card.no-anim {
+  transition: none;
+}
+
+/* Inner layer holds the image frame and a perpetual, subtle z-axis float so
+   the cards are never completely still. Kept separate from the card so the
+   ambient drift never fights the eased "deal" transitions on the card. */
+.hero-deck-inner {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f2f2f2;
+  transform-origin: center;
+  animation: deckFloat var(--fdur, 6s) linear var(--fdelay, 0s) infinite;
+  will-change: transform;
+}
+
+/* Perpetual drift along ONE straight (vertical) direction. Linear timing +
+   front-loaded keyframes: it moves quickly to the middle, then slows down
+   drastically and keeps creeping the same way — never still, never wandering. */
+@keyframes deckFloat {
+  0%   { transform: translateY(0); }
+  42%  { transform: translateY(calc(var(--fy, -24px) * 0.9)); }   /* quick to ~middle */
+  60%  { transform: translateY(var(--fy, -24px)); }               /* slow crawl onward */
+  100% { transform: translateY(0); }                              /* slow return */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-deck-inner { animation: none; }
+}
+
+.hero-deck-card img {
+  width: 100%;
+  height: 100%;
+  max-width: none;        /* override global img max-width that squeezes the card */
+  border-radius: 0;       /* override .hero-image img rounding — show images as-is */
+  object-fit: cover;      /* card matches the image ratio, so no crop or distortion */
+  display: block;
+}
+
 .hero-label {
   color: #000;
   margin-bottom: 20px;
@@ -603,96 +678,23 @@ a {
 }
 
 .topline-btn {
-  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  background: #fff;
-  color: #333;
+  background: #000;
+  color: #fff;
   font-size: inherit;
   font-weight: 600;
   letter-spacing: 0.01em;
-  padding: 12px 32px 12px 24px;
+  padding: 12px 24px;
   border: none;
   border-radius: 100px;
   text-decoration: none;
-  transition: box-shadow 0.3s ease;
-}
-
-.topline-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background:
-    conic-gradient(
-      from var(--border-angle, 0deg),
-      transparent 55%,
-      rgba(34, 197, 94, 0.6) 78%,
-      rgba(59, 130, 246, 0.7) 86%,
-      transparent 100%
-    ),
-    conic-gradient(
-      from var(--border-angle-2, 180deg),
-      transparent 65%,
-      rgba(147, 51, 234, 0.6) 82%,
-      rgba(59, 130, 246, 0.5) 90%,
-      transparent 100%
-    );
-  background-blend-mode: screen;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: border-spin 3.5s linear infinite, border-spin-2 5.7s linear infinite;
-  transition: padding 0.4s ease, inset 0.4s ease, filter 0.4s ease;
+  white-space: nowrap;
+  transition: background 0.2s ease;
 }
 
 .topline-btn:hover {
-  box-shadow: 0 0 12px rgba(34, 197, 94, 0.08), 0 0 24px rgba(59, 130, 246, 0.05);
-}
-
-.topline-btn:hover::before {
-  padding: 1.5px;
-  background:
-    conic-gradient(
-      from var(--border-angle, 0deg),
-      rgba(34, 197, 94, 0.8) 0%,
-      rgba(59, 130, 246, 0.9) 25%,
-      transparent 50%,
-      rgba(147, 51, 234, 0.8) 75%,
-      rgba(34, 197, 94, 0.8) 100%
-    ),
-    conic-gradient(
-      from var(--border-angle-2, 180deg),
-      rgba(147, 51, 234, 0.7) 0%,
-      transparent 30%,
-      rgba(59, 130, 246, 0.8) 60%,
-      transparent 100%
-    );
-  background-blend-mode: screen;
-  animation: border-spin 1.8s linear infinite, border-spin-2 2.9s linear infinite;
-}
-
-@keyframes border-spin {
-  to { --border-angle: 360deg; }
-}
-
-@keyframes border-spin-2 {
-  to { --border-angle-2: 540deg; }
-}
-
-@property --border-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@property --border-angle-2 {
-  syntax: '<angle>';
-  initial-value: 180deg;
-  inherits: false;
+  background: #1a1a1a;
 }
 
 .topline-flip {
