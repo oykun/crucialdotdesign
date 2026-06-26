@@ -555,8 +555,8 @@ if (contactSection) navObserver.observe(contactSection);
   function randomEnter() {
     return {
       d: rand(110, 240),     // forward in depth
-      x: rand(-55, 55),      // sideways nudge
-      y: rand(65, 145),      // how far below it starts
+      x: rand(-45, 45),      // sideways nudge
+      y: rand(40, 90),       // how far below it starts (kept modest so it never clips)
       r: 0,                  // no tilt — cards stay straight throughout
       o: 0,
       z: 70
@@ -701,19 +701,21 @@ if (contactSection) navObserver.observe(contactSection);
     if (timer) { clearTimeout(timer); timer = null; }
   }
 
+  // Start right away — the observers below only pause/resume, so the deck can
+  // never get stuck waiting on an observer callback that fires out-of-view.
+  start();
+
   // Pause while the tab is hidden.
   document.addEventListener('visibilitychange', function() {
     if (document.hidden) stop(); else start();
   });
 
-  // Pause when the hero scrolls out of view.
+  // Pause when the hero scrolls fully out of view, resume when it returns.
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
         if (e.isIntersecting) start(); else stop();
       });
-    }, { threshold: 0.05 }).observe(deck);
-  } else {
-    start();
+    }, { threshold: 0 }).observe(deck);
   }
 })();

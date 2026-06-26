@@ -327,11 +327,14 @@ a {
   border-radius: 12px;
 }
 
-/* Hero deck — stack of work cards receding into z-depth at centre */
+/* Hero deck — stack of work cards receding into z-depth at centre.
+   Full page width so cards entering / scattering off-centre are never clipped;
+   overflow is clipped only at the viewport edge to avoid horizontal scroll. */
 .hero-deck {
   position: relative;
-  width: 100%;
-  height: clamp(360px, 54vw, 640px);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  height: clamp(380px, 56vw, 680px);
   overflow: hidden;
   perspective: 1500px;
   perspective-origin: center center;
