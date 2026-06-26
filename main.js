@@ -527,16 +527,16 @@ if (contactSection) navObserver.observe(contactSection);
     return;
   }
 
-  // Slots, front (0) to back. Pure 2D depth — each card recedes by scaling down
-  // and fading, newest at full size in front. No 3D, so Safari renders it cleanly.
+  // Slots, front (0) to back. Pure 2D depth with NO opacity fade — every card is
+  // fully opaque; depth reads from scale alone. Newest at full size in front.
   var SLOTS = [
-    { s: 1.00, o: 1,    z: 60 },
-    { s: 0.91, o: 0.72, z: 50 },
-    { s: 0.83, o: 0.46, z: 40 },
-    { s: 0.76, o: 0.26, z: 30 },
-    { s: 0.70, o: 0.12, z: 20 }
+    { s: 1.00, o: 1, z: 60 },
+    { s: 0.87, o: 1, z: 50 },
+    { s: 0.76, o: 1, z: 40 },
+    { s: 0.66, o: 1, z: 30 },
+    { s: 0.58, o: 1, z: 20 }
   ];
-  var GONE = { s: 0.64, o: 0, z: 10 };   // faded away
+  var GONE = { s: 0.12, o: 1, z: 10 };   // shrinks away behind the stack (no fade)
   var VISIBLE = SLOTS.length;
   var SETTLE_MS = 480;                    // recycle delay (>= CSS transition)
 
@@ -547,9 +547,10 @@ if (contactSection) navObserver.observe(contactSection);
     return Math.random() < 0.45 ? rand(560, 900) : rand(1100, 1700);
   }
 
-  // Entrance: starts a little below centre and slightly larger, fading in.
+  // Entrance: starts just below the visible area and slides up into front —
+  // full opacity, no fade.
   function randomEnter() {
-    return { y: rand(40, 90), s: 1.06, o: 0, z: 70 };
+    return { y: deck.clientHeight / 2 + 240, s: 1.0, o: 1, z: 70 };
   }
   // A small persistent scatter each card keeps for its whole life, so the stack
   // sits around the centre rather than perfectly concentric.

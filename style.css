@@ -668,6 +668,11 @@ a {
   margin: 0;
 }
 
+.topline-lead {
+  display: block;
+  margin-bottom: 4px;
+}
+
 .topline-dot {
   width: 7px;
   height: 7px;
