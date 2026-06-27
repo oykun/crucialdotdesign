@@ -673,6 +673,30 @@ a {
   margin-bottom: 4px;
 }
 
+.topline-meta {
+  display: block;
+  margin-top: 6px;
+}
+
+.topline-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.topline-email {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.55);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 1px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.topline-email:hover {
+  color: #000;
+  border-bottom-color: rgba(0, 0, 0, 0.4);
+}
+
 .topline-dot {
   width: 7px;
   height: 7px;
