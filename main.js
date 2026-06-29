@@ -18,79 +18,37 @@ document.querySelectorAll('.fade-in').forEach(function(el) {
 });
 
 /* ========================================
-   Floating actions: circular icon buttons that fly out of the in-page
-   topline buttons once the topline scrolls out of view (FLIP motion).
+   Floating actions: circular icon buttons that blip in once the topline
+   scrolls out of view (scale + fade pop, staggered — handled in CSS).
    ======================================== */
 (function() {
   var floatCta = document.getElementById('float-cta');
   var topline = document.querySelector('.topline');
-  var anchor = document.querySelector('.topline-actions');
-  if (!floatCta || !topline || !anchor) return;
+  if (!floatCta || !topline) return;
 
-  var prefersReduced = window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var stuck = false;
-  var current = null;
-
-  // Animate the floating icons FROM the in-page topline buttons so they read as
-  // the same control travelling to the corner — not a separate fade in/out.
-  function fly(show) {
-    if (current) current.cancel();
-
-    if (prefersReduced || typeof floatCta.animate !== 'function') {
-      floatCta.classList.toggle('is-visible', show);
-      return;
-    }
-
-    if (show) floatCta.classList.add('is-visible');
-
-    var t = floatCta.getBoundingClientRect();
-    var s = anchor.getBoundingClientRect();
-    var dx = (s.left + s.width / 2) - (t.left + t.width / 2);
-    var dy = (s.top + s.height / 2) - (t.top + t.height / 2);
-
-    var atSource = { transform: 'translate(' + dx + 'px, ' + dy + 'px) scale(0.55)', opacity: 0 };
-    var atHome = { transform: 'none', opacity: 1 };
-
-    current = floatCta.animate(
-      show ? [atSource, atHome] : [atHome, atSource],
-      { duration: show ? 440 : 360, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
-    );
-    current.onfinish = function() {
-      current = null;
-      if (!show) floatCta.classList.remove('is-visible');
-    };
-  }
-
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      var shouldStick = !entry.isIntersecting;
-      if (shouldStick === stuck) return;
-      stuck = shouldStick;
-      fly(stuck);
-    });
-  }, { threshold: 0 });
-
-  observer.observe(topline);
-
-  // The avatar only joins the floating bar once the in-page hero avatar has
-  // scrolled fully above the viewport — otherwise the same avatar shows twice.
+  // Single rAF-throttled scroll check drives both reveals:
+  //  - call + email blip in once the topline has scrolled past
+  //  - the avatar joins only once the in-page hero avatar has scrolled past,
+  //    so we never show two of the same avatar at once
   var heroAvatar = document.querySelector('.hero-avatar');
-  if (heroAvatar) {
-    var ticking = false;
-    function checkAvatar() {
-      ticking = false;
-      var passed = heroAvatar.getBoundingClientRect().bottom < 0;
-      floatCta.classList.toggle('show-avatar', passed);
+  var ticking = false;
+
+  function update() {
+    ticking = false;
+    floatCta.classList.toggle('is-visible', topline.getBoundingClientRect().bottom <= 0);
+    if (heroAvatar) {
+      floatCta.classList.toggle('show-avatar', heroAvatar.getBoundingClientRect().bottom < 0);
     }
-    window.addEventListener('scroll', function() {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(checkAvatar);
-      }
-    }, { passive: true });
-    checkAvatar();
   }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }, { passive: true });
+
+  update();
 })();
 
 /* ========================================

@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,300;1,14..32,400;1,14..32,500&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=14">
 </head>
 <body>
 
@@ -63,14 +63,17 @@
 
   <!-- ============ Floating actions (fly out of the topline on scroll) ============ -->
   <div class="float-cta" id="float-cta">
-    <a class="float-btn float-btn--avatar" href="https://x.com/oykun" target="_blank" rel="noopener" aria-label="Oykun on X">
+    <a class="float-btn float-btn--avatar" href="#about" aria-label="More about Oykun" data-tooltip="25+ years, 500+ projects, $1B+ raised for clients.">
       <img src="images/avatar.jpg" alt="Oykun">
     </a>
-    <a class="float-btn float-btn--call" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" aria-label="Let's talk">
+    <a class="float-btn float-btn--call" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" aria-label="Let's talk" data-tooltip="Book a call">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
     </a>
-    <a class="float-btn float-btn--email" href="mailto:hey@crucial.design" aria-label="Email hey@crucial.design">
+    <a class="float-btn float-btn--email" href="mailto:hey@crucial.design" aria-label="Email hey@crucial.design" data-tooltip="Mail to hey@crucial.design">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+    </a>
+    <a class="float-btn float-btn--pricing" href="#process" aria-label="Process and pricing" data-tooltip="2 spots open. Starting from $4,987/mth">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
     </a>
   </div>
 
@@ -286,7 +289,7 @@
   </section>
 
   <!-- ============ Footer ============ -->
-  <footer class="footer">
+  <footer class="footer" id="about">
     <div class="footer-photos">
       <a href="https://x.com/oykun/status/1971126280386138421" target="_blank" rel="noopener" class="footer-photo" style="--rot: -4deg; --x: -5%; --y: 0;"><img src="images/about-1.jpg" alt="Oykun selfie"></a>
       <a href="https://x.com/oykun/status/2023450450947960847" target="_blank" rel="noopener" class="footer-photo" style="--rot: 3deg; --x: 8%; --y: -10px;"><img src="images/about-2.jpg" alt="Cat and laptop"></a>
@@ -313,7 +316,7 @@
     </div>
   </footer>
 
-  <script src="main.js?v=3"></script>
+  <script src="main.js?v=5"></script>
   <script>
     (function(){
       var words = ['product design','branding','web design','UX strategy','design systems'];

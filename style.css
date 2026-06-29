@@ -481,11 +481,11 @@ a {
   gap: 18px;
 }
 
-/* Floating actions — circular icon buttons that fly out of the in-page
-   topline buttons once they scroll away (motion handled in main.js). */
+/* Floating actions — circular icon buttons that blip in (scale + fade pop)
+   once the topline scrolls away, staggered with a slight delay. */
 .float-cta {
   position: fixed;
-  top: 16px;
+  top: 28px;
   left: 0;
   right: 0;
   z-index: 200;
@@ -493,25 +493,47 @@ a {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  opacity: 0;
   pointer-events: none;
-  will-change: transform, opacity;
-}
-
-.float-cta.is-visible {
-  opacity: 1;
 }
 
 .float-btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  pointer-events: auto;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+/* Tooltip below each icon (the bar lives at the top of the viewport). */
+.float-btn[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  padding: 7px 11px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.float-btn[data-tooltip]:hover::after,
+.float-btn[data-tooltip]:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 .float-btn svg {
@@ -520,21 +542,51 @@ a {
   display: block;
 }
 
+/* Call + email + pricing blip in like the avatar, staggered behind it. */
+.float-btn--call,
+.float-btn--email,
+.float-btn--pricing {
+  opacity: 0;
+  transform: scale(0.3);
+  pointer-events: none;
+  /* snappy transition for hover; the blip itself runs as a keyframe below */
+  transition: transform 0.12s ease, opacity 0.12s ease,
+              background 0.2s ease, color 0.2s ease;
+}
+
+.float-cta.is-visible .float-btn--call,
+.float-cta.is-visible .float-btn--email,
+.float-cta.is-visible .float-btn--pricing {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  animation: floatBlip 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.float-cta.is-visible .float-btn--call { animation-delay: 0.08s; }
+.float-cta.is-visible .float-btn--email { animation-delay: 0.18s; }
+.float-cta.is-visible .float-btn--pricing { animation-delay: 0.28s; }
+
+@keyframes floatBlip {
+  from { opacity: 0; transform: scale(0.3); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
 /* Avatar stays collapsed until the in-page hero avatar is scrolled past,
    so we never show two of the same avatar at once. */
 .float-btn--avatar {
   width: 0;
   padding: 0;
   margin-right: -10px;        /* cancel the flex gap while collapsed */
-  overflow: hidden;
   background: #fff;
   opacity: 0;
   transform: scale(0.3);
   pointer-events: none;
+  /* width/margin handle the collapse; transform stays snappy for hover */
   transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
               margin-right 0.45s cubic-bezier(0.22, 1, 0.36, 1),
               opacity 0.3s ease,
-              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+              transform 0.12s ease;
 }
 
 .float-cta.show-avatar .float-btn--avatar {
@@ -543,6 +595,12 @@ a {
   opacity: 1;
   transform: scale(1);
   pointer-events: auto;
+  animation: avatarBlip 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+@keyframes avatarBlip {
+  from { width: 0; margin-right: -10px; opacity: 0; transform: scale(0.3); }
+  to   { width: 44px; margin-right: 0; opacity: 1; transform: scale(1); }
 }
 
 .float-btn--avatar img {
@@ -553,7 +611,7 @@ a {
 }
 
 .float-cta.show-avatar .float-btn--avatar:hover {
-  transform: translateY(-2px);
+  transform: translateY(5px);
 }
 
 .float-btn--call {
@@ -561,26 +619,38 @@ a {
   color: #fff;
 }
 
-.float-btn--call:hover {
+.float-cta.is-visible .float-btn--call:hover {
   background: #1a1a1a;
-  transform: translateY(-2px);
+  transform: translateY(5px);
 }
 
 .float-btn--email {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.97);
   color: #1A1A18;
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
 }
 
-.float-btn--email:hover {
+.float-cta.is-visible .float-btn--email:hover {
   color: #000;
-  transform: translateY(-2px);
+  transform: translateY(5px);
+}
+
+.float-btn--pricing {
+  background: rgba(255, 255, 255, 0.97);
+  color: #1A1A18;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+
+.float-cta.is-visible .float-btn--pricing:hover {
+  color: #000;
+  transform: translateY(5px);
 }
 
 @media (max-width: 768px) {
   .float-cta {
-    top: 12px;
+    top: 20px;
     gap: 10px;
   }
 
