@@ -61,26 +61,18 @@
     </div>
   </div>
 
-  <!-- ============ Navigation ============ -->
-  <nav class="nav" id="nav">
-    <div class="nav-pod" id="nav-pod" role="button" tabindex="0" aria-label="Open menu" aria-expanded="false">
-      <canvas class="nav-trigger-canvas" id="nav-trigger-canvas" aria-hidden="true"></canvas>
-      <div class="nav-pod-body">
-        <p class="nav-pod-headline">Your AI works.<br>The experience doesn't.</p>
-        <a class="nav-panel-booking" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">
-          <div class="nav-panel-booking-logo">
-            <img src="images/avatar.jpg" alt="">
-          </div>
-          <div class="nav-panel-booking-text">
-            <p class="nav-panel-booking-title">Let's sort it</p>
-            <p class="nav-panel-booking-sub">15 min</p>
-          </div>
-        </a>
-        <a class="nav-panel-email" href="mailto:hey@crucial.design">hey@crucial.design</a>
-        <a class="nav-panel-link" href="#pricing">Pricing</a>
-      </div>
-    </div>
-  </nav>
+  <!-- ============ Floating actions (fly out of the topline on scroll) ============ -->
+  <div class="float-cta" id="float-cta">
+    <a class="float-btn float-btn--avatar" href="https://x.com/oykun" target="_blank" rel="noopener" aria-label="Oykun on X">
+      <img src="images/avatar.jpg" alt="Oykun">
+    </a>
+    <a class="float-btn float-btn--call" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" aria-label="Let's talk">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    </a>
+    <a class="float-btn float-btn--email" href="mailto:hey@crucial.design" aria-label="Email hey@crucial.design">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+    </a>
+  </div>
 
   <!-- ============ Hero ============ -->
   <section class="hero">

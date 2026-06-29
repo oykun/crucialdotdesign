@@ -108,209 +108,6 @@ a {
 }
 
 /* ========================================
-   Navigation — trigger pill (bottom-center)
-   ======================================== */
-.nav {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-.nav::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 50%;
-  padding: 1.5px;
-  background: conic-gradient(
-    from var(--border-angle, 0deg),
-    transparent 60%,
-    rgba(34, 197, 94, 0.5) 78%,
-    rgba(59, 130, 246, 0.6) 85%,
-    rgba(147, 51, 234, 0.5) 92%,
-    transparent 100%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: border-spin 3.5s linear infinite;
-  pointer-events: none;
-  transition: border-radius 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.nav:has(.nav-pod.is-open)::before {
-  border-radius: 50%;
-}
-
-.nav-hidden {
-  transform: translateX(-50%) translateY(calc(100% + 48px));
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* ========================================
-   Nav Pod — single morphing element
-   Click makes the circle resize larger (bottom anchored)
-   ======================================== */
-.nav-pod {
-  position: relative;
-  width: 72px;
-  height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  color: #000;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  overflow: hidden;
-  transition:
-    width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-
-.nav-pod.is-open {
-  width: 320px;
-  height: 320px;
-  cursor: default;
-}
-
-.nav-trigger-canvas {
-  position: absolute;
-  width: 56px;
-  height: 56px;
-  display: block;
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity 0.25s ease;
-}
-
-.nav-pod.is-open .nav-trigger-canvas {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.nav-pod-body {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  padding: 40px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease 0.2s;
-}
-
-.nav-pod.is-open .nav-pod-body {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.nav-pod-headline {
-  font-size: inherit;
-  line-height: 1.4;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.7);
-  text-align: center;
-  margin: 0 0 4px;
-  max-width: 220px;
-}
-
-/* Booking pill */
-.nav-panel-booking {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 7px 18px 7px 7px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.06);
-  border: 0.5px solid rgba(0, 0, 0, 0.1);
-  color: #000;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-  box-shadow: none;
-}
-
-.nav-panel-booking:hover {
-  background: rgba(0, 0, 0, 0.1);
-  border-color: rgba(0, 0, 0, 0.15);
-}
-
-.nav-panel-booking-logo {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-  background: #000;
-}
-
-.nav-panel-booking-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.nav-panel-booking-text {
-  min-width: 0;
-  text-align: left;
-}
-
-.nav-panel-booking-title {
-  font-size: inherit;
-  font-weight: 600;
-  color: #000;
-  margin-bottom: 1px;
-}
-
-.nav-panel-booking-sub {
-  font-size: inherit;
-  color: rgba(0, 0, 0, 0.45);
-}
-
-/* Email link */
-.nav-panel-email {
-  display: inline-block;
-  font-size: inherit;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.55);
-  padding: 2px 4px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.nav-panel-email:hover {
-  color: #000;
-  border-bottom-color: rgba(0, 0, 0, 0.4);
-}
-
-.nav-panel-link {
-  display: inline-block;
-  font-size: inherit;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.55);
-  padding: 2px 4px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  text-decoration: none;
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.nav-panel-link:hover {
-  color: #000;
-  border-bottom-color: rgba(0, 0, 0, 0.4);
-}
-
-/* ========================================
    Hero
    ======================================== */
 .hero {
@@ -682,6 +479,119 @@ a {
   display: flex;
   align-items: center;
   gap: 18px;
+}
+
+/* Floating actions — circular icon buttons that fly out of the in-page
+   topline buttons once they scroll away (motion handled in main.js). */
+.float-cta {
+  position: fixed;
+  top: 16px;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.float-cta.is-visible {
+  opacity: 1;
+}
+
+.float-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  pointer-events: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.float-btn svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* Avatar stays collapsed until the in-page hero avatar is scrolled past,
+   so we never show two of the same avatar at once. */
+.float-btn--avatar {
+  width: 0;
+  padding: 0;
+  margin-right: -10px;        /* cancel the flex gap while collapsed */
+  overflow: hidden;
+  background: #fff;
+  opacity: 0;
+  transform: scale(0.3);
+  pointer-events: none;
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              margin-right 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.3s ease,
+              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.float-cta.show-avatar .float-btn--avatar {
+  width: 44px;
+  margin-right: 0;
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.float-btn--avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.float-cta.show-avatar .float-btn--avatar:hover {
+  transform: translateY(-2px);
+}
+
+.float-btn--call {
+  background: #000;
+  color: #fff;
+}
+
+.float-btn--call:hover {
+  background: #1a1a1a;
+  transform: translateY(-2px);
+}
+
+.float-btn--email {
+  background: rgba(255, 255, 255, 0.9);
+  color: #1A1A18;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+
+.float-btn--email:hover {
+  color: #000;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .float-cta {
+    top: 12px;
+    gap: 10px;
+  }
+
+  .float-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .float-cta.show-avatar .float-btn--avatar {
+    width: 40px;
+  }
 }
 
 .topline-email {
@@ -1105,10 +1015,6 @@ a {
    Responsive
    ======================================== */
 @media (max-width: 768px) {
-  .nav-inner {
-    padding: 7px 14px 7px 7px;
-  }
-
   .footer-inner {
     padding: 0 24px;
   }

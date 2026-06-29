@@ -18,296 +18,79 @@ document.querySelectorAll('.fade-in').forEach(function(el) {
 });
 
 /* ========================================
-   Hide nav when pricing or contact section is in view
-   ======================================== */
-var nav = document.getElementById('nav');
-var pricingSection = document.getElementById('pricing');
-var pricingCtaSection = document.getElementById('pricing-cta');
-var contactSection = document.getElementById('contact');
-var navHideSections = new Set();
-
-var navObserver = new IntersectionObserver(function(entries) {
-  entries.forEach(function(entry) {
-    if (entry.isIntersecting) {
-      navHideSections.add(entry.target.id);
-    } else {
-      navHideSections.delete(entry.target.id);
-    }
-  });
-  if (navHideSections.size > 0) {
-    nav.classList.add('nav-hidden');
-  } else {
-    nav.classList.remove('nav-hidden');
-  }
-}, {
-  threshold: 0.05
-});
-
-if (pricingSection) navObserver.observe(pricingSection);
-if (pricingCtaSection) navObserver.observe(pricingCtaSection);
-if (contactSection) navObserver.observe(contactSection);
-
-/* ========================================
-   Nav Panel (Menu + Say hi) open/close + tabs
+   Floating actions: circular icon buttons that fly out of the in-page
+   topline buttons once the topline scrolls out of view (FLIP motion).
    ======================================== */
 (function() {
-  var pod = document.getElementById('nav-pod');
-  if (!pod) return;
+  var floatCta = document.getElementById('float-cta');
+  var topline = document.querySelector('.topline');
+  var anchor = document.querySelector('.topline-actions');
+  if (!floatCta || !topline || !anchor) return;
 
-  function openPod() {
-    pod.classList.add('is-open');
-    pod.setAttribute('aria-expanded', 'true');
-  }
-  function closePod() {
-    pod.classList.remove('is-open');
-    pod.setAttribute('aria-expanded', 'false');
-  }
-  function togglePod() {
-    if (pod.classList.contains('is-open')) closePod();
-    else openPod();
-  }
+  var prefersReduced = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stuck = false;
+  var current = null;
 
-  pod.addEventListener('click', function(e) {
-    var link = e.target.closest && e.target.closest('a');
-    if (link) {
-      if (link.getAttribute('href').startsWith('#')) closePod();
+  // Animate the floating icons FROM the in-page topline buttons so they read as
+  // the same control travelling to the corner — not a separate fade in/out.
+  function fly(show) {
+    if (current) current.cancel();
+
+    if (prefersReduced || typeof floatCta.animate !== 'function') {
+      floatCta.classList.toggle('is-visible', show);
       return;
     }
-    if (pod.classList.contains('is-open')) return;
-    e.preventDefault();
-    e.stopPropagation();
-    togglePod();
-  });
 
-  pod.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      togglePod();
-    }
-  });
+    if (show) floatCta.classList.add('is-visible');
 
-  // Click anywhere outside the pod closes it
-  document.addEventListener('click', function(e) {
-    if (!pod.classList.contains('is-open')) return;
-    if (pod.contains(e.target)) return;
-    closePod();
-  });
+    var t = floatCta.getBoundingClientRect();
+    var s = anchor.getBoundingClientRect();
+    var dx = (s.left + s.width / 2) - (t.left + t.width / 2);
+    var dy = (s.top + s.height / 2) - (t.top + t.height / 2);
 
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && pod.classList.contains('is-open')) closePod();
-  });
-})();
+    var atSource = { transform: 'translate(' + dx + 'px, ' + dy + 'px) scale(0.55)', opacity: 0 };
+    var atHome = { transform: 'none', opacity: 1 };
 
-/* ========================================
-   Nav trigger: mini dot animation
-   A tiny echo of the hero story — messy dots on the left, a single
-   dot hopping through them to a clean target on the right.
-   ======================================== */
-(function() {
-  var canvas = document.getElementById('nav-trigger-canvas');
-  if (!canvas) return;
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var ctx = canvas.getContext('2d');
-  var dpr = window.devicePixelRatio || 1;
-  var W = 0, H = 0;
-
-  function rand(seed) {
-    var x = Math.sin(seed * 9301 + 49297) * 233280;
-    return x - Math.floor(x);
+    current = floatCta.animate(
+      show ? [atSource, atHome] : [atHome, atSource],
+      { duration: show ? 440 : 360, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+    );
+    current.onfinish = function() {
+      current = null;
+      if (!show) floatCta.classList.remove('is-visible');
+    };
   }
 
-  var M = 3;           // messy dots
-  var messy = [];
-  var target = { x: 0, y: 0 };
-  var loopSeed = 0;
-
-  function layout() {
-    // Left cluster center
-    var cxL = W * 0.32;
-    var cyM = H * 0.5;
-    var rx = W * 0.22;
-    var ry = H * 0.28;
-    messy = [];
-    for (var i = 0; i < M; i++) {
-      var ang = (i / M) * Math.PI * 2 + rand(i + 11 + loopSeed * 97) * 1.1;
-      var rr = 0.55 + rand(i + 31 + loopSeed * 53) * 0.5;
-      messy.push({
-        x: cxL + Math.cos(ang) * rx * rr,
-        y: cyM + Math.sin(ang) * ry * rr
-      });
-    }
-    target = { x: W * 0.82, y: cyM };
-  }
-
-  function resize() {
-    var rect = canvas.getBoundingClientRect();
-    W = rect.width;
-    H = rect.height;
-    canvas.width = Math.round(W * dpr);
-    canvas.height = Math.round(H * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    layout();
-  }
-
-  // Build a shuffled path through the messy dots, ending at target
-  var path = [];
-  function buildPath() {
-    var idx = [];
-    for (var k = 0; k < M; k++) idx.push(k);
-    for (var j = idx.length - 1; j > 0; j--) {
-      var r = Math.floor(rand(j * 7 + loopSeed * 131) * (j + 1));
-      var tmp = idx[j]; idx[j] = idx[r]; idx[r] = tmp;
-    }
-    path = idx.concat([M]); // M = target index
-  }
-  buildPath();
-
-  var antMs = 110, jumpMs = 500, holdMs = 260;
-  var endHoldMs = 1200;
-  var fadeDur = 300; // fade out before reshuffle, fade in after
-
-  function getNode(i) {
-    return i < M ? messy[i] : target;
-  }
-
-  // Hover gating — animation only runs while the pod is hovered.
-  var podEl = document.getElementById('nav-pod');
-  var isHover = false;
-  var hoverStart = 0;
-  var lastT = 0;
-  if (podEl) {
-    podEl.addEventListener('mouseenter', function() {
-      isHover = true;
-      hoverStart = performance.now();
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      var shouldStick = !entry.isIntersecting;
+      if (shouldStick === stuck) return;
+      stuck = shouldStick;
+      fly(stuck);
     });
-    podEl.addEventListener('mouseleave', function() {
-      isHover = false;
-    });
+  }, { threshold: 0 });
+
+  observer.observe(topline);
+
+  // The avatar only joins the floating bar once the in-page hero avatar has
+  // scrolled fully above the viewport — otherwise the same avatar shows twice.
+  var heroAvatar = document.querySelector('.hero-avatar');
+  if (heroAvatar) {
+    var ticking = false;
+    function checkAvatar() {
+      ticking = false;
+      var passed = heroAvatar.getBoundingClientRect().bottom < 0;
+      floatCta.classList.toggle('show-avatar', passed);
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(checkAvatar);
+      }
+    }, { passive: true });
+    checkAvatar();
   }
-
-  function drawStatic() {
-    ctx.clearRect(0, 0, W, H);
-    // Messy nodes
-    for (var i = 0; i < M; i++) {
-      var mn = messy[i];
-      ctx.fillStyle = 'rgba(0,0,0,0.5)';
-      ctx.beginPath();
-      ctx.arc(mn.x, mn.y, 2, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    // Target
-    ctx.fillStyle = 'rgba(0,0,0,0.7)';
-    ctx.beginPath();
-    ctx.arc(target.x, target.y, 2.5, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  function frame(now) {
-    if (!isHover) {
-      drawStatic();
-      requestAnimationFrame(frame);
-      return;
-    }
-    ctx.clearRect(0, 0, W, H);
-
-    var segs = path.length - 1;
-    var segTime = antMs + jumpMs + holdMs;
-    var journey = segs * segTime;
-    var loopDur = journey + endHoldMs;
-    var t = (now - hoverStart) % loopDur;
-
-    // Reshuffle on loop boundary
-    if (t < 50 && lastT > loopDur - 200) {
-      loopSeed++;
-      layout();
-      buildPath();
-    }
-    lastT = t;
-
-    // Global fade: fade out near end, fade in at start
-    var globalAlpha = 1;
-    if (t > loopDur - fadeDur) {
-      globalAlpha = Math.max(0, (loopDur - t) / fadeDur);
-    } else if (t < fadeDur) {
-      globalAlpha = t / fadeDur;
-    }
-    ctx.globalAlpha = globalAlpha;
-
-    // ---- Draw messy nodes ----
-    for (var i = 0; i < M; i++) {
-      var mn = messy[i];
-      ctx.fillStyle = 'rgba(0,0,0,0.5)';
-      ctx.beginPath();
-      ctx.arc(mn.x, mn.y, 2, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    // Target dot
-    ctx.fillStyle = 'rgba(0,0,0,0.7)';
-    ctx.beginPath();
-    ctx.arc(target.x, target.y, 2.5, 0, Math.PI * 2);
-    ctx.fill();
-
-    // ---- Active dot ----
-    var finished = t >= journey;
-    var clamped = finished ? journey - 1 : t;
-    var seg = Math.min(segs - 1, Math.floor(clamped / segTime));
-    var inSeg = clamped - seg * segTime;
-    var a = getNode(path[seg]);
-    var b = getNode(path[seg + 1]);
-    var x, y, sx = 1, sy = 1;
-
-    if (inSeg < antMs) {
-      var aT = inSeg / antMs;
-      var crouch = Math.sin(aT * Math.PI);
-      sx = 1 + crouch * 0.3;
-      sy = 1 - crouch * 0.4;
-      x = a.x; y = a.y;
-    } else if (inSeg < antMs + jumpMs) {
-      var mT = (inSeg - antMs) / jumpMs;
-      var u = 1 - Math.pow(1 - mT, 1.8);
-      var h = Math.sin(u * Math.PI);
-      x = a.x + (b.x - a.x) * u;
-      y = a.y + (b.y - a.y) * u - h * 5;
-      sy = 1 + h * 0.15;
-      sx = 1 - h * 0.08;
-    } else {
-      var hT = (inSeg - antMs - jumpMs) / holdMs;
-      x = b.x; y = b.y;
-      var squash = Math.max(0, 1 - hT * 3);
-      sx = 1 + squash * 0.3;
-      sy = 1 - squash * 0.35;
-    }
-
-    // If finished, park on target with a gentle green glow
-    var onTarget = finished || (seg === segs - 1 && inSeg >= antMs + jumpMs);
-    var color = onTarget ? '#3fa24a' : '#1A1A18';
-    var haloColor = onTarget ? 'rgba(63,162,74,0.25)' : 'rgba(0,0,0,0.12)';
-
-    if (finished) {
-      x = target.x; y = target.y; sx = 1; sy = 1;
-    }
-
-    ctx.save();
-    ctx.fillStyle = haloColor;
-    ctx.beginPath();
-    ctx.arc(x, y, 5, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.translate(x, y);
-    ctx.scale(sx, sy);
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(0, 0, 2.5, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-
-    ctx.globalAlpha = 1;
-    requestAnimationFrame(frame);
-  }
-
-  resize();
-  window.addEventListener('resize', resize);
-  requestAnimationFrame(frame);
 })();
 
 /* ========================================
