@@ -20,8 +20,8 @@ html {
 }
 
 body {
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 15px;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
   line-height: 1.55;
   color: #1A1A18;
   background-color: #fff;
@@ -108,165 +108,6 @@ a {
 }
 
 /* ========================================
-   Navigation — trigger pill (bottom-center)
-   ======================================== */
-.nav {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-.nav-hidden {
-  transform: translateX(-50%) translateY(calc(100% + 48px));
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* ========================================
-   Nav Pod — single morphing element
-   Click makes the circle resize larger (bottom anchored)
-   ======================================== */
-.nav-pod {
-  position: relative;
-  width: 72px;
-  height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  color: #000;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  overflow: hidden;
-  transition:
-    width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.nav-pod.is-open {
-  width: 320px;
-  height: 320px;
-  cursor: default;
-}
-
-.nav-trigger-canvas {
-  position: absolute;
-  width: 56px;
-  height: 56px;
-  display: block;
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity 0.25s ease;
-}
-
-.nav-pod.is-open .nav-trigger-canvas {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.nav-pod-body {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  padding: 40px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease 0.2s;
-}
-
-.nav-pod.is-open .nav-pod-body {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.nav-pod-headline {
-  font-size: 14px;
-  line-height: 1.4;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.7);
-  text-align: center;
-  margin: 0 0 4px;
-  max-width: 220px;
-}
-
-/* Booking pill */
-.nav-panel-booking {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 7px 18px 7px 7px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.06);
-  border: 0.5px solid rgba(0, 0, 0, 0.1);
-  color: #000;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-  box-shadow: none;
-}
-
-.nav-panel-booking:hover {
-  background: rgba(0, 0, 0, 0.1);
-  border-color: rgba(0, 0, 0, 0.15);
-}
-
-.nav-panel-booking-logo {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-  background: #000;
-}
-
-.nav-panel-booking-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.nav-panel-booking-text {
-  min-width: 0;
-  text-align: left;
-}
-
-.nav-panel-booking-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #000;
-  margin-bottom: 1px;
-}
-
-.nav-panel-booking-sub {
-  font-size: 11px;
-  color: rgba(0, 0, 0, 0.45);
-}
-
-/* Email link */
-.nav-panel-email {
-  display: inline-block;
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.55);
-  padding: 2px 4px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.nav-panel-email:hover {
-  color: #000;
-  border-bottom-color: rgba(0, 0, 0, 0.4);
-}
-
-/* ========================================
    Hero
    ======================================== */
 .hero {
@@ -274,7 +115,7 @@ a {
 }
 
 .hero-image {
-  margin-top: 120px;
+  margin-bottom: 100px;
   max-width: 800px;
 }
 
@@ -283,17 +124,85 @@ a {
   border-radius: 12px;
 }
 
+/* Hero deck — stack of work cards that recede (scale down) toward the centre.
+   Full page width so cards entering / scattering off-centre are never clipped;
+   overflow is clipped only at the viewport edge to avoid horizontal scroll.
+   Deliberately 2D only (no perspective / preserve-3d) for solid Safari support. */
+.hero-deck {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  height: clamp(380px, 56vw, 680px);
+  overflow: hidden;
+}
+
+.hero-deck-fallback {
+  display: none;
+}
+
+/* Shown when JS is off or reduced motion is preferred */
+.hero-image.no-deck .hero-deck {
+  display: none;
+}
+.hero-image.no-deck .hero-deck-fallback {
+  display: block;
+}
+
+.hero-deck-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: clamp(240px, 36vw, 460px);
+  width: auto;            /* derived from aspect-ratio set inline per image */
+  transform-origin: center;
+  will-change: transform, opacity;
+  transition: transform 0.42s cubic-bezier(0.2, 1, 0.3, 1),
+              opacity 0.42s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.hero-deck-card.no-anim {
+  transition: none;
+}
+
+/* Inner layer holds the image frame and a perpetual, subtle z-axis float so
+   the cards are never completely still. Kept separate from the card so the
+   ambient drift never fights the eased "deal" transitions on the card. */
+.hero-deck-inner {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f2f2f2;
+  transform-origin: center;
+  animation: deckFloat var(--fdur, 6s) linear var(--fdelay, 0s) infinite;
+  will-change: transform;
+}
+
+/* Perpetual drift along ONE straight (vertical) direction. Linear timing +
+   front-loaded keyframes: it moves quickly to the middle, then slows down
+   drastically and keeps creeping the same way — never still, never wandering. */
+@keyframes deckFloat {
+  0%   { transform: translateY(0); }
+  42%  { transform: translateY(calc(var(--fy, -24px) * 0.9)); }   /* quick to ~middle */
+  60%  { transform: translateY(var(--fy, -24px)); }               /* slow crawl onward */
+  100% { transform: translateY(0); }                              /* slow return */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-deck-inner { animation: none; }
+}
+
+.hero-deck-card img {
+  width: 100%;
+  height: 100%;
+  max-width: none;        /* override global img max-width that squeezes the card */
+  border-radius: 0;       /* override .hero-image img rounding — show images as-is */
+  object-fit: cover;      /* card matches the image ratio, so no crop or distortion */
+  display: block;
+}
+
 .hero-label {
   color: #000;
   margin-bottom: 20px;
-}
-
-.hero-anim {
-  display: block;
-  width: 100%;
-  max-width: 920px;
-  height: 280px;
-  margin: 0 0 40px 0;
 }
 
 .hero-headline {
@@ -386,14 +295,86 @@ a {
 }
 
 .hero-byline a {
-  color: #888;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 0.2s ease;
+  color: #1A1A18;
+  text-decoration: none;
+  padding: 0 3px;
+  margin: 0 -3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background 0.18s ease, color 0.18s ease;
 }
 
 .hero-byline a:hover {
+  background: #f0f0f0;
+}
+
+/* ========================================
+   Metrics
+   ======================================== */
+.metrics {
+  padding: 80px 0;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.metric {
+  padding: 0 36px;
+  border-left: 1px solid #e0dfdd;
+}
+
+.metric:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.metric:last-child {
+  padding-right: 0;
+}
+
+.metric-number {
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 8px;
   color: #1A1A18;
+}
+
+.metric-label {
+  font-size: inherit;
+  color: #888;
+  line-height: 1.45;
+}
+
+@media (max-width: 768px) {
+  .metrics {
+    padding: 60px 0;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .metric {
+    border-left: none;
+    padding: 32px 0;
+    border-bottom: 1px solid #e0dfdd;
+  }
+
+  .metric:first-child {
+    padding-top: 0;
+  }
+
+  .metric:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .metric-number {
+    font-size: inherit;
+  }
 }
 
 /* ========================================
@@ -408,7 +389,7 @@ a {
 }
 
 .project {
-  margin-bottom: 120px;
+  margin-bottom: 220px;
 }
 
 .project:last-child {
@@ -446,7 +427,7 @@ a {
 .project-card-inner {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 0;
 }
 
 .project-card-inner img {
@@ -462,6 +443,222 @@ a {
 .others-intro strong {
   color: #1A1A18;
   font-weight: 700;
+}
+
+/* ========================================
+   Top status line
+   ======================================== */
+.topline {
+  padding: 32px 0 0;
+}
+
+/* Edge-to-edge CTAs: full-bleed bands (span the full browser width), label
+   aligned to the content column via the inner container. Pure neutral greys. */
+.cta-bar {
+  display: block;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 0;
+  color: #111;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+/* Inset variant — stays within its container (e.g. inside bordered cards) */
+.cta-bar--inset {
+  width: auto;
+  margin-left: 0;
+}
+
+/* Dark variant — near-black */
+.cta-bar--dark {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.cta-bar--dark:hover {
+  background: #444;
+}
+
+/* Plan variant — full-bleed band anchored to the viewport, with the label
+   left-aligned to the plan's text column. 249px = 300 (half the 600 content
+   column) − 24 (column padding) − 27 (flow-timeline dot+gap indent). */
+.cta-bar--plan {
+  margin-top: 10px;
+  margin-left: calc(249px - 50vw);
+  padding-left: calc(50vw - 249px);
+  padding-right: 24px;
+}
+
+@media (max-width: 600px) {
+  .cta-bar--plan {
+    margin-left: -51px;          /* 24 column padding + 27 timeline indent */
+    padding-left: 51px;
+  }
+}
+
+.cta-bar .container-narrow {
+  display: block;
+}
+
+/* Primary — grey going black on hover */
+.cta-bar--primary {
+  margin-top: 24px;
+  background: #f0f0f0;
+}
+
+.cta-bar--primary:hover {
+  background: #000;
+  color: #fff;
+}
+
+/* Secondary — transparent (blends into content) going grey on hover */
+.cta-bar--secondary {
+  margin-top: 6px;
+  background: transparent;
+}
+
+.cta-bar--secondary:hover {
+  background: #f0f0f0;
+}
+
+.topline-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin: 0;
+}
+
+.topline-context {
+  font-size: inherit;
+  color: #000;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+.topline-lead {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.topline-meta {
+  display: block;
+  margin-top: 6px;
+}
+
+.topline-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Floating action bar — the topline CTAs pinned at the top of the browser as
+   stacked edge-to-edge rows, sliding down once the topline scrolls out of view. */
+.float-bar {
+  position: fixed;
+  top: -140px;            /* hidden above the viewport (slides via top, not
+                             transform, so mix-blend-mode can read the page) */
+  left: 0;
+  right: 0;
+  z-index: 200;
+  transition: top 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.float-bar.is-visible {
+  top: 0;
+  pointer-events: auto;
+}
+
+.float-bar .cta-bar {
+  margin-top: 0;
+}
+
+/* Transparent rows' labels flip to white when the bar is over dark content
+   (toggled by JS that samples the background behind the bar). */
+.float-bar .container-narrow {
+  color: #111;
+  transition: color 0.2s ease;
+}
+
+.float-bar.on-dark .cta-bar--secondary .container-narrow {
+  color: #fff;
+}
+
+.topline-email {
+  display: inline-block;
+  margin-top: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.55);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 1px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.topline-email:hover {
+  color: #000;
+  border-bottom-color: rgba(0, 0, 0, 0.4);
+}
+
+.topline-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55);
+  animation: topline-pulse 2.4s ease-out infinite;
+  flex-shrink: 0;
+}
+
+.topline-btn {
+  display: inline-flex;
+  align-items: center;
+  background: #000;
+  color: #fff;
+  font-size: inherit;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 100px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.topline-btn:hover {
+  background: #1a1a1a;
+}
+
+.topline-flip {
+  display: inline;
+}
+
+.topline-ch {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.topline-ch-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes topline-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55); }
+  70%  { box-shadow: 0 0 0 7px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+@media (max-width: 768px) {
+  .topline-btn {
+    padding: 8px 14px 8px 12px;
+  }
 }
 
 /* ========================================
@@ -518,14 +715,13 @@ a {
 
 .flow-card {
   flex: 1;
+  min-width: 0;            /* let full-bleed CTAs overflow without stretching the flex item */
   padding: 28px 0;
 }
 
 .flow-plan-box {
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 24px 28px;
-  margin-bottom: 12px;
+  padding: 0;
+  margin-bottom: 32px;
 }
 
 .flow-plan-box:first-of-type {
@@ -567,7 +763,7 @@ a {
 }
 
 .flow-good-for {
-  margin-top: 16px;
+  margin-top: 4px;
   color: #888;
   font-style: italic;
 }
@@ -633,22 +829,26 @@ a {
 
 .flow-plan-desc {
   color: #000;
-  margin-bottom: 12px;
+  margin-top: 6px;
 }
 
 .flow-plan-subtle {
   color: #000;
 }
 
+/* Inline links — hover-highlight (grey box behind the text), no underline */
 .flow-link {
   color: #000;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 0.2s ease;
+  text-decoration: none;
+  padding: 0 3px;
+  margin: 0 -3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background 0.18s ease, color 0.18s ease;
 }
 
 .flow-link:hover {
-  color: #555;
+  background: #f0f0f0;
 }
 
 .flow-note {
@@ -705,13 +905,61 @@ a {
    Footer
    ======================================== */
 .footer {
-  padding: 80px 0 100px;
+  padding: 80px 0 200px;
+}
+
+.footer-photos {
+  display: flex;
+  justify-content: center;
+  padding: 30px 24px;
+  margin-bottom: 80px;
+}
+
+.footer-photo {
+  display: block;
+  width: 160px;
+  flex-shrink: 1;
+  min-width: 0;
+  margin: 0 -12px;
+  transform: rotate(var(--rot, 0deg)) translate(var(--x, 0), var(--y, 0));
+  transition: transform 0.35s ease, z-index 0s, box-shadow 0.35s ease;
+  z-index: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.footer-photo:hover {
+  transform: rotate(0deg) translate(0, -8px) scale(1.08);
+  z-index: 10;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.footer-photo img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .footer-photos {
+    padding: 20px 16px;
+    margin-bottom: 48px;
+  }
+  .footer-photo {
+    margin: 0 -8px;
+    border-radius: 6px;
+  }
+  .footer-photo img {
+    height: 140px;
+  }
 }
 
 .footer-inner {
   max-width: 600px;
   margin: 0 auto;
-  padding: 0 24px 0 51px;
+  padding: 0 24px;
 }
 
 .footer-bio {
@@ -747,29 +995,19 @@ a {
   line-height: 1.55;
 }
 
+/* Footer links — stacked edge-to-edge bands (cta-bar) */
 .footer-links {
-  display: flex;
-  gap: 24px;
-  margin-top: 24px;
+  margin-top: 48px;
 }
 
-.footer-links a {
-  color: #888;
-  transition: color 0.2s ease;
-}
-
-.footer-links a:hover {
-  color: #1A1A18;
+.footer-links .cta-bar {
+  margin-top: 0;
 }
 
 /* ========================================
    Responsive
    ======================================== */
 @media (max-width: 768px) {
-  .nav-inner {
-    padding: 7px 14px 7px 7px;
-  }
-
   .footer-inner {
     padding: 0 24px;
   }
@@ -782,9 +1020,8 @@ a {
     padding: 32px 0 60px;
   }
 
-  .hero-anim {
-    height: 160px;
-    margin: 0 0 12px 0;
+  .hero-image {
+    margin-bottom: 40px;
   }
 
   .pricing-cards {
@@ -847,7 +1084,7 @@ a {
 }
 
 .chat-trigger-label {
-  font-size: 14px;
+  font-size: inherit;
   font-weight: 500;
   color: #1A1A18;
   white-space: nowrap;
@@ -899,7 +1136,7 @@ a {
 }
 
 .chat-header-title {
-  font-size: 13px;
+  font-size: inherit;
   color: #999;
 }
 
@@ -908,7 +1145,7 @@ a {
   border: none;
   cursor: pointer;
   color: #999;
-  font-size: 18px;
+  font-size: inherit;
   line-height: 1;
   padding: 0;
   transition: color 0.2s ease;
@@ -933,7 +1170,7 @@ a {
   max-width: 85%;
   padding: 10px 14px;
   border-radius: 12px;
-  font-size: 14px;
+  font-size: inherit;
   line-height: 1.5;
   word-wrap: break-word;
 }
@@ -992,7 +1229,7 @@ a {
   border: none;
   background: transparent;
   font-family: inherit;
-  font-size: 14px;
+  font-size: inherit;
   color: #1A1A18;
   outline: none;
   padding: 4px 0;
@@ -1023,7 +1260,7 @@ a {
 }
 
 .chat-error {
-  font-size: 13px;
+  font-size: inherit;
   color: #C8451B;
   padding: 8px 14px;
   align-self: flex-start;
@@ -1043,7 +1280,7 @@ a {
   border-radius: 100px;
   padding: 6px 14px;
   font-family: inherit;
-  font-size: 13px;
+  font-size: inherit;
   color: #555;
   cursor: pointer;
   transition: border-color 0.2s ease, color 0.2s ease;

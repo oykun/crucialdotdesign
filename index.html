@@ -42,149 +42,66 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400;1,9..40,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=35">
 </head>
 <body>
 
-  <!-- ============ Navigation ============ -->
-  <nav class="nav" id="nav">
-    <div class="nav-pod" id="nav-pod" role="button" tabindex="0" aria-label="Open menu" aria-expanded="false">
-      <canvas class="nav-trigger-canvas" id="nav-trigger-canvas" aria-hidden="true"></canvas>
-      <div class="nav-pod-body">
-        <p class="nav-pod-headline">Got an AI that<br>deserves great design?</p>
-        <a class="nav-panel-booking" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">
-          <div class="nav-panel-booking-logo">
-            <img src="images/avatar.jpg" alt="">
-          </div>
-          <div class="nav-panel-booking-text">
-            <p class="nav-panel-booking-title">Intro call</p>
-            <p class="nav-panel-booking-sub">15 min</p>
-          </div>
-        </a>
-        <a class="nav-panel-email" href="mailto:hey@crucial.design">hey@crucial.design</a>
-      </div>
+  <!-- ============ Top status line ============ -->
+  <div class="topline">
+    <div class="container-narrow">
+      <p class="topline-context"><span class="topline-lead">Founders building AI-native products,</span>I've got 2 spots open for <span class="topline-flip" data-topline-flip></span>.<span class="topline-meta">25+ years, 500+ projects, $1B+ raised for clients.</span></p>
     </div>
-  </nav>
+    <a class="cta-bar cta-bar--primary" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">
+      <span class="container-narrow">Let's talk</span>
+    </a>
+    <a class="cta-bar cta-bar--secondary" href="mailto:hey@crucial.design">
+      <span class="container-narrow">hey@crucial.design</span>
+    </a>
+  </div>
+
+  <!-- ============ Floating action bar (stacked rows, pinned on scroll) ============ -->
+  <div class="float-bar" id="float-cta">
+    <a class="cta-bar cta-bar--primary" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">
+      <span class="container-narrow">Let's talk</span>
+    </a>
+    <a class="cta-bar cta-bar--secondary" href="#process">
+      <span class="container-narrow">Process and Pricing</span>
+    </a>
+  </div>
 
   <!-- ============ Hero ============ -->
   <section class="hero">
+    <div class="container-wide hero-image fade-in">
+      <div class="hero-deck" id="hero-deck" aria-hidden="true"></div>
+      <img class="hero-deck-fallback" src="images/motion/motion07.jpg" alt="Product design showcase">
+    </div>
     <div class="container-narrow">
-      <canvas class="hero-anim" aria-hidden="true"></canvas>
       <h1 class="hero-headline fade-in">Your AI is impressive.<br>But most of your users never get to see it.<br>They get lost before they reach the value.</h1>
       <p class="hero-sub fade-in">They land and start guessing.<br>One path. Then another. Then another.<br>Each one dead-ends somewhere confusing.<br>Most give up before they reach the value.<br><br>The few who push through are your retention number.<br>The rest churn silently.<br><br>This is where I come in with Crucial.Design.<br>I find the straight line from confusion to clarity.<br>I don't start with pixels. I start with the thinking. Then I design.</p>
       <a href="https://x.com/oykun" target="_blank" rel="noopener" class="hero-avatar fade-in"><img src="images/avatar.jpg" alt="Oykun"></a>
-      <p class="hero-byline fade-in"><a href="https://x.com/oykun" target="_blank" rel="noopener">Oykun</a>. Design partner for AI founders, 25+ years.</p>
-    </div>
-    <div class="container-wide hero-image fade-in">
-      <img src="images/hero-showcase.gif" alt="Product design showcase">
-    </div>
-  </section>
-
-  <!-- ============ How I Work / Flow ============ -->
-  <section class="flow" id="process">
-    <div class="container-narrow">
-      <h2 class="flow-title fade-in">Here's how we take your AI Product<br>from impressive tech to a product people reach for</h2>
-      <div class="flow-timeline">
-
-        <!-- Step: Say hello (optional) -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Say hello</h3>
-            <div class="flow-body">
-              <p>Want to chat before committing? Totally fine. <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="flow-link">Book a free call</a> or drop me a line at <a href="mailto:hey@crucial.design" class="flow-link">hey@crucial.design</a></p>
-              <p class="flow-optional">This step is optional. If you already know what you need and want to move fast, skip straight to picking a plan.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step: Pick a plan -->
-        <div class="flow-step fade-in" id="pricing">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Pick a plan</h3>
-            <div class="flow-plan-box">
-              <div class="flow-plan-header">
-                <span class="flow-plan-name">Priority</span>
-                <span class="flow-plan-price">$6,847/mth</span>
-              </div>
-              <p class="flow-plan-desc">4 design sessions per week. Every other day including weekends.</p>
-              <a href="https://buy.stripe.com/28E14bd0G7Ix7DQ0S40gw0t" target="_blank" rel="noopener" class="btn-primary">Start with Priority</a>
-              <p class="flow-good-for">Good for teams moving fast who need a design partner keeping pace with them.</p>
-            </div>
-            <div class="flow-plan-box">
-              <div class="flow-plan-header">
-                <span class="flow-plan-name flow-plan-subtle">Standard</span>
-                <span class="flow-plan-price flow-plan-subtle">$4,987/mth</span>
-              </div>
-              <p class="flow-plan-desc">2 design sessions per week. Tuesdays and Fridays.</p>
-              <a href="https://buy.stripe.com/3cIfZ55yefaZf6i0S40gw0u" target="_blank" rel="noopener" class="flow-link">Start with Standard</a>
-              <p class="flow-good-for">Good for teams who want the same quality and thinking at a steadier rhythm.</p>
-            </div>
-            <p class="flow-note">Cancel or pause anytime. 75% back if not a fit after week one.</p>
-            <p class="flow-oneoff">Prefer a one-off project? <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="flow-link">Book a call</a> or <a href="mailto:hey@crucial.design" class="flow-link">email</a> to discuss.</p>
-          </div>
-        </div>
-
-        <!-- Step: Connect and Sync -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Connect and Sync</h3>
-            <div class="flow-body">
-              <p>I set up a private Slack channel. This becomes our hub. Everything lives here: project context, Figma links, calendar link for booking calls, updates, feedback. One place for everything</p>
-              <p>You share your goals and product vision. I start digging in.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step: Product Strategy -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Product Strategy</h3>
-            <div class="flow-body">
-              <p>I get into the product properly. Talk to your team, map the workflows, understand what your AI actually does and where users lose the thread. Then I tell you honestly what's broken and what to fix first.</p>
-              <p>This is where most designers go quiet and just start designing. I don't.</p>
-            </div>
-            <p class="flow-good-for">Good for early-stage founders who aren't sure what the product needs to be yet, or teams stuck between too many priorities.</p>
-          </div>
-        </div>
-
-        <!-- Step: Design Execution -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Design Execution</h3>
-            <div class="flow-body">
-              <p>Once we're clear on direction, I move fast. Clean, opinionated, buildable design. Every decision comes with the reasoning behind it.</p>
-              <p>No handoff to a junior. No account manager in between. Just me.</p>
-            </div>
-            <p class="flow-good-for">Good for funded teams who know what they're building and need a principal-level designer embedded in the product.</p>
-          </div>
-        </div>
-
-        <!-- Step: Investor Ready -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Investor Ready</h3>
-            <div class="flow-body">
-              <p>Sometimes the product works but it doesn't show well. Demos fall flat. Investors see potential but can't picture it. I've been in that room. I know what makes a product land in a funding conversation.</p>
-              <p>I help you close that gap.</p>
-            </div>
-            <p class="flow-good-for">Good for pre-raise teams who need the product to look and feel as strong as the underlying technology.</p>
-          </div>
-        </div>
-
-      </div>
+      <p class="hero-byline fade-in"><a href="https://x.com/oykun" target="_blank" rel="noopener">Oykun</a>. Design partner for AI founders, since 1998. London.</p>
     </div>
   </section>
 
   <!-- ============ Selected Work ============ -->
   <section class="work" id="work">
+    <!-- Arcade -->
+    <div class="project fade-in">
+      <div class="project-info">
+        <p><strong>Arcade.dev</strong> &nbsp; <strong>The only MCP runtime for secure, reliable AI agent deployments.</strong> &nbsp; $12M seed-funded. Built by former Okta and AI infrastructure engineers to solve secure authentication, the missing layer that lets AI agents take action.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-card-inner">
+          <img src="images/arcade001.jpg" alt="Arcade product interface" loading="lazy">
+          <img src="images/arcade002.jpg" alt="Arcade dashboard" loading="lazy">
+          <img src="images/arcade003.jpg" alt="Arcade deployment view" loading="lazy">
+          <img src="images/arcade004.jpg" alt="Arcade agent management" loading="lazy">
+        </div>
+      </div>
+    </div>
+
     <!-- MultiOn -->
     <div class="project fade-in">
       <div class="project-info">
@@ -264,10 +181,10 @@
     </div>
   </section>
 
-  <!-- ============ Final CTA ============ -->
-  <section class="final-cta" id="contact">
+  <!-- ============ How I Work / Flow ============ -->
+  <section class="flow" id="process">
     <div class="container-narrow">
-      <h2 class="flow-title fade-in">Your AI is good enough. The experience around it isn't.<br>Let's fix that.</h2>
+      <h2 class="flow-title fade-in">Here's how we take your AI Product<br>from impressive tech to a product people reach for</h2>
       <div class="flow-timeline">
 
         <!-- Step: Say hello (optional) -->
@@ -277,38 +194,79 @@
             <h3 class="flow-name">Say hello</h3>
             <div class="flow-body">
               <p>Want to chat before committing? Totally fine. <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="flow-link">Book a free call</a> or drop me a line at <a href="mailto:hey@crucial.design" class="flow-link">hey@crucial.design</a></p>
-              <p class="flow-optional">This step is optional. If you already know what you need, skip straight to picking a plan.</p>
+              <p class="flow-optional">This step is optional. If you already know what you need and want to move fast, skip straight to picking a plan.</p>
             </div>
           </div>
         </div>
 
         <!-- Step: Pick a plan -->
-        <div class="flow-step fade-in" id="pricing-cta">
+        <div class="flow-step fade-in" id="pricing">
           <div class="flow-dot"></div>
           <div class="flow-card">
             <h3 class="flow-name">Pick a plan</h3>
-
             <div class="flow-plan-box">
-              <div class="flow-plan-header">
-                <span class="flow-plan-name">Priority</span>
-                <span class="flow-plan-price">$6,847/mth</span>
-              </div>
+              <a href="https://buy.stripe.com/28E14bd0G7Ix7DQ0S40gw0t" target="_blank" rel="noopener" class="cta-bar cta-bar--dark cta-bar--plan">Start with Priority for $6,847/mth</a>
               <p class="flow-plan-desc">4 design sessions per week. Every other day including weekends.</p>
-              <a href="https://buy.stripe.com/28E14bd0G7Ix7DQ0S40gw0t" target="_blank" rel="noopener" class="btn-primary">Start with Priority</a>
               <p class="flow-good-for">Good for teams moving fast who need a design partner keeping pace with them.</p>
             </div>
             <div class="flow-plan-box">
-              <div class="flow-plan-header">
-                <span class="flow-plan-name flow-plan-subtle">Standard</span>
-                <span class="flow-plan-price flow-plan-subtle">$4,987/mth</span>
-              </div>
+              <a href="https://buy.stripe.com/3cIfZ55yefaZf6i0S40gw0u" target="_blank" rel="noopener" class="cta-bar cta-bar--primary cta-bar--plan">Start with Standard for $4,987/mth</a>
               <p class="flow-plan-desc">2 design sessions per week. Tuesdays and Fridays.</p>
-              <a href="https://buy.stripe.com/3cIfZ55yefaZf6i0S40gw0u" target="_blank" rel="noopener" class="flow-link">Start with Standard</a>
               <p class="flow-good-for">Good for teams who want the same quality and thinking at a steadier rhythm.</p>
             </div>
             <p class="flow-note">Cancel or pause anytime. 75% back if not a fit after week one.</p>
             <p class="flow-oneoff">Prefer a one-off project? <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="flow-link">Book a call</a> or <a href="mailto:hey@crucial.design" class="flow-link">email</a> to discuss.</p>
+          </div>
+        </div>
 
+        <!-- Step: Connect and Sync -->
+        <div class="flow-step fade-in">
+          <div class="flow-dot"></div>
+          <div class="flow-card">
+            <h3 class="flow-name">Connect and Sync</h3>
+            <div class="flow-body">
+              <p>I set up a private Slack channel. This becomes our hub. Everything lives here: project context, Figma links, calendar link for booking calls, updates, feedback. One place for everything</p>
+              <p>You share your goals and product vision. I start digging in.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step: Product Strategy -->
+        <div class="flow-step fade-in">
+          <div class="flow-dot"></div>
+          <div class="flow-card">
+            <h3 class="flow-name">Product Strategy</h3>
+            <div class="flow-body">
+              <p>I get into the product properly. Talk to your team, map the workflows, understand what your AI actually does and where users lose the thread. Then I tell you honestly what's broken and what to fix first.</p>
+              <p>This is where most designers go quiet and just start designing. I don't.</p>
+            </div>
+            <p class="flow-good-for">Good for early-stage founders who aren't sure what the product needs to be yet, or teams stuck between too many priorities.</p>
+          </div>
+        </div>
+
+        <!-- Step: Design Execution -->
+        <div class="flow-step fade-in">
+          <div class="flow-dot"></div>
+          <div class="flow-card">
+            <h3 class="flow-name">Design Execution</h3>
+            <div class="flow-body">
+              <p>Once we're clear on direction, I move fast. Clean, opinionated, buildable design. Every decision comes with the reasoning behind it.</p>
+              <p>No handoff to a junior. No account manager in between. Just me.</p>
+            </div>
+            <p class="flow-good-for">Good for funded teams who know what they're building and need a principal-level designer embedded in the product.</p>
+          </div>
+        </div>
+
+        <!-- Step: Investor Ready -->
+        <div class="flow-step fade-in">
+          <div class="flow-dot"></div>
+          <div class="flow-card">
+            <h3 class="flow-name">Investor Ready</h3>
+            <div class="flow-body">
+              <p>Sometimes the product works but it doesn't show well. Demos fall flat. Investors see potential but can't picture it. I've been in that room. I know what makes a product land in a funding conversation.</p>
+              <p>I help you close that gap.</p>
+            </div>
+            <p class="flow-good-for">Good for pre-raise teams who need the product to look and feel as strong as the underlying technology.</p>
           </div>
         </div>
 
@@ -317,10 +275,17 @@
   </section>
 
   <!-- ============ Footer ============ -->
-  <footer class="footer">
+  <footer class="footer" id="about">
+    <div class="footer-photos">
+      <a href="https://x.com/oykun/status/1971126280386138421" target="_blank" rel="noopener" class="footer-photo" style="--rot: -4deg; --x: -5%; --y: 0;"><img src="images/about-1.jpg" alt="Oykun selfie"></a>
+      <a href="https://x.com/oykun/status/2023450450947960847" target="_blank" rel="noopener" class="footer-photo" style="--rot: 3deg; --x: 8%; --y: -10px;"><img src="images/about-2.jpg" alt="Cat and laptop"></a>
+      <a href="https://x.com/oykun/status/1971126280386138421" target="_blank" rel="noopener" class="footer-photo" style="--rot: -2deg; --x: -3%; --y: 5px;"><img src="images/about-3.jpg" alt="Big Ben, London"></a>
+      <a href="https://x.com/oykun/status/2025862092352360735" target="_blank" rel="noopener" class="footer-photo" style="--rot: 5deg; --x: 6%; --y: -8px;"><img src="images/about-4.jpg" alt="Working from rooftop"></a>
+      <a href="https://x.com/oykun" target="_blank" rel="noopener" class="footer-photo" style="--rot: -3deg; --x: -4%; --y: 12px;"><img src="images/about-5.jpg" alt="On a flight"></a>
+    </div>
     <div class="footer-inner">
       <div class="footer-bio fade-in">
-        <p>I'm Oykun. 25 years shaping products.</p>
+        <p>I'm Oykun. Shaping products since 1998.</p>
         <p>First as a full-stack developer and designer, then design only.</p>
         <p>I've worked at every scale, from early-stage startups to Fortune 100s. Complex data, complex systems, making them make sense.</p>
         <p>I started Crucial.Design because I kept seeing the same thing: brilliant AI, terrible product experience.</p>
@@ -328,16 +293,58 @@
         <p>AI has the hardest and most interesting design problems right now. That's why it's all I do.</p>
       </div>
       <a href="https://x.com/oykun" target="_blank" rel="noopener" class="footer-avatar fade-in"><img src="images/avatar.jpg" alt="Oykun"></a>
-      <p class="footer-name fade-in"><strong>Öykün Yılmaz</strong><br>Designer & Founder, Crucial.Design</p>
-      <div class="footer-links fade-in">
-        <a href="https://x.com/oykun" target="_blank" rel="noopener">@oykun</a>
-        <a href="https://x.com/crucialaidesign" target="_blank" rel="noopener">@crucialaidesign</a>
-        <a href="mailto:hey@crucial.design">hey@crucial.design</a>
-      </div>
+      <p class="footer-name fade-in"><strong>Öykün Yılmaz</strong><br>Designer & Founder, Crucial.Design · London</p>
+    </div>
+    <div class="footer-links fade-in">
+      <a class="cta-bar cta-bar--secondary" href="https://x.com/oykun" target="_blank" rel="noopener"><span class="container-narrow">@oykun</span></a>
+      <a class="cta-bar cta-bar--secondary" href="https://x.com/crucialaidesign" target="_blank" rel="noopener"><span class="container-narrow">@crucialaidesign</span></a>
+      <a class="cta-bar cta-bar--secondary" href="mailto:hey@crucial.design"><span class="container-narrow">hey@crucial.design</span></a>
     </div>
   </footer>
 
-  <script src="main.js?v=2"></script>
+  <script src="main.js?v=7"></script>
+  <script>
+    (function(){
+      var words = ['product design','branding','web design','UX strategy','design systems'];
+      var slot = document.querySelector('[data-topline-flip]');
+      if(!slot) return;
+      var idx = 0;
+      var busy = false;
+
+      function randDelay(){ return Math.floor(Math.random() * 400) + 'ms'; }
+
+      function wrapLetters(text){
+        return text.split('').map(function(ch){
+          if(ch === ' ') return '<span class="topline-ch" style="transition-delay:'+randDelay()+'">&nbsp;</span>';
+          return '<span class="topline-ch" style="transition-delay:'+randDelay()+'">'+ch+'</span>';
+        }).join('');
+      }
+
+      slot.innerHTML = wrapLetters(words[0]);
+      requestAnimationFrame(function(){
+        slot.querySelectorAll('.topline-ch').forEach(function(el){ el.classList.add('topline-ch-in'); });
+      });
+
+      setInterval(function(){
+        if(busy) return;
+        busy = true;
+        slot.querySelectorAll('.topline-ch').forEach(function(el){
+          el.style.transitionDelay = randDelay();
+          el.classList.remove('topline-ch-in');
+        });
+        setTimeout(function(){
+          idx = (idx + 1) % words.length;
+          slot.innerHTML = wrapLetters(words[idx]);
+          requestAnimationFrame(function(){
+            requestAnimationFrame(function(){
+              slot.querySelectorAll('.topline-ch').forEach(function(el){ el.classList.add('topline-ch-in'); });
+              busy = false;
+            });
+          });
+        }, 600);
+      }, 2500);
+    })();
+  </script>
 
 </body>
 </html>
