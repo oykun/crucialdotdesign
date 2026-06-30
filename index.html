@@ -42,38 +42,32 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,300;1,14..32,400;1,14..32,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=14">
+  <link rel="stylesheet" href="style.css?v=35">
 </head>
 <body>
 
   <!-- ============ Top status line ============ -->
   <div class="topline">
     <div class="container-narrow">
-      <div class="topline-bar">
-        <p class="topline-context"><span class="topline-lead">Founders building AI-native products,</span>I've got 2 spots open for <span class="topline-flip" data-topline-flip></span>.<span class="topline-meta">25+ years, 500+ projects, $1B+ raised for clients.</span></p>
-        <div class="topline-actions">
-          <a class="topline-btn" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">Let's talk</a>
-          <a class="topline-email" href="mailto:hey@crucial.design">hey@crucial.design</a>
-        </div>
-      </div>
+      <p class="topline-context"><span class="topline-lead">Founders building AI-native products,</span>I've got 2 spots open for <span class="topline-flip" data-topline-flip></span>.<span class="topline-meta">25+ years, 500+ projects, $1B+ raised for clients.</span></p>
     </div>
+    <a class="cta-bar cta-bar--primary" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">
+      <span class="container-narrow">Let's talk</span>
+    </a>
+    <a class="cta-bar cta-bar--secondary" href="mailto:hey@crucial.design">
+      <span class="container-narrow">hey@crucial.design</span>
+    </a>
   </div>
 
-  <!-- ============ Floating actions (fly out of the topline on scroll) ============ -->
-  <div class="float-cta" id="float-cta">
-    <a class="float-btn float-btn--avatar" href="#about" aria-label="More about Oykun" data-tooltip="25+ years, 500+ projects, $1B+ raised for clients.">
-      <img src="images/avatar.jpg" alt="Oykun">
+  <!-- ============ Floating action bar (stacked rows, pinned on scroll) ============ -->
+  <div class="float-bar" id="float-cta">
+    <a class="cta-bar cta-bar--primary" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">
+      <span class="container-narrow">Let's talk</span>
     </a>
-    <a class="float-btn float-btn--call" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" aria-label="Let's talk" data-tooltip="Book a call">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-    </a>
-    <a class="float-btn float-btn--email" href="mailto:hey@crucial.design" aria-label="Email hey@crucial.design" data-tooltip="Mail to hey@crucial.design">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-    </a>
-    <a class="float-btn float-btn--pricing" href="#process" aria-label="Process and pricing" data-tooltip="2 spots open. Starting from $4,987/mth">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    <a class="cta-bar cta-bar--secondary" href="#process">
+      <span class="container-narrow">Process and Pricing</span>
     </a>
   </div>
 
@@ -211,21 +205,13 @@
           <div class="flow-card">
             <h3 class="flow-name">Pick a plan</h3>
             <div class="flow-plan-box">
-              <div class="flow-plan-header">
-                <span class="flow-plan-name">Priority</span>
-                <span class="flow-plan-price">$6,847/mth</span>
-              </div>
+              <a href="https://buy.stripe.com/28E14bd0G7Ix7DQ0S40gw0t" target="_blank" rel="noopener" class="cta-bar cta-bar--dark cta-bar--plan">Start with Priority for $6,847/mth</a>
               <p class="flow-plan-desc">4 design sessions per week. Every other day including weekends.</p>
-              <a href="https://buy.stripe.com/28E14bd0G7Ix7DQ0S40gw0t" target="_blank" rel="noopener" class="btn-primary">Start with Priority</a>
               <p class="flow-good-for">Good for teams moving fast who need a design partner keeping pace with them.</p>
             </div>
             <div class="flow-plan-box">
-              <div class="flow-plan-header">
-                <span class="flow-plan-name flow-plan-subtle">Standard</span>
-                <span class="flow-plan-price flow-plan-subtle">$4,987/mth</span>
-              </div>
+              <a href="https://buy.stripe.com/3cIfZ55yefaZf6i0S40gw0u" target="_blank" rel="noopener" class="cta-bar cta-bar--primary cta-bar--plan">Start with Standard for $4,987/mth</a>
               <p class="flow-plan-desc">2 design sessions per week. Tuesdays and Fridays.</p>
-              <a href="https://buy.stripe.com/3cIfZ55yefaZf6i0S40gw0u" target="_blank" rel="noopener" class="flow-link">Start with Standard</a>
               <p class="flow-good-for">Good for teams who want the same quality and thinking at a steadier rhythm.</p>
             </div>
             <p class="flow-note">Cancel or pause anytime. 75% back if not a fit after week one.</p>
@@ -308,15 +294,15 @@
       </div>
       <a href="https://x.com/oykun" target="_blank" rel="noopener" class="footer-avatar fade-in"><img src="images/avatar.jpg" alt="Oykun"></a>
       <p class="footer-name fade-in"><strong>Öykün Yılmaz</strong><br>Designer & Founder, Crucial.Design · London</p>
-      <div class="footer-links fade-in">
-        <a href="https://x.com/oykun" target="_blank" rel="noopener">@oykun</a>
-        <a href="https://x.com/crucialaidesign" target="_blank" rel="noopener">@crucialaidesign</a>
-        <a href="mailto:hey@crucial.design">hey@crucial.design</a>
-      </div>
+    </div>
+    <div class="footer-links fade-in">
+      <a class="cta-bar cta-bar--secondary" href="https://x.com/oykun" target="_blank" rel="noopener"><span class="container-narrow">@oykun</span></a>
+      <a class="cta-bar cta-bar--secondary" href="https://x.com/crucialaidesign" target="_blank" rel="noopener"><span class="container-narrow">@crucialaidesign</span></a>
+      <a class="cta-bar cta-bar--secondary" href="mailto:hey@crucial.design"><span class="container-narrow">hey@crucial.design</span></a>
     </div>
   </footer>
 
-  <script src="main.js?v=5"></script>
+  <script src="main.js?v=7"></script>
   <script>
     (function(){
       var words = ['product design','branding','web design','UX strategy','design systems'];

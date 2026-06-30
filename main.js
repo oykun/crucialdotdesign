@@ -18,26 +18,61 @@ document.querySelectorAll('.fade-in').forEach(function(el) {
 });
 
 /* ========================================
-   Floating actions: circular icon buttons that blip in once the topline
-   scrolls out of view (scale + fade pop, staggered — handled in CSS).
+   Floating action bar: stacked CTA rows that slide down from the top once
+   the topline has scrolled out of view.
    ======================================== */
 (function() {
-  var floatCta = document.getElementById('float-cta');
+  var floatBar = document.getElementById('float-cta');
   var topline = document.querySelector('.topline');
-  if (!floatCta || !topline) return;
+  if (!floatBar || !topline) return;
 
-  // Single rAF-throttled scroll check drives both reveals:
-  //  - call + email blip in once the topline has scrolled past
-  //  - the avatar joins only once the in-page hero avatar has scrolled past,
-  //    so we never show two of the same avatar at once
-  var heroAvatar = document.querySelector('.hero-avatar');
   var ticking = false;
+
+  // 1x1 canvas reused to sample average colour of images behind the bar
+  var lumCanvas = document.createElement('canvas');
+  lumCanvas.width = lumCanvas.height = 1;
+  var lumCtx = lumCanvas.getContext('2d', { willReadFrequently: true });
+
+  function luminanceOf(el) {
+    // Images (the dark work mockups): sample their average colour
+    if (el.tagName === 'IMG' && el.complete && el.naturalWidth) {
+      try {
+        lumCtx.drawImage(el, 0, 0, 1, 1);
+        var d = lumCtx.getImageData(0, 0, 1, 1).data;
+        return (0.299 * d[0] + 0.587 * d[1] + 0.114 * d[2]) / 255;
+      } catch (e) { /* tainted — fall through */ }
+    }
+    // Otherwise walk up for the first solid background colour
+    var node = el;
+    while (node && node.nodeType === 1) {
+      var bg = getComputedStyle(node).backgroundColor;
+      var m = bg.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+      if (m) {
+        var a = m[4] === undefined ? 1 : parseFloat(m[4]);
+        if (a > 0.3) {
+          return (0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3]) / 255;
+        }
+      }
+      node = node.parentElement;
+    }
+    return 1; // assume light
+  }
 
   function update() {
     ticking = false;
-    floatCta.classList.toggle('is-visible', topline.getBoundingClientRect().bottom <= 0);
-    if (heroAvatar) {
-      floatCta.classList.toggle('show-avatar', heroAvatar.getBoundingClientRect().bottom < 0);
+    var visible = topline.getBoundingClientRect().bottom <= 0;
+    floatBar.classList.toggle('is-visible', visible);
+    if (!visible) return;
+
+    // Sample what's behind the bar's lower edge and flip the labels if it's dark
+    var rect = floatBar.getBoundingClientRect();
+    var stack = document.elementsFromPoint(Math.round(window.innerWidth / 2), Math.round(rect.bottom - 2));
+    var behind = null;
+    for (var i = 0; i < stack.length; i++) {
+      if (!floatBar.contains(stack[i])) { behind = stack[i]; break; }
+    }
+    if (behind) {
+      floatBar.classList.toggle('on-dark', luminanceOf(behind) < 0.5);
     }
   }
 
