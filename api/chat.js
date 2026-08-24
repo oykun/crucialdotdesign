@@ -10,7 +10,7 @@ KEY FACTS:
 - Based in London, UK.
 
 PRICING:
-- Priority plan: $6,847/month — 4 design sessions per week (every other day, including weekends)
+- Priority plan: $7,986/month — 4 design sessions per week (every other day, including weekends)
 - Standard plan: $4,987/month — 2 design sessions per week (Tuesdays and Fridays)
 - Cancel or pause anytime
 - 75% refund if it's not a fit after the first week
