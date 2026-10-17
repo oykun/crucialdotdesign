@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <!--
 
    ████ ████  ██ ██  ████ ██  ███  ██          ███    ██        ████  █████  ████ ██  ████ ██  ██
@@ -10,8 +10,7 @@
   Let's talk: hey@crucial.design
 
 -->
-<html lang="en">
-<head>
+<html lang="en"><head>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3W3DC31QMG"></script>
   <script>
@@ -20,331 +19,571 @@
     gtag('js', new Date());
     gtag('config', 'G-3W3DC31QMG');
   </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crucial.Design — Design Partner for AI Founders</title>
-  <meta name="description" content="Your AI is impressive, but most of your users get lost before they ever reach the value. I find the straight line from confusion to clarity. Thinking first, then design.">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Crucial.Design — Design Partner for AI Founders">
-  <meta property="og:description" content="Your AI is impressive, but most of your users get lost before they ever reach the value. I find the straight line from confusion to clarity. Thinking first, then design.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://crucial.design">
-  <meta property="og:image" content="https://crucial.design/images/crucialdesign-og.jpg">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Crucial.Design — Design Partner for AI Founders">
-  <meta name="twitter:description" content="Your AI is impressive, but most of your users get lost before they ever reach the value. I find the straight line from confusion to clarity. Thinking first, then design.">
-  <meta name="twitter:image" content="https://crucial.design/images/crucialdesign-og.jpg">
-
-  <link rel="icon" type="image/jpeg" href="images/avatar.jpg">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css?v=35">
-</head>
-<body>
-
-  <!-- ============ Top status line ============ -->
-  <div class="topline">
-    <div class="container-narrow">
-      <p class="topline-context"><span class="topline-lead">Founders building AI-native products,</span>I've got 2 spots open for <span class="topline-flip" data-topline-flip></span>.<span class="topline-meta">25+ years, 500+ projects, $1B+ raised for clients.</span></p>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crucial.Design</title>
+<meta name="description" content="Crucial.Design is your all-in-one creative partner. Strategy, product, brand, website, code for founders of AI companies since 1998.">
+<meta property="og:title" content="Crucial.Design">
+<meta property="og:description" content="Crucial.Design is your all-in-one creative partner. Strategy, product, brand, website, code for founders of AI companies since 1998.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://crucial.design">
+<meta property="og:image" content="https://crucial.design/images/crucialdesign-og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Crucial.Design">
+<meta name="twitter:description" content="Crucial.Design is your all-in-one creative partner. Strategy, product, brand, website, code for founders of AI companies since 1998.">
+<meta name="twitter:image" content="https://crucial.design/images/crucialdesign-og.jpg">
+<link rel="icon" type="image/jpeg" href="images/avatar.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+<style>
+  /* A16 · Full width, text top left, the bend at the bottom (updated 17 Oct, same round).
+     White by default; click any empty space and the page picks a new colour from five (white, black, green, lilac, orange). Type: Geist.
+     Header gets the top 60% of the screen, work starts in the bottom 40%. The bottom 20% of the browser works like the Dock: whatever passes through it grows from the centre as it nears the bottom edge, fading in from the top of the band so there is no seam. WebGL, with a plain canvas fallback. "Start a project" is a button. */
+  :root{--bg:#ffffff;--ink:#111111;--muted:#6f6f6f;--g:16px;--pad:72px;--btn-bg:#111111;--btn-ink:#ffffff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);transition:background-color .5s,color .5s;font:400 16px/1.5 Geist,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  body{margin:0}
+  a{color:inherit;text-underline-offset:3px;text-decoration-thickness:1px} a:hover{color:var(--muted)}
+  a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  /* positioning from system.studio: one centred block, sitting in the middle of the top of the screen */
+  /* the header text sits in the middle of the space above the band (the band is fixed at 50% of the screen) */
+  header{box-sizing:border-box;height:50svh;padding:0 0 11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
+  header p{max-width:400px;line-height:1.65}
+  /* the slim full-bleed band from the live site: edge to edge, 22px tall, pale, square. Hover fills with ink. */
+  .btn{position:fixed;left:0;right:0;top:50%;transform:translateY(-50%);z-index:3;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;width:100vw;height:22px;line-height:22px;padding:0;margin:0;border-radius:0;background:var(--ink);color:var(--bg);text-decoration:none;font-size:15px;font-weight:500;text-align:center;cursor:pointer;transition:background-color .5s,color .5s,height .6s cubic-bezier(.22,1,.36,1)}
+  /* hover the band and it opens above and below: the next three free times from cal.com, and the email */
+  .btn.open{height:104px}
+  .btn a{color:inherit;text-decoration:none}
+  .panel{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;height:0;margin-top:0;opacity:0;overflow:hidden;transition:opacity .25s}
+  .btn.open .panel{height:auto;margin-top:0;opacity:1;transition:opacity .2s .1s}
+  .btnlab{display:block;width:100%;text-align:center}
+  /* open: the pixels keep to the two ends and fade out toward the middle, so the times sit on calm ink */
+  .btn .starfx{top:50%;bottom:auto;height:150px;transform:translateY(-50%);transition:opacity .4s}
+  .btn.open .starfx{opacity:.75;-webkit-mask-image:linear-gradient(to right,#000 calc(50% - 420px),transparent calc(50% - 370px),transparent calc(50% + 370px),#000 calc(50% + 420px));mask-image:linear-gradient(to right,#000 calc(50% - 420px),transparent calc(50% - 370px),transparent calc(50% + 370px),#000 calc(50% + 420px))}
+  .slots{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  /* each time is a small calendar entry: day and date over the time, no box. Hover floods it from the bottom with its own colour */
+  .slots{gap:4px!important;flex-wrap:nowrap!important}
+  .slot{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:12px 18px 12px 16px;min-width:116px;text-align:left;line-height:1.15;color:var(--bg)!important;white-space:nowrap}
+  .slot .d{font-size:12px;font-weight:650;letter-spacing:.07em;text-transform:uppercase;opacity:.55;transition:opacity .2s}
+  .slot .t{font-size:16px;font-weight:600}
+  .slot::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--fill,#ff4a00);transform:scaleY(0);transform-origin:50% 100%;transition:transform .4s cubic-bezier(.22,1,.36,1)}
+  .slot:hover::before,.slot:focus-visible::before{transform:scaleY(1)}
+  .slot:hover,.slot:focus-visible{color:var(--on,#111)!important}
+  .slot:hover .d{opacity:.8}
+  @media (max-width:700px){.slots{flex-wrap:wrap!important;justify-content:center}.slot{min-width:0;padding:8px 12px}}
+  .mail{font-size:14px;line-height:1.3;opacity:.8}.mail a{text-decoration:underline!important;text-underline-offset:3px}
+  .btn.open .btnlab{position:absolute;opacity:0;pointer-events:none}
+  .btn .btnlab{text-transform:uppercase;letter-spacing:.05em;font-size:13px;font-weight:650}
+  .btnlab,.ctxlab{transition:opacity .25s,color .25s}
+  .ctxlab{position:absolute;inset:0;color:var(--bg);opacity:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 16px;pointer-events:none}
+  .btn.ctx .btnlab{opacity:0}.btn.ctx .ctxlab{opacity:1}
+  @media (min-width:1001px){.work figcaption{display:none}}
+  .btn:hover{color:var(--bg)}
+  .starfx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .mark{position:relative;display:inline-block}
+  .btnlab{position:relative;display:inline-block;color:var(--bg)}
+  header .one{font-weight:600}
+  .wrap{position:relative;padding-top:12svh;padding-bottom:120px}
+  /* big and full width again (17 Oct, "it needs to be bigger"), with a little rhythm: pieces take half to two-thirds of the
+     width, one in ten runs edge to edge, small staggered offsets */
+  .work{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);row-gap:var(--g);align-items:start}
+  .work figure:nth-child(10n+1){grid-column:1 / span 7}
+  .work figure:nth-child(10n+2){grid-column:8 / span 5;margin-top:64px}
+  .work figure:nth-child(10n+3){grid-column:1 / span 5;margin-top:24px}
+  .work figure:nth-child(10n+4){grid-column:6 / span 7}
+  .work figure:nth-child(10n+5){grid-column:1 / span 6}
+  .work figure:nth-child(10n+6){grid-column:7 / span 6;margin-top:48px}
+  .work figure:nth-child(10n+7){grid-column:1 / span 12}
+  .work figure:nth-child(10n+8){grid-column:1 / span 8}
+  .work figure:nth-child(10n+9){grid-column:9 / span 4;margin-top:80px}
+  .work figure:nth-child(10n+10){grid-column:3 / span 8}
+  .work figure{min-width:0} .work img,.work video{display:block;width:100%;max-width:100%;height:auto;object-fit:cover;background:rgba(127,127,127,.12)}
+  .work figcaption{margin-top:6px;font-size:14px;color:var(--muted);opacity:0;transition:opacity .2s} .work figcaption b{color:var(--ink);font-weight:500} .work figure:hover figcaption{opacity:1}
+  /* ---- process (17 Oct, v60): the Calendar (from the Process lab, I1). Your first two weeks as a real calendar: the steps sit on
+     their days, dots mark the design sessions after. Click a day (or use Back / Next, or the arrow keys). Each step has its own colour;
+     the whole page takes it (v62: no section colour of its own). Say hello, Pick a plan and Strategy share Day 0. The band steps aside here. */
+  .process{position:relative;min-height:max(100svh,640px);margin:120px calc(-1 * var(--pad)) 0;padding:56px var(--pad) calc(15svh + 32px);overflow:hidden;outline:none;color:var(--ink);transition:color .5s;display:flex;flex-direction:column}
+  .ptop{display:flex;flex-direction:column;gap:2px}
+  .ptop b{font-weight:600}.ptop span{opacity:.75}
+  /* v72 (17 Oct): one fast week, no week two. Eight squares, days 0 to 7, each holding its own step, larger, like dice.
+     Hover or click a day (or use the arrow keys): it fills and the whole page takes its colour. Update days carry a tag */
+  .pdays{flex:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:40px 0;align-content:center}
+  .pday{position:relative;aspect-ratio:1/1;font:inherit;color:inherit;text-align:left;background:none;border:0;box-shadow:inset 0 0 0 1px color-mix(in srgb,currentColor 35%,transparent);padding:22px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:background-color .25s,color .25s,box-shadow .2s}
+  .pday .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  .pday .k{font-size:12px;font-weight:650;letter-spacing:.07em;text-transform:uppercase;opacity:.7}
+  .pday .tag{font-size:12px;font-weight:650;letter-spacing:.07em;text-transform:uppercase;padding:4px 7px;box-shadow:inset 0 0 0 1px currentColor}
+  .pday .big{display:block;font-weight:250;font-size:96px;line-height:.9;letter-spacing:-.05em;margin-left:-.04em}
+  .pday .h{display:block;font-weight:600;font-size:18px;margin-top:10px}
+  .pday .l{display:block;font-size:16px;line-height:1.4;margin-top:4px;opacity:.8;max-width:30ch;min-height:4.2em}
+  .pday.quiet .big,.pday.quiet .h{opacity:.45}
+  .pday:hover{box-shadow:inset 0 0 0 1.5px currentColor}
+  .pday.on{background:var(--ink);color:var(--bg);box-shadow:none}
+  .pday.on .big,.pday.on .h{opacity:1}
+  .ptop .ai{max-width:62ch;margin-top:10px;opacity:1}
+  .pfoot{display:flex;justify-content:space-between;gap:24px;font-size:14px}
+  .pfoot span{opacity:.75}
+  .pfoot a{color:var(--ink);text-decoration:underline;white-space:nowrap}
+  .btn.away{opacity:0;pointer-events:none;transition:opacity .3s,background-color .5s,color .5s,height .6s cubic-bezier(.22,1,.36,1)}
+  @media (max-width:1100px){.pday{padding:16px}.pday .big{font-size:72px}.pday .l{font-size:14px}}
+  @media (max-width:820px){.process{padding:40px 20px calc(15svh + 24px)}.pdays{grid-template-columns:1fr 1fr;gap:8px;margin:28px 0}.pday{aspect-ratio:auto;min-height:220px;padding:14px}.pday .big{font-size:56px}.pday .h{font-size:16px}.pfoot{flex-direction:column;gap:4px}}
+  footer{margin:0;padding-block:40px calc(18svh + 24px);display:flex;gap:18px;flex-wrap:wrap;align-items:center;color:var(--muted)}
+  .swatches{display:flex;gap:0;margin-left:auto;align-items:flex-end;height:24px}
+  .swatches button{width:16px;height:16px;padding:0;border:0;border-radius:0;cursor:pointer;transition:height .2s}
+  .swatches button:hover{height:20px}
+  .swatches button.on{height:24px}
+  html,body{height:100%;overflow:hidden}
+  .scroller{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-left:max(var(--pad),env(safe-area-inset-left,0px));padding-right:max(var(--pad),env(safe-area-inset-right,0px));background:var(--bg);transition:background-color .5s;cursor:default}
+  #gl{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+  @media (max-width:1000px){.work figcaption{display:block;margin-top:6px;font-size:13px;color:var(--muted)}.work figcaption b{color:var(--ink);font-weight:600}}
+  @media (max-width:820px){:root{--pad:20px}header{height:50svh;padding:0 0 11px}.work{grid-template-columns:1fr 1fr;row-gap:var(--g)}.work figure{grid-column:span 2!important;margin-top:0!important}}
+  /* v69 (17 Oct): the open band is two blocks side by side. Left, book a call: the next two days as calendar squares, then more times
+     and the email, no labels. Right, start now: Standard, Priority, fixed price, as squares too. Hover floods a square with its colour */
+  .cols{display:flex;align-items:flex-start;justify-content:center;text-align:left;line-height:1.15}
+  .col{display:flex;flex-direction:column;gap:10px}
+  .col:first-child{padding-right:40px}
+  .col+.col{padding-left:40px;border-left:1px solid color-mix(in srgb,var(--bg) 16%,transparent)}
+  .col .ch{font-size:12px;font-weight:650;letter-spacing:.07em;text-transform:uppercase;opacity:.4}
+  .sqs{display:flex;gap:6px}
+  .sq{--sq:128px;position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:space-between;width:var(--sq);min-height:var(--sq);padding:12px;color:var(--bg)!important;text-decoration:none!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--bg) 22%,transparent);transition:color .2s,box-shadow .2s}
+  .sq>span{display:flex;flex-direction:column;gap:3px}
+  .sq::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--fill,#ff4a00);transform:scaleY(0);transform-origin:50% 100%;transition:transform .4s cubic-bezier(.22,1,.36,1)}
+  .sq:hover::before,.sq:focus-visible::before{transform:scaleY(1)}
+  .sq:hover,.sq:focus-visible{color:var(--on,#111)!important;box-shadow:none}
+  .sq .k{font-size:12px;font-weight:650;letter-spacing:.07em;text-transform:uppercase}
+  .sq .s{font-size:12px;opacity:.55}
+  .sq .t{font-size:16px;font-weight:600;white-space:nowrap}
+  .sq .n{font-size:40px;font-weight:300;line-height:1;letter-spacing:-.02em}
+  .more{display:flex;gap:18px;font-size:14px}
+  .more a{opacity:.7;transition:opacity .2s}.more a:hover{opacity:1;text-decoration:underline!important;text-underline-offset:3px}
+  .btn.open .starfx{-webkit-mask-image:linear-gradient(to right,#000 calc(50% - var(--mw,420px)),transparent calc(50% - var(--mw,420px) + 50px),transparent calc(50% + var(--mw,420px) - 50px),#000 calc(50% + var(--mw,420px)))!important;mask-image:linear-gradient(to right,#000 calc(50% - var(--mw,420px)),transparent calc(50% - var(--mw,420px) + 50px),transparent calc(50% + var(--mw,420px) - 50px),#000 calc(50% + var(--mw,420px)))!important}
+  .btn.open{height:220px}
+  .btn .starfx{height:520px}
+  @media (max-width:700px){.cols{flex-direction:column;align-items:center;gap:20px}.col:first-child{padding-right:0}.col+.col{padding-left:0;border-left:0}.sq{--sq:104px;padding:10px}.sq .n{font-size:32px}}
+  /* v75 (17 Oct): "a bit too large": the week now sits in the header's 400px column, centred, two squares a row */
+  .process .ptop,.process .pdays,.process .pfoot{width:100%;max-width:400px;margin-left:auto;margin-right:auto}
+  .pdays{grid-template-columns:1fr 1fr!important;gap:6px!important;flex:none!important;margin:32px auto!important}
+  .pday{aspect-ratio:1/1!important;min-height:0!important;padding:14px!important}
+  .pday .big{font-size:48px!important}
+  .pday .h{font-size:16px!important;margin-top:8px}
+  .pday .l{font-size:14px!important;line-height:1.35;min-height:4.05em}
+  .pday .tag{font-size:11px;padding:3px 6px}
+  .process{justify-content:center}
+  .pfoot{flex-direction:column;gap:6px}
+  @media (max-width:820px){.pday{aspect-ratio:auto!important}.pday .l{min-height:0}}
+  /* v76: hover only; the square takes its own colour, the page doesn't change */
+  .pday{cursor:default}
+  .pday.on .big,.pday.on .h{opacity:1}
+  .pfoot .pl{display:flex;flex-direction:column;gap:4px;margin-top:4px;opacity:1}
+</style></head><body>
+<div class="scroller" id="scroller">
+<header>
+  <p class="one"><span class="mark">Crucial.Design</span> is your all-in-one creative partner.</p>
+  <p>Strategy, product, brand, website, code for founders of AI companies since 1998. From $4,987 a month.</p>
+  <div class="btn" id="band">
+    <a class="btnlab" href="https://cal.com/crucialdesign/15min">Start a project</a>
+    <div class="panel" aria-label="Book a call, or start now">
+      <div class="cols">
+        <div class="col"><span class="ch">Book a call</span>
+          <div class="sqs" id="slots"></div>
+          <div class="more"><a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">More times →</a><a href="mailto:hey@crucial.design">hey@crucial.design</a></div>
+        </div>
+        <div class="col"><span class="ch">Start now</span>
+          <div class="sqs">
+            <a class="sq" href="https://buy.stripe.com/3cIfZ55yefaZf6i0S40gw0u" target="_blank" rel="noopener" style="--fill:#d7ff1f;--on:#111111"><span><span class="k">Standard</span><span class="s">2 sessions a week</span></span><span><span class="t">$4,987</span><span class="s">a month</span></span></a>
+            <a class="sq" href="https://buy.stripe.com/cNi9AH2m24wl0bo44g0gw0v" target="_blank" rel="noopener" style="--fill:#ff2e93;--on:#14000a"><span><span class="k">Priority</span><span class="s">4 sessions a week</span></span><span><span class="t">$7,986</span><span class="s">a month</span></span></a>
+            <a class="sq" href="mailto:hey@crucial.design?subject=Fixed-price%20project" style="--fill:#00d8ff;--on:#00141a"><span><span class="k">Fixed price</span><span class="s">One project</span></span><span><span class="t">Get a quote →</span></span></a>
+          </div>
+        </div>
+      </div>
     </div>
-    <a class="cta-bar cta-bar--primary" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">
-      <span class="container-narrow">Let's talk</span>
-    </a>
-    <a class="cta-bar cta-bar--secondary" href="mailto:hey@crucial.design">
-      <span class="container-narrow">hey@crucial.design</span>
-    </a>
   </div>
-
-  <!-- ============ Floating action bar (stacked rows, pinned on scroll) ============ -->
-  <div class="float-bar" id="float-cta">
-    <a class="cta-bar cta-bar--primary" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">
-      <span class="container-narrow">Let's talk</span>
-    </a>
-    <a class="cta-bar cta-bar--secondary" href="#process">
-      <span class="container-narrow">Process and Pricing</span>
-    </a>
-  </div>
-
-  <!-- ============ Hero ============ -->
-  <section class="hero">
-    <div class="container-wide hero-image fade-in">
-      <div class="hero-deck" id="hero-deck" aria-hidden="true"></div>
-      <img class="hero-deck-fallback" src="images/motion/motion07.jpg" alt="Product design showcase">
-    </div>
-    <div class="container-narrow">
-      <h1 class="hero-headline fade-in">Your AI is impressive.<br>But most of your users never get to see it.<br>They get lost before they reach the value.</h1>
-      <p class="hero-sub fade-in">They land and start guessing.<br>One path. Then another. Then another.<br>Each one dead-ends somewhere confusing.<br>Most give up before they reach the value.<br><br>The few who push through are your retention number.<br>The rest churn silently.<br><br>This is where I come in with Crucial.Design.<br>I find the straight line from confusion to clarity.<br>I don't start with pixels. I start with the thinking. Then I design.</p>
-      <a href="https://x.com/oykun" target="_blank" rel="noopener" class="hero-avatar fade-in"><img src="images/avatar.jpg" alt="Oykun"></a>
-      <p class="hero-byline fade-in"><a href="https://x.com/oykun" target="_blank" rel="noopener">Oykun</a>. Design partner for AI founders, since 1998. London.</p>
-    </div>
-  </section>
-
-  <!-- ============ Selected Work ============ -->
-  <section class="work" id="work">
-    <!-- Arcade -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>Arcade.dev</strong> &nbsp; <strong>The only MCP runtime for secure, reliable AI agent deployments.</strong> &nbsp; $12M seed-funded. Built by former Okta and AI infrastructure engineers to solve secure authentication, the missing layer that lets AI agents take action.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/arcade001.jpg" alt="Arcade product interface" loading="lazy">
-          <img src="images/arcade002.jpg" alt="Arcade dashboard" loading="lazy">
-          <img src="images/arcade003.jpg" alt="Arcade deployment view" loading="lazy">
-          <img src="images/arcade004.jpg" alt="Arcade agent management" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- MultiOn -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>MultiOn.ai</strong> &nbsp; <strong>AI agents that act on your behalf.</strong> &nbsp; Leading AI Agent featured in Forbes, VentureBeat and more. Recently secured $20 million funding at a $100 million valuation.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/multion-1.jpg" alt="MultiOn product interface" loading="lazy">
-          <img src="images/multion-2.jpg" alt="MultiOn dashboard" loading="lazy">
-          <img src="images/multion-3.jpg" alt="MultiOn agent interaction" loading="lazy">
-          <img src="images/multion-4.jpg" alt="MultiOn settings and account" loading="lazy">
-          <img src="images/multion-5.jpg" alt="MultiOn NYSE and press" loading="lazy">
-          <img src="images/multion-6.jpg" alt="MultiOn TED AI and awards" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- cubic.dev -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>cubic.dev</strong> &nbsp; <strong>Code Review For The AI Era.</strong> &nbsp; Backed by YCombinator. cubic helps modern software teams ship higher-quality code, 3x faster.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/cubic-1.jpg" alt="cubic.dev code review interface" loading="lazy">
-          <img src="images/cubic-2.jpg" alt="cubic.dev pull request analysis" loading="lazy">
-          <img src="images/cubic-3.jpg" alt="cubic.dev team collaboration" loading="lazy">
-          <img src="images/cubic-4.jpg" alt="cubic.dev workflow view" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- Echo -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>Echo</strong> &nbsp; <strong>NHS prescriptions without the hassle.</strong> &nbsp; Featured at the Apple App Store, BBC, Wired, The Times, TechCrunch and much more. Acquired by Lloyds Pharmacy.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/echo-1.jpg" alt="Echo prescription app interface" loading="lazy">
-          <img src="images/echo-2.jpg" alt="Echo press coverage" loading="lazy">
-          <img src="images/echo-3.jpg" alt="Echo reviews and App Store" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- Cooin -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>Cooin App.</strong> &nbsp; <strong>Buy, Sell, Trade Crypto.</strong> &nbsp; Collaboration with Adobe to design a Crypto trading platform for web and mobile.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/cooin-1.jpg" alt="Cooin trading interface" loading="lazy">
-          <img src="images/cooin-2.jpg" alt="Cooin portfolio dashboard" loading="lazy">
-          <img src="images/cooin-3.jpg" alt="Cooin mobile app" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- Others -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p class="others-intro"><strong>Want to see even more work?</strong> &nbsp; Sure thing, scroll down…</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/work-extra-1.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-2.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-3.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-4.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-5.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-6.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-7.jpg" alt="Additional work sample" loading="lazy">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ How I Work / Flow ============ -->
-  <section class="flow" id="process">
-    <div class="container-narrow">
-      <h2 class="flow-title fade-in">Here's how we take your AI Product<br>from impressive tech to a product people reach for</h2>
-      <div class="flow-timeline">
-
-        <!-- Step: Say hello (optional) -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Say hello</h3>
-            <div class="flow-body">
-              <p>Want to chat before committing? Totally fine. <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="flow-link">Book a free call</a> or drop me a line at <a href="mailto:hey@crucial.design" class="flow-link">hey@crucial.design</a></p>
-              <p class="flow-optional">This step is optional. If you already know what you need and want to move fast, skip straight to picking a plan.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step: Pick a plan -->
-        <div class="flow-step fade-in" id="pricing">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Pick a plan</h3>
-            <div class="flow-plan-box">
-              <a href="https://buy.stripe.com/cNi9AH2m24wl0bo44g0gw0v" target="_blank" rel="noopener" class="cta-bar cta-bar--dark cta-bar--plan">Start with Priority for $7,986/mth</a>
-              <p class="flow-plan-desc">4 design sessions per week. Every other day including weekends.</p>
-              <p class="flow-good-for">Good for teams moving fast who need a design partner keeping pace with them.</p>
-            </div>
-            <div class="flow-plan-box">
-              <a href="https://buy.stripe.com/3cIfZ55yefaZf6i0S40gw0u" target="_blank" rel="noopener" class="cta-bar cta-bar--primary cta-bar--plan">Start with Standard for $4,987/mth</a>
-              <p class="flow-plan-desc">2 design sessions per week. Tuesdays and Fridays.</p>
-              <p class="flow-good-for">Good for teams who want the same quality and thinking at a steadier rhythm.</p>
-            </div>
-            <p class="flow-note">Cancel or pause anytime. 75% back if not a fit after week one.</p>
-            <p class="flow-oneoff">Prefer a one-off project? <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="flow-link">Book a call</a> or <a href="mailto:hey@crucial.design" class="flow-link">email</a> to discuss.</p>
-          </div>
-        </div>
-
-        <!-- Step: Connect and Sync -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Connect and Sync</h3>
-            <div class="flow-body">
-              <p>I set up a private Slack channel. This becomes our hub. Everything lives here: project context, Figma links, calendar link for booking calls, updates, feedback. One place for everything</p>
-              <p>You share your goals and product vision. I start digging in.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step: Product Strategy -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Product Strategy</h3>
-            <div class="flow-body">
-              <p>I get into the product properly. Talk to your team, map the workflows, understand what your AI actually does and where users lose the thread. Then I tell you honestly what's broken and what to fix first.</p>
-              <p>This is where most designers go quiet and just start designing. I don't.</p>
-            </div>
-            <p class="flow-good-for">Good for early-stage founders who aren't sure what the product needs to be yet, or teams stuck between too many priorities.</p>
-          </div>
-        </div>
-
-        <!-- Step: Design Execution -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Design Execution</h3>
-            <div class="flow-body">
-              <p>Once we're clear on direction, I move fast. Clean, opinionated, buildable design. Every decision comes with the reasoning behind it.</p>
-              <p>No handoff to a junior. No account manager in between. Just me.</p>
-            </div>
-            <p class="flow-good-for">Good for funded teams who know what they're building and need a principal-level designer embedded in the product.</p>
-          </div>
-        </div>
-
-        <!-- Step: Investor Ready -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Investor Ready</h3>
-            <div class="flow-body">
-              <p>Sometimes the product works but it doesn't show well. Demos fall flat. Investors see potential but can't picture it. I've been in that room. I know what makes a product land in a funding conversation.</p>
-              <p>I help you close that gap.</p>
-            </div>
-            <p class="flow-good-for">Good for pre-raise teams who need the product to look and feel as strong as the underlying technology.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ Footer ============ -->
-  <footer class="footer" id="about">
-    <div class="footer-photos">
-      <a href="https://x.com/oykun/status/1971126280386138421" target="_blank" rel="noopener" class="footer-photo" style="--rot: -4deg; --x: -5%; --y: 0;"><img src="images/about-1.jpg" alt="Oykun selfie"></a>
-      <a href="https://x.com/oykun/status/2023450450947960847" target="_blank" rel="noopener" class="footer-photo" style="--rot: 3deg; --x: 8%; --y: -10px;"><img src="images/about-2.jpg" alt="Cat and laptop"></a>
-      <a href="https://x.com/oykun/status/1971126280386138421" target="_blank" rel="noopener" class="footer-photo" style="--rot: -2deg; --x: -3%; --y: 5px;"><img src="images/about-3.jpg" alt="Big Ben, London"></a>
-      <a href="https://x.com/oykun/status/2025862092352360735" target="_blank" rel="noopener" class="footer-photo" style="--rot: 5deg; --x: 6%; --y: -8px;"><img src="images/about-4.jpg" alt="Working from rooftop"></a>
-      <a href="https://x.com/oykun" target="_blank" rel="noopener" class="footer-photo" style="--rot: -3deg; --x: -4%; --y: 12px;"><img src="images/about-5.jpg" alt="On a flight"></a>
-    </div>
-    <div class="footer-inner">
-      <div class="footer-bio fade-in">
-        <p>I'm Oykun. Shaping products since 1998.</p>
-        <p>First as a full-stack developer and designer, then design only.</p>
-        <p>I've worked at every scale, from early-stage startups to Fortune 100s. Complex data, complex systems, making them make sense.</p>
-        <p>I started Crucial.Design because I kept seeing the same thing: brilliant AI, terrible product experience.</p>
-        <p>Founders who'd spent months on the technology but days on the design. That gap is where I work best.</p>
-        <p>AI has the hardest and most interesting design problems right now. That's why it's all I do.</p>
-      </div>
-      <a href="https://x.com/oykun" target="_blank" rel="noopener" class="footer-avatar fade-in"><img src="images/avatar.jpg" alt="Oykun"></a>
-      <p class="footer-name fade-in"><strong>Öykün Yılmaz</strong><br>Designer & Founder, Crucial.Design · London</p>
-    </div>
-    <div class="footer-links fade-in">
-      <a class="cta-bar cta-bar--secondary" href="https://x.com/oykun" target="_blank" rel="noopener"><span class="container-narrow">@oykun</span></a>
-      <a class="cta-bar cta-bar--secondary" href="https://x.com/crucialaidesign" target="_blank" rel="noopener"><span class="container-narrow">@crucialaidesign</span></a>
-      <a class="cta-bar cta-bar--secondary" href="mailto:hey@crucial.design"><span class="container-narrow">hey@crucial.design</span></a>
-    </div>
-  </footer>
-
-  <script src="main.js?v=7"></script>
-  <script>
-    (function(){
-      var words = ['product design','branding','web design','UX strategy','design systems'];
-      var slot = document.querySelector('[data-topline-flip]');
-      if(!slot) return;
-      var idx = 0;
-      var busy = false;
-
-      function randDelay(){ return Math.floor(Math.random() * 400) + 'ms'; }
-
-      function wrapLetters(text){
-        return text.split('').map(function(ch){
-          if(ch === ' ') return '<span class="topline-ch" style="transition-delay:'+randDelay()+'">&nbsp;</span>';
-          return '<span class="topline-ch" style="transition-delay:'+randDelay()+'">'+ch+'</span>';
-        }).join('');
+</header>
+<div class="wrap"><main class="work">
+<figure><img src="images/work/multion-1.jpg" alt="MultiOn" loading="lazy" style="aspect-ratio:1.5"><figcaption><b>MultiOn</b> Client</figcaption></figure>
+<figure><img src="images/work/multion-3.jpg" alt="MultiOn" loading="lazy" style="aspect-ratio:1.5"><figcaption><b>MultiOn</b> Client</figcaption></figure>
+<figure><img src="images/work/arcade001.jpg" alt="Arcade.dev" loading="lazy" style="aspect-ratio:1.5"><figcaption><b>Arcade.dev</b> Client</figcaption></figure>
+<figure><img src="images/work/cubic-1.jpg" alt="cubic.dev" loading="lazy" style="aspect-ratio:1.5"><figcaption><b>cubic.dev</b> Client</figcaption></figure>
+<figure><img src="images/work/designermindset.jpg" alt="Designer Mindset" loading="lazy" style="aspect-ratio:1.6"><figcaption><b>Designer Mindset</b> Own product · ongoing</figcaption></figure>
+<figure><img src="images/work/multion-5.jpg" alt="MultiOn" loading="lazy" style="aspect-ratio:1.5"><figcaption><b>MultiOn</b> Client</figcaption></figure>
+<figure><img src="images/work/agencyoperator.jpg" alt="Agency Operator" loading="lazy" style="aspect-ratio:1.6"><figcaption><b>Agency Operator</b> Own product</figcaption></figure>
+<figure><img src="images/work/echo-1.jpg" alt="Echo" loading="lazy" style="aspect-ratio:1.5"><figcaption><b>Echo</b> Client · acquired by Lloyds Pharmacy</figcaption></figure>
+<figure><img src="images/work/arcade003.jpg" alt="Arcade.dev" loading="lazy" style="aspect-ratio:1.5"><figcaption><b>Arcade.dev</b> Client</figcaption></figure>
+<figure><img src="images/work/motion07.jpg" alt="Motion study 07" loading="lazy" style="aspect-ratio:1.571"><figcaption><b>Motion study 07</b> Experiment</figcaption></figure>
+<figure><img src="images/work/allai.jpg" alt="allai.design" loading="lazy" style="aspect-ratio:1.6"><figcaption><b>allai.design</b> Own product · early</figcaption></figure>
+<figure><img src="images/work/cooin-1.jpg" alt="Cooin" loading="lazy" style="aspect-ratio:1.5"><figcaption><b>Cooin</b> Client · with Adobe</figcaption></figure>
+<figure><img src="images/work/cubic-4.jpg" alt="cubic.dev" loading="lazy" style="aspect-ratio:1.5"><figcaption><b>cubic.dev</b> Client</figcaption></figure>
+<figure><img src="images/work/echo-2.jpg" alt="Echo" loading="lazy" style="aspect-ratio:1.5"><figcaption><b>Echo</b> Client</figcaption></figure>
+<figure><img src="images/work/work-extra-1.jpg" alt="Selected work" loading="lazy" style="aspect-ratio:1.5"><figcaption><b>Selected work</b> Client</figcaption></figure>
+<figure><img src="images/work/multion-2.jpg" alt="MultiOn" loading="lazy" style="aspect-ratio:1.5"><figcaption><b>MultiOn</b> Client</figcaption></figure>
+<figure><img src="images/work/arcade004.jpg" alt="Arcade.dev" loading="lazy" style="aspect-ratio:1.5"><figcaption><b>Arcade.dev</b> Client</figcaption></figure>
+</main></div>
+<section class="process" id="process" aria-label="Your first week" tabindex="-1">
+  <div class="ptop"><b>Your first week.</b><span>Fast and efficient: a design update every other day, until you're happy.</span></div>
+  <div class="pdays" aria-label="Your first week"></div>
+  <div class="pfoot"><span>Updates every other day on Priority, $7,986 a month. Standard, $4,987, runs on Tuesdays and Fridays. Not the right fit after week one? You get 75% back.</span><span>We design with AI to move faster. Every decision is still a designer's.</span><span class="pl"><a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">Book a call</a><a href="mailto:hey@crucial.design">hey@crucial.design</a></span></div>
+</section>
+<footer><span>hey@crucial.design</span><a href="https://x.com/oykun">@oykun</a><span class="swatches" id="swatches" aria-label="Page colours"></span></footer>
+</div>
+<script>
+(() => {
+  // ---- click any empty space: a new page colour, picked at random from five
+  (() => {
+    const looks = [{bg:'#ffffff', ink:'#111111', muted:'#6f6f6f'}, {bg:'#000000', ink:'#f2f2f2', muted:'#8a8a8a', dark:1},
+                   {bg:'#1f2bff', ink:'#ffffff', muted:'#b9bdff', dark:1}, {bg:'#ff2e93', ink:'#14000a', muted:'#6e0d3f'},
+                   {bg:'#d7ff1f', ink:'#111111', muted:'#4f5f00'}, {bg:'#ff4a00', ink:'#140500', muted:'#5c1d00'},
+                   {bg:'#7a3cff', ink:'#ffffff', muted:'#d2c2ff', dark:1}, {bg:'#00d8ff', ink:'#00141a', muted:'#00515f'},
+                   {bg:'#ffe500', ink:'#111111', muted:'#5f5500'}];
+    let cur = 0; const root = document.documentElement.style;
+    const apply = i => { const L = looks[i]; const scr0 = document.getElementById('scroller'); if (scr0) scr0.style.backgroundColor = ''; document.body.style.backgroundColor = ''; root.setProperty('--bg', L.bg); root.setProperty('--ink', L.ink); root.setProperty('--muted', L.muted); root.setProperty('--btn-bg', L.ink); root.setProperty('--btn-ink', L.bg); document.documentElement.style.colorScheme = L.dark ? 'dark' : 'light'; };
+    document.getElementById('scroller').addEventListener('click', e => {
+      if (e.target.closest('a,button,figure,video,img,p,input')) return;
+      let n; do { n = Math.floor(Math.random() * looks.length); } while (n === cur); cur = n; apply(cur); mark();
+    });
+    // the palette, shown as squares at the very bottom of the page: click one to switch to it; the current one is marked
+    const sw = document.getElementById('swatches');
+    const mark = () => sw && [...sw.children].forEach((b, i) => b.classList.toggle('on', i === cur));
+    if (sw) {
+      looks.forEach((L, i) => { const b = document.createElement('button'); b.type = 'button'; b.style.background = L.bg; b.setAttribute('aria-label', 'Page colour ' + L.bg); b.addEventListener('click', () => { cur = i; apply(cur); mark(); }); sw.appendChild(b); });
+      mark();
+    }
+  })();
+  // ---- starfield (B3): the bar stays ink; single pixels twinkle in and out in colour. It plays when the page opens, settles,
+  // and comes back on hover. The same twinkle lives inside the letters of "Crucial.Design" in the first line.
+  const STAR = [[255,91,38],[216,211,255],[87,71,240],[255,210,63],[255,122,198],[61,220,151],[242,239,255]];
+  // five pixel moods for the band, one per hover, in turn. Each returns [alpha, colour?] for a cell, or nothing.
+  const PIX = [
+    // P1 Twinkle: single pixels blink in and out (the original B3)
+    (c, t) => { const tw = Math.sin(t * (1 + c.s * 2) + c.r * 40); return tw > 0.92 && [(tw - 0.92) / 0.08]; },
+    // P2 Rain: pixels fall down a few columns, each with a short fading tail
+    (c, t, x, y, W, H) => { if (c.k > 0.3) return; const sp = 60 + c.k * 400, L = H + 70, head = (t * sp + c.k * 997) % L, dd = head - y; return dd >= 0 && dd < 42 && [1 - dd / 42]; },
+    // P3 Ripple: rings of pixels spread out from where the cursor came in
+    (c, t, x, y, W, H, cx) => { if (c.r > 0.55) return; const r = Math.hypot(x - cx, (y - H / 2) * 1.4), w = Math.sin(r * 0.05 - t * 6); return w > 0.8 && [(w - 0.8) / 0.2 * Math.max(0.25, 1 - r / 1500)]; },
+    // P4 Scan: two dense fronts race out from the cursor to the edges, over a faint twinkle
+    (c, t, x, y, W, H, cx) => { const f = (t * 700) % (W * 0.75), dd = Math.abs(Math.abs(x - cx) - f); if (dd < 34 && c.r < 0.75) return [1 - dd / 34]; const tw = Math.sin(t * (1 + c.s * 2) + c.r * 40); return tw > 0.97 && [(tw - 0.97) / 0.03 * 0.7]; },
+    // P5 Drift: slow bands of colour flow sideways through the band, sorted by hue
+    (c, t, x, y, W) => { if (c.s > 0.55) return; const v = Math.sin(x * 0.009 + t * 1.3) + Math.sin(y * 0.07 - t * 0.8 + x * 0.002); if (v < 1.05) return; return [Math.min(1, (v - 1.05) / 0.6), STAR[Math.floor(((x / W) * 2 + t * 0.15) * STAR.length) % STAR.length]]; },
+  ];
+  // the band's pixel moods on hover, one per hover, in turn. pre() runs once a frame; cell() lights a cell: [alpha, colour?] or nothing.
+  // Oykun kept P2, P3 and P9 (17 Oct).
+  const MODES = [
+    {name: 'P2 · Rain', note: 'Pixels fall down a few columns, each with a short fading tail. Kept.',
+      cell: (c, t, x, y, W, H) => { if (c.k > 0.3) return; const sp = 60 + c.k * 400, L = H + 70, head = (t * sp + c.k * 997) % L, dd = head - y; return dd >= 0 && dd < 42 && [1 - dd / 42]; }},
+    {name: 'P3 · Ripple, wider', note: 'Rings of pixels spread from the cursor. Now longer waves and thicker rings.',
+      cell: (c, t, x, y, W, H, cx) => { if (c.r > 0.6) return; const r = Math.hypot(x - cx, (y - H / 2) * 1.4), w = Math.sin(r * 0.02 - t * 3.2); return w > 0.7 && [(w - 0.7) / 0.3 * Math.max(0.3, 1 - r / 1800)]; }},
+    {name: 'P9 · Life', note: 'The Game of Life. Pixels are born and die by its rules, and your cursor keeps seeding new ones.',
+      pre: (st, t, W, H, cx, cols, CELL, rows) => { const n = cols * rows; if (!st.g || st.g.length !== n) { st.g = new Uint8Array(n).map(() => Math.random() < 0.28 ? 1 : 0); st.l = 0; }
+        for (let k = 0; k < 24; k++) { const i = Math.max(1, Math.min(cols - 2, Math.round(cx / CELL + (Math.random() - 0.5) * 30))), j = 1 + Math.floor(Math.random() * (rows - 2)); st.g[j * cols + i] = 1; }
+        if (t - st.l < 0.09) return; st.l = t; const g = st.g, o = new Uint8Array(n);
+        for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) { let s = 0; for (let b = -1; b <= 1; b++) for (let a = -1; a <= 1; a++) { if (!a && !b) continue; const ii = (i + a + cols) % cols, jj = (j + b + rows) % rows; s += g[jj * cols + ii]; }
+          const v = g[j * cols + i]; o[j * cols + i] = (v && (s === 2 || s === 3)) || (!v && s === 3) ? 1 : 0; } st.g = o; },
+      cell: (c, t, x, y, W, H, cx, st, cols) => st.g && st.g[c.j * cols + c.i] && [1]},
+  ];
+  function starfield(host, opts) {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; if (reduce) return;
+    const text = !!opts.text, CELL = opts.cell;
+    const cv = document.createElement('canvas'); cv.className = 'starfx'; cv.setAttribute('aria-hidden', 'true'); host.prepend(cv);
+    const ctx = cv.getContext('2d'), off = document.createElement('canvas'), ox = off.getContext('2d');
+    let W = 0, H = 0, cols = 0, rows = 0, dpr = 1, cells = [], p = 1, target = 1, oxn = 0.5, raf = 0, last = 0, mode = opts.cycle ? -1 : 0, colK = [], st = {};
+    const size = () => { const r = host.getBoundingClientRect(); dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = opts.h || r.height;
+      cv.width = off.width = Math.round(W * dpr); cv.height = off.height = Math.round(H * dpr);
+      cols = Math.ceil(W / CELL); rows = Math.max(1, Math.ceil(H / CELL)); colK = Array.from({length: cols}, Math.random);
+      cells = []; for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) cells.push({i, j, k: colK[i], r: Math.random(), s: Math.random(), c: STAR[(Math.random() * STAR.length) | 0]}); };
+    function draw(now) {
+      const t = now / 1000, dt = Math.min(0.05, (now - last) / 1000 || 0.016); last = now;
+      p += Math.sign(target - p) * Math.min(Math.abs(target - p), dt / 0.7);
+      const g = text ? ox : ctx;
+      g.setTransform(dpr, 0, 0, dpr, 0, 0); g.globalCompositeOperation = 'source-over'; g.clearRect(0, 0, W, H);
+      const M = opts.cycle && mode >= 0 ? MODES[mode] : null; if (M && M.pre) M.pre(st, t, W, H, oxn * W, cols, CELL, rows);
+      for (const c of cells) {
+        const d = Math.min(1, Math.abs(c.i / cols - oxn) * 1.6) * 0.75 + c.r * 0.25;
+        if (!(p > d)) continue;
+        let a, col = c.c;
+        if (text) { const tw = Math.sin(t * (1 + c.s * 2) + c.r * 40); if (tw < 0.35) continue; a = (tw - 0.35) / 0.65; }
+        else { const o = M ? M.cell(c, t, c.i * CELL, c.j * CELL, W, H, oxn * W, st, cols, CELL) : PIX[0](c, t); if (!o) continue; a = o[0]; if (o[1]) col = o[1]; }
+        g.globalAlpha = a; g.fillStyle = `rgb(${col[0]},${col[1]},${col[2]})`; g.fillRect(c.i * CELL, c.j * CELL, CELL, CELL);
       }
+      g.globalAlpha = 1;
+      if (text) {
+        // keep only the pixels that fall inside the letters
+        const cs = getComputedStyle(host); g.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`; g.textBaseline = 'alphabetic'; g.fillStyle = '#000';
+        const m = g.measureText(host.textContent); const base = (H + m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
+        g.globalCompositeOperation = 'destination-in'; g.fillText(host.textContent, 0, base); g.globalCompositeOperation = 'source-over'; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(off, 0, 0); }
+      if (p > 0.001 || target > 0) raf = requestAnimationFrame(draw); else { raf = 0; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); }
+    }
+    const run = () => { if (!raf) { last = performance.now(); raf = requestAnimationFrame(draw); } };
+    const at = e => { const r = host.getBoundingClientRect(); return (e.clientX - r.left) / r.width; };
+    host.addEventListener('mouseenter', e => { if (opts.cycle && target === 0) { mode = (mode + 1) % MODES.length; st = {}; } target = 1; oxn = at(e); run(); });
+    host.addEventListener('mouseleave', e => { target = 0; oxn = at(e); run(); });
+    if (opts.cycle) host.addEventListener('mousemove', e => { oxn = at(e); });
+    host.addEventListener('focus', () => { target = 1; oxn = 0.5; run(); }); host.addEventListener('blur', () => { target = 0; oxn = 0.5; run(); });
+    addEventListener('resize', () => { size(); run(); });
+      (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { size(); p = 1; target = 1; run(); setTimeout(() => { if (!host.matches(':hover')) { target = 0; oxn = 0.5; run(); } }, opts.hold || 1600); });
+  }
+  (() => {
+    const btn = document.querySelector('header .btn');
+    if (btn) starfield(btn, {cell: 5.5, h: 520, cycle: true});
+    // the pixels inside "Crucial.Design" were removed (17 Oct, Oykun: "something weird... just remove that effect")
+  })();
+  // ---- process v72: one week, eight squares, each day holds its step. Hover, click or arrow keys pick a day; it fills and the whole
+  // page takes that day's colour while the section is on screen.
+  (() => {
+    const sec = document.getElementById('process'); if (!sec) return; const grid = sec.querySelector('.pdays');
+    const S = [
+      {h: 'Say hello', t: 'We meet, check the fit and pick a plan. Same day or the next.'},
+      {h: 'Kick-off', t: 'You pay, we start. We set your first success metric. Design starts today.'},
+      {h: 'Designing', t: 'Heads down on your project, exploring wide with AI.', quiet: 1},
+      {h: 'First update', t: 'Real work to react to, with the thinking behind it.', tag: 'Update'},
+      {h: 'Designing', t: 'Your feedback goes straight into the work.', quiet: 1},
+      {h: 'Second update', t: 'Round two, shaped by what you said about round one.', tag: 'Update'},
+      {h: 'Designing', t: 'Into the details.', quiet: 1},
+      {h: 'Third update', t: 'Then one every other day until you\'re happy.', tag: 'Update'}];
+    const DAYC = [['#d7ff1f', '#111111'], ['#ffe500', '#111111'], ['#ff4a00', '#140500'], ['#ff2e93', '#14000a'], ['#1f2bff', '#ffffff'], ['#7a3cff', '#ffffff'], ['#00d8ff', '#00141a'], ['#111111', '#f2f2f2']];
+    // v77 (17 Oct): hover a day and the whole page takes its colour, the square fills with ink. Leave the week and the page goes
+    // back to whatever it was before (the default or a colour picked by clicking)
+    const root = document.documentElement.style, scr = document.getElementById('scroller'), KEYS = ['--bg', '--ink', '--muted', '--btn-bg', '--btn-ink'];
+    let saved = null, cur = null;
+    const set = (bg, ink) => { if (scr) scr.style.backgroundColor = bg; document.body.style.backgroundColor = bg;
+      root.setProperty('--bg', bg); root.setProperty('--ink', ink); root.setProperty('--muted', `color-mix(in srgb, ${ink} 62%, ${bg})`); root.setProperty('--btn-bg', ink); root.setProperty('--btn-ink', bg); };
+    const enter = (c, d) => { if (!saved) saved = {vars: KEYS.map(k => root.getPropertyValue(k)), scr: scr ? scr.style.backgroundColor : '', body: document.body.style.backgroundColor};
+      if (cur) cur.classList.remove('on'); cur = c; c.classList.add('on'); set(DAYC[d][0], DAYC[d][1]); };
+    const leave = () => { if (cur) cur.classList.remove('on'); cur = null; if (!saved) return;
+      KEYS.forEach((k, i) => saved.vars[i] ? root.setProperty(k, saved.vars[i]) : root.removeProperty(k));
+      if (scr) scr.style.backgroundColor = saved.scr; document.body.style.backgroundColor = saved.body; saved = null; };
+    S.forEach((s, d) => { const c = document.createElement('div'); c.className = 'pday' + (s.quiet ? ' quiet' : '');
+      c.innerHTML = `<span class="top"><span class="k">Day ${d}</span>${s.tag ? `<span class="tag">${s.tag}</span>` : ''}</span><span><span class="big">${d}</span><span class="h"></span><span class="l"></span></span>`;
+      c.querySelector('.h').textContent = s.h; c.querySelector('.l').textContent = s.t; c.addEventListener('mouseenter', () => enter(c, d)); grid.appendChild(c); });
+    grid.addEventListener('mouseleave', leave);
+    const band = document.getElementById('band'), sc = scr || window;
+    const check = () => { if (!band) return; const r = sec.getBoundingClientRect(), m = innerHeight / 2; band.classList.toggle('away', r.top < m - 40 && r.bottom > m + 40); };
+    sc.addEventListener('scroll', () => { check(); if (cur && !grid.matches(':hover')) leave(); }, {passive: true}); check();
+  })();
+  // ---- the band is fixed across the middle of the screen (Melody idea: the title held mid-screen). Hover a piece of work and
+  // "Start a project" fades into a line about that piece; move off and it comes back. Clicking the band still books a call.
+  (() => {
+    const btn = document.querySelector('header .btn'); if (!btn) return;
+    const lab = btn.querySelector('.btnlab'); if (!lab) return;
+    const ctxl = document.createElement('span'); ctxl.className = 'ctxlab'; ctxl.setAttribute('aria-hidden', 'true'); btn.appendChild(ctxl);
+    // one line per piece: draft wording for Oykun to correct
+    const DESC = {
+      'MultiOn': 'MultiOn · AI agents that do the work for you on the web · Product and brand',
+      'MultiOn ASCII Agents': 'MultiOn · ASCII Agents · An experiment, built in code',
+      'Arcade.dev': 'Arcade.dev · Tool calling for AI agents · Client',
+      'cubic.dev': 'cubic.dev · AI code review · Client',
+      'Designer Mindset': 'Designer Mindset · Our own community and course for designers',
+      'Agency Operator': 'Agency Operator · Our own Claude plugin that runs an agency pipeline',
+      'Echo': 'Echo · Client, acquired by Lloyds Pharmacy',
+      'Motion study 07': 'Motion study 07 · Experiment',
+      'allai.design': 'allai.design · Our own product, early',
+      'Cooin': 'Cooin · Client, with Adobe',
+      'Selected work': 'Selected work · Client'
+    };
+    const descOf = f => { const m = f.querySelector('img,video'); const cap = f.querySelector('figcaption'); const name = (m && (m.alt || '')) || '';
+      if (m && m.tagName === 'VIDEO') return DESC['MultiOn ASCII Agents']; return DESC[name] || (cap ? cap.textContent.trim() : name); };
+    // each piece gets its own random loud colour for the band while it's hovered (never the current page colour, never the same twice in a row)
+    const BANDS = [['#1f2bff','#ffffff'],['#ff2e93','#14000a'],['#d7ff1f','#111111'],['#ff4a00','#140500'],['#7a3cff','#ffffff'],['#00d8ff','#00141a'],['#ffe500','#111111']];
+    let lastBand = -1;
+    const paint = f => {
+      const page = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim().toLowerCase();
+      let k; do { k = Math.floor(Math.random() * BANDS.length); } while (k === lastBand || BANDS[k][0] === page);
+      lastBand = k; btn.style.background = BANDS[k][0]; ctxl.style.color = BANDS[k][1];
+    };
+    let tm = 0;
+    document.querySelectorAll('.work figure').forEach(f => {
+      f.addEventListener('mouseenter', () => { clearTimeout(tm); ctxl.textContent = descOf(f); paint(f); btn.classList.add('ctx'); });
+      f.addEventListener('mouseleave', () => { tm = setTimeout(() => { btn.classList.remove('ctx'); btn.style.background = ''; ctxl.style.color = ''; }, 120); });
+    });
+  })();
+  // ---- the band opens on hover: next three free 15-minute slots, read live from cal.com, falling back to the snapshot taken at publish
+  (() => {
+    const band = document.getElementById('band'), box = document.getElementById('slots'); if (!band || !box) return;
+    const CAL = 'https://cal.com/crucialdesign/15min';
+    const SNAPSHOT = ["2026-10-17T21:30:00.000+01:00", "2026-10-18T06:00:00.000+01:00", "2026-10-19T06:00:00.000+01:00", "2026-10-20T06:00:00.000+01:00", "2026-10-21T06:00:00.000+01:00", "2026-10-22T06:00:00.000+01:00", "2026-10-23T06:00:00.000+01:00", "2026-10-24T11:15:00.000+01:00"];
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const fmt = iso => { const d = new Date(iso); const day = d.toLocaleDateString('en-GB', {weekday: 'short', timeZone: tz});
+      const h = d.toLocaleTimeString('en-GB', {hour: 'numeric', minute: '2-digit', hour12: true, timeZone: tz}).replace(':00', '').replace(' ', '').toLowerCase(); return day + ' ' + h; };
+    const link = iso => { const d = new Date(iso); const ymd = d.toLocaleDateString('en-CA', {timeZone: tz}); return `${CAL}?date=${ymd}&month=${ymd.slice(0, 7)}&slot=${encodeURIComponent(d.toISOString())}`; };
+    // one slot per day, the first free one, at least an hour from now
+    const pick = list => { const soon = Date.now() + 36e5, seen = new Set(), out = [];
+      for (const iso of list) { const d = new Date(iso); if (d < soon) continue; const k = d.toLocaleDateString('en-CA', {timeZone: tz}); if (seen.has(k)) continue; seen.add(k); out.push(iso); if (out.length === 2) break; } return out; };
+    // vivid fills, one per entry, with the text colour that reads on each
+    const FILLS = [['#ff4a00','#140500'],['#d7ff1f','#111111'],['#ff2e93','#14000a'],['#00d8ff','#00141a'],['#7a3cff','#ffffff'],['#ffe500','#111111']];
+    const sq = (href, k, n, t, i) => { const a = document.createElement('a'); a.className = 'sq'; a.href = href; a.target = '_blank'; a.rel = 'noopener';
+      a.style.setProperty('--fill', FILLS[i % FILLS.length][0]); a.style.setProperty('--on', FILLS[i % FILLS.length][1]);
+      a.innerHTML = '<span><span class="k"></span></span><span><span class="n"></span><span class="t"></span></span>';
+      a.querySelector('.k').textContent = k; a.querySelector('.n').textContent = n; a.querySelector('.t').textContent = t; box.appendChild(a); };
+    const render = list => { const p = pick(list); box.textContent = ''; const off = Math.floor(Math.random() * FILLS.length);
+      p.forEach((iso, i) => { const d = new Date(iso); sq(link(iso), d.toLocaleDateString('en-GB', {weekday: 'short', timeZone: tz}), d.toLocaleDateString('en-GB', {day: 'numeric', timeZone: tz}), fmt(iso).split(' ')[1], i + off); }); };
+    render(SNAPSHOT);
+    (async () => { try {
+      const s = new Date(), e = new Date(Date.now() + 21 * 864e5), d = x => x.toISOString().slice(0, 10);
+      const r = await fetch(`https://api.cal.com/v2/slots?eventTypeSlug=15min&username=crucialdesign&start=${d(s)}&end=${d(e)}&timeZone=${encodeURIComponent(tz)}`, {headers: {'cal-api-version': '2024-09-04'}});
+      const j = await r.json(); const all = Object.keys(j.data || {}).sort().flatMap(k => (j.data[k] || []).map(x => x.start)); if (all.length) render(all);
+    } catch (e) { /* offline or blocked: the snapshot stays */ } })();
+    let t = 0;
+    // the times come in one by one from soft focus to sharp
+    let runs = [];
+    const items = () => [...band.querySelectorAll('.ch,.sq,.more')];
+    const anim = (el, k, o) => { const a = el.animate(k, Object.assign({fill: 'backwards'}, o)); runs.push(a); return a; };
+    const reveal = () => items().forEach((el, i) => anim(el, [{opacity: 0, filter: 'blur(8px)', transform: 'translateY(8px) scale(.96)'}, {opacity: 1, filter: 'blur(0)', transform: 'none'}], {duration: 600, delay: 140 + i * 60, easing: 'cubic-bezier(.22,1,.36,1)'}));
+    const stop = () => { runs.forEach(a => a.cancel()); runs = []; };
+    const open = () => { clearTimeout(t); if (band.classList.contains('open')) return; band.classList.remove('ctx'); band.style.background = '';
+      stop(); band.classList.add('open'); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) reveal(); requestAnimationFrame(() => { const w = Math.max(...[...band.querySelectorAll('.cols')].map(e => e.scrollWidth)); band.style.setProperty('--mw', (w / 2 + 60) + 'px'); band.style.height = (band.querySelector('.panel').scrollHeight + 36) + 'px'; }); };
+    const close = () => { t = setTimeout(() => { band.classList.remove('open'); band.style.height = ''; stop(); }, 180); };
+    band.addEventListener('mouseenter', open); band.addEventListener('mouseleave', close);
+    band.addEventListener('focusin', open); band.addEventListener('focusout', close);
+    band.addEventListener('click', e => { if (!e.target.closest('a')) window.open(CAL, '_blank', 'noopener'); });
+  })();
+  // ---- the bend: the bottom 20% of the browser warps whatever passes through it (text, captions, button, images, video),
+  // as if the page itself lifts off like paper, with coloured echoes behind it. Every frame the band is redrawn into a
+  // 2D canvas from the live page, then bent by WebGL. The real page stays underneath for clicks and selection.
+  (() => {
+    const say = () => {};
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { say('off: Reduce motion is on in your system settings'); return; }
+    const sc = document.getElementById('scroller'), BAND = 0.15, AMT = 0.38, BELOW = 0.1;
+    let cv = document.createElement('canvas'); cv.id = 'gl'; document.body.appendChild(cv);
+    let gl = null;
+    try { gl = cv.getContext('webgl', {premultipliedAlpha: true, alpha: true, antialias: true}) || cv.getContext('experimental-webgl'); } catch (e) {}
+    let mode = gl ? 'webgl' : '2d';
+    let prog, aLoc, U, uR, uV, uVel, uT, uB, uK, uTint, uTm, tex, N = 48;
+    function setupGL() {
+    // like the Dock in reverse: inside the band everything shrinks smoothly toward the centre line as it nears the bottom
+    // of the screen, and grows back to full size as it rises. The vertical squeeze matches the horizontal one, so nothing stretches.
+    const vs = `attribute vec2 a; uniform vec4 R; uniform vec2 V; uniform float band, amt; varying vec2 uv; varying float tv;
+      void main(){ uv = a; vec2 p = R.xy + a * R.zw; float y0 = V.y * (1.0 - band), bh = V.y * band;
+        float tr = max(0.0, (p.y - y0) / bh);
+        // a soft curve: starts almost flat, rounds out gradually, no kink at either end
+        float tc = min(tr, 1.0), e = tc * tc;
+        float F = tr <= 1.0 ? tr * tr * tr / 3.0 : 1.0 / 3.0 + (tr - 1.0);
+        float s = 1.0 + amt * e;
+        p.y = p.y + amt * bh * F;
+        tv = tc;
+        p.x = V.x * 0.5 + (p.x - V.x * 0.5) * s;
+        gl_Position = vec4(p.x / V.x * 2.0 - 1.0, 1.0 - p.y / V.y * 2.0, 0.0, 1.0); }`;
+    const fs = `#ifdef GL_FRAGMENT_PRECISION_HIGH
+      precision highp float;
+      #else
+      precision mediump float;
+      #endif
+      uniform sampler2D tex; varying vec2 uv; varying float tv;
+      void main(){ gl_FragColor = texture2D(tex, uv) * smoothstep(0.0, 0.14, tv); }`;
+    const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw gl.getShaderInfoLog(s); return s; };
+    prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(prog); if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw gl.getProgramInfoLog(prog);
+    gl.useProgram(prog);
+    const pts = [];
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) { const a = i / N, b = j / N, c = (i + 1) / N, d = (j + 1) / N; pts.push(a, b, c, b, a, d, a, d, c, b, c, d); }
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pts), gl.STATIC_DRAW);
+    aLoc = gl.getAttribLocation(prog, 'a'); gl.enableVertexAttribArray(aLoc); gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
+    U = n => gl.getUniformLocation(prog, n); uR = U('R'); uV = U('V'); uB = U('band'); uK = U('amt');
+    gl.uniform1f(uB, BAND); gl.uniform1f(uK, AMT);
+    gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+    }
+    // fall back to plain canvas drawing when WebGL isn't available or breaks
+    let c2 = null;
+    function to2d(why) {
+      mode = '2d'; cv.remove(); cv = document.createElement('canvas'); cv.id = 'gl'; document.body.appendChild(cv);
+      c2 = cv.getContext('2d'); size(); say('canvas' + (why ? ' (' + why + ')' : ''));
+    }
 
-      slot.innerHTML = wrapLetters(words[0]);
-      requestAnimationFrame(function(){
-        slot.querySelectorAll('.topline-ch').forEach(function(el){ el.classList.add('topline-ch-in'); });
-      });
-
-      setInterval(function(){
-        if(busy) return;
-        busy = true;
-        slot.querySelectorAll('.topline-ch').forEach(function(el){
-          el.style.transitionDelay = randDelay();
-          el.classList.remove('topline-ch-in');
-        });
-        setTimeout(function(){
-          idx = (idx + 1) % words.length;
-          slot.innerHTML = wrapLetters(words[idx]);
-          requestAnimationFrame(function(){
-            requestAnimationFrame(function(){
-              slot.querySelectorAll('.topline-ch').forEach(function(el){ el.classList.add('topline-ch-in'); });
-              busy = false;
-            });
-          });
-        }, 600);
-      }, 2500);
-    })();
-  </script>
-
-</body>
-</html>
+    // the band's source: a 2D canvas the page is redrawn into
+    const bc = document.createElement('canvas'), bx = bc.getContext('2d');
+    let W = 0, H = 0, dpr = 1, y0 = 0, y1 = 0, words = [], media = [], btns = [];
+    const posters = new Map();
+    function collect() {
+      const st = sc.scrollTop;
+      words = [];
+      const walker = document.createTreeWalker(sc, NodeFilter.SHOW_TEXT, {acceptNode: n => n.nodeValue.trim() && !n.parentElement.closest('script,style,.btn') ? 1 : 2});
+      const rg = document.createRange();
+      for (let n; (n = walker.nextNode());) {
+        const el = n.parentElement, cs = getComputedStyle(el), font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+        const cap = el.closest('figcaption');
+        for (const m of n.nodeValue.matchAll(/\S+/g)) {
+          rg.setStart(n, m.index); rg.setEnd(n, m.index + m[0].length);
+          const r = rg.getBoundingClientRect(); if (!r.width) continue;
+          words.push({t: m[0], x: r.left, y: r.top + st + r.height / 2, font, color: cs.color, cap});
+        }
+      }
+      media = [...document.querySelectorAll('.work img, .work video')];
+      btns = [...document.querySelectorAll('.btn')];
+    }
+    function size() {
+      dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      if (mode === 'webgl') { gl.viewport(0, 0, cv.width, cv.height); gl.uniform2f(uV, W, H); }
+      y0 = H * (1 - BAND); y1 = H + H * BAND * BELOW;
+      bc.width = W * dpr; bc.height = (y1 - y0) * dpr;
+      collect();
+    }
+    function paintBand() {
+      bx.setTransform(dpr, 0, 0, dpr, 0, 0); bx.fillStyle = getComputedStyle(sc).backgroundColor; bx.fillRect(0, 0, W, y1 - y0);
+      for (const el of media) {
+        const r = el.getBoundingClientRect(); if (r.bottom < y0 || r.top > y1 || !r.width) continue;
+        let src = el; const v = el.tagName === 'VIDEO';
+        if (v && el.readyState < 2) { src = posters.get(el); if (!src) { src = new Image(); src.src = el.poster; posters.set(el, src); } if (!src.complete) continue; }
+        const nw = src.videoWidth || src.naturalWidth, nh = src.videoHeight || src.naturalHeight;
+        if (!nw) continue;
+        const ra = r.width / r.height, ia = nw / nh; let sw = nw, sh2 = nh, sx = 0, sy = 0;
+        if (ia > ra) { sw = nh * ra; sx = (nw - sw) / 2; } else { sh2 = nw / ra; sy = (nh - sh2) / 2; }
+        try { bx.drawImage(src, sx, sy, sw, sh2, r.left, r.top - y0, r.width, r.height); } catch (e) {}
+      }
+      const st = sc.scrollTop;
+      bx.textBaseline = 'middle';
+      for (const w of words) {
+        const y = w.y - st; if (y < y0 - 20 || y > y1 + 20) continue;
+        if (w.cap && +getComputedStyle(w.cap).opacity < 0.5) continue;
+        bx.font = w.font; bx.fillStyle = w.color; bx.fillText(w.t, w.x, y - y0);
+      }
+      for (const b of btns) {
+        const r = b.getBoundingClientRect(); if (r.bottom < y0 || r.top > y1) continue;
+        const cs = getComputedStyle(b); bx.fillStyle = cs.backgroundColor; bx.beginPath();
+        const rad = r.height / 2, x = r.left, y = r.top - y0; bx.moveTo(x + rad, y); bx.arcTo(x + r.width, y, x + r.width, y + r.height, rad); bx.arcTo(x + r.width, y + r.height, x, y + r.height, rad); bx.arcTo(x, y + r.height, x, y, rad); bx.arcTo(x, y, x + r.width, y, rad); bx.fill();
+        bx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`; bx.fillStyle = cs.color; bx.textAlign = 'center'; bx.fillText(b.textContent.trim(), r.left + r.width / 2, y + r.height / 2); bx.textAlign = 'left';
+      }
+    }
+    // the same squeeze, drawn with plain canvas: the band is cut into a grid and each cell is placed by the same mapping
+    const mapY = y => { const bh = H * BAND, tr = Math.max(0, (y - y0) / bh), F = tr <= 1 ? tr ** 3 / 3 : 1 / 3 + (tr - 1); return y + AMT * bh * F; };
+    const tAt = y => Math.min(1, Math.max(0, (y - y0) / (H * BAND)));
+    const scaleAt = y => { const t = tAt(y); return 1 + AMT * t * t; };
+    const fadeAt = y => { const t = Math.min(1, tAt(y) / 0.14); return t * t * (3 - 2 * t); };
+    function draw2d() {
+      const ctx = c2; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      const bh = y1 - y0, ROWS = Math.ceil(bh), rh = bh / ROWS, cx = W / 2;
+      for (let j = 0; j < ROWS; j++) {
+        const ya = y0 + j * rh, yb = ya + rh, s = scaleAt((ya + yb) / 2), da = mapY(ya), db = mapY(yb);
+        ctx.globalAlpha = fadeAt((ya + yb) / 2);
+        ctx.drawImage(bc, 0, j * rh * dpr, W * dpr, rh * dpr, cx - cx * s, da, W * s, db - da + 1);
+      }
+      ctx.globalAlpha = 1;
+    }
+    let lastY = sc.scrollTop, vel = 0, broken = false;
+    const rgb = s => { const m = s.match(/[\d.]+/g) || [255, 255, 255]; return [m[0] / 255, m[1] / 255, m[2] / 255]; };
+    const frame = now => {
+      if (broken) return;
+      const y = sc.scrollTop; vel += ((y - lastY) / H * 6 - vel) * 0.15; lastY = y;
+      paintBand();
+      if (mode === '2d') { draw2d(); requestAnimationFrame(frame); return; }
+      try { gl.bindTexture(gl.TEXTURE_2D, tex); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, bc); if (gl.isContextLost()) throw 'lost'; }
+      catch (e) { to2d('webgl refused the page image'); requestAnimationFrame(frame); return; }
+      gl.disable(gl.SCISSOR_TEST); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+      // cover the real page inside the band with the page colour, so only the bent copy shows there
+      const bg = rgb(getComputedStyle(sc).backgroundColor);
+      gl.uniform4f(uR, 0, y0, W, y1 - y0);
+      gl.drawArrays(gl.TRIANGLES, 0, N * N * 6);
+      requestAnimationFrame(frame);
+    };
+    const go = () => {
+      if (mode === 'webgl') { try { setupGL(); size(); say('webgl'); } catch (e) { to2d('webgl failed to start'); } }
+      else to2d('no webgl here');
+      requestAnimationFrame(frame);
+    };
+    addEventListener('resize', () => requestAnimationFrame(size));
+    // captions and images change size as things load; re-measure the words now and then
+    sc.addEventListener('load', () => collect(), true);
+    setInterval(collect, 1500);
+    sc.addEventListener('click', () => setTimeout(collect, 600));
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(go, go);
+  })();
+})();
+</script>
+</body></html>
