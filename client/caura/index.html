@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Caura · Fleet · Crucial.Design</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/jpeg" href="../../images/avatar.jpg">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;900&display=swap" rel="stylesheet">
+<style>
+  /* Round 2 · Combined. A's turning phones and objects, C's map and day, B's live console. Brand: navy #16242c, lime #b7f005, Inter. */
+  :root{--navy:#16242c;--stage:#050d12;--panel:#132026;--lime:#b7f005;--amber:#f59e0b;--ink:#fff;--soft:rgba(255,255,255,.72);--mute:rgba(255,255,255,.48);--line:rgba(255,255,255,.1);
+        --l-ink:#16242c;--l-body:#4b5a63;--l-mute:#8a969d;--l-rule:#e8ebec}
+  *{box-sizing:border-box;margin:0}
+  html{background:var(--stage);overflow-x:clip}
+  body{font:400 18px/28px Inter,system-ui,sans-serif;color:var(--ink);background:var(--stage);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+  h1{font-weight:900;text-transform:uppercase;font-size:64px;line-height:70px;letter-spacing:-.01em}
+  h2{font:600 40px/44px Inter,sans-serif;letter-spacing:-.02em}
+  .kicker{font:600 13px/1 Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:18px}
+  .lede{max-width:580px;margin:20px auto 0;color:var(--soft)}
+  .sec{padding-top:160px;padding-bottom:160px}
+  .sec-head{text-align:center;margin-bottom:72px}
+  .plate{display:inline-block;font:600 12px/1 Inter,sans-serif;background:#ffd400;color:#111;padding:5px 7px;border-radius:4px;letter-spacing:.04em}
+
+  /* nav, kept as on caura.com */
+  nav{position:fixed;inset:0 0 auto;z-index:20;height:72px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 32px;background:rgba(5,13,18,.96);backdrop-filter:blur(12px)}
+  nav .links{display:flex;gap:6px;font-size:14px}
+  nav .links a{padding:8px 14px;border-radius:999px;color:var(--soft)}
+  nav .links a.on{background:rgba(255,255,255,.08);color:var(--ink)}
+  nav img{height:20px;display:block}
+  .pill{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 26px;border-radius:999px;background:var(--lime);color:#050d12;font:700 16px/1 Inter,sans-serif;letter-spacing:-.005em;box-shadow:0 10px 30px rgba(183,240,5,.18);transition:transform .2s,box-shadow .2s}
+  .pill:hover{transform:translateY(-1px);box-shadow:0 14px 36px rgba(183,240,5,.3)}
+  .pill span{color:inherit}
+  nav .pill{height:42px;padding:0 20px;font-size:15px}
+  nav .right{justify-self:end;display:grid;align-items:center;justify-items:end}
+  nav .right>*{grid-area:1/1}
+  nav .login{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;border-radius:999px;font:500 14px/1 Inter,sans-serif;color:var(--soft);box-shadow:0 0 0 1px rgba(255,255,255,.16) inset;transition:opacity .3s,transform .3s,color .2s,box-shadow .2s}
+  nav .login::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--lime)}
+  nav .login:hover{color:var(--ink);box-shadow:0 0 0 1px rgba(255,255,255,.4) inset}
+  nav .pill{opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .3s,transform .3s}
+  body.past nav .pill{opacity:1;transform:none;pointer-events:auto}
+  body.past nav .login{opacity:0;transform:translateY(6px);pointer-events:none}
+
+  /* ---- hero: the map is the stage, the phones turn on it, the glass cards land around them ---- */
+  .hero{position:relative;padding-top:230px;text-align:center;overflow:hidden;background:var(--stage)}
+  .hero>*{position:relative}
+  /* the living map: drawn in code, fades into the page at the bottom */
+  .hero>.map{position:absolute;inset:0;width:100%;height:100%;display:block;-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.35) 0,#000 14%,#000 58%,transparent 100%);mask-image:linear-gradient(to bottom,rgba(0,0,0,.35) 0,#000 14%,#000 58%,transparent 100%)}
+  .hero .lede{margin-bottom:32px}
+  .world{position:relative;height:780px;max-width:1440px;margin:56px auto 0;perspective:1600px}
+  /* real 3D phones (assets/phones3d.js); the CSS phones below are the fallback */
+  .phones3d{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+  .world.three .devices{display:none}
+  .devices{position:absolute;left:50%;top:70px;width:640px;height:700px;margin-left:-320px;transform-style:preserve-3d;transform:rotateX(var(--rx,10deg)) rotateY(var(--ry,-24deg));text-align:left;z-index:2;will-change:transform}
+  .iphone{position:absolute;left:250px;top:0;width:330px;height:690px;border-radius:60px;padding:4px;transform:translateZ(60px);
+    background:linear-gradient(140deg,#a9acae 0%,#6b6f72 22%,#3f4346 50%,#6b6f72 78%,#b4b7b9 100%);
+    box-shadow:0 0 0 .5px rgba(255,255,255,.4) inset,0 0 0 1.5px rgba(0,0,0,.6),0 60px 100px rgba(0,0,0,.6),0 14px 28px rgba(0,0,0,.4)}
+  .iphone::before{content:"";position:absolute;left:-3px;top:170px;width:3px;height:62px;border-radius:2px 0 0 2px;background:#7a7e81;box-shadow:0 76px 0 #7a7e81,0 -62px 0 -0px transparent}
+  .iphone::after{content:"";position:absolute;right:-3px;top:210px;width:3px;height:98px;border-radius:0 2px 2px 0;background:#7a7e81}
+  .iphone .scr{width:100%;height:100%;border:9px solid #000;border-radius:56px;overflow:hidden;background:#16242c;position:relative}
+  .iphone .scr::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.08) 0%,rgba(255,255,255,0) 36%);pointer-events:none;z-index:3}
+  .iphone .island{position:absolute;top:10px;left:50%;width:96px;height:28px;margin-left:-48px;border-radius:20px;background:#000;z-index:2}
+  .iphone .shot{display:block;width:100%;height:auto}
+  .att{margin:10px 14px;padding:12px 14px;border:1px solid rgba(255,255,255,.14);border-radius:12px;font-size:13px;line-height:18px;display:flex;align-items:center;gap:10px;color:#e8ecef}
+  .att b{width:22px;height:22px;border-radius:50%;border:2px solid var(--amber);display:grid;place-items:center;font-size:11px;flex:none}
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 14px}
+  .tile{height:96px;border:1px solid rgba(255,255,255,.14);border-radius:12px;display:grid;place-items:center;font-size:12px;color:#e8ecef;text-align:center}
+  .tile i{display:block;width:30px;height:30px;margin:0 auto 6px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);font-style:normal;font-weight:600;line-height:27px}
+  .recent{margin:16px 14px 0;font-size:13px;line-height:18px;color:#e8ecef}
+  .recent small{display:block;color:rgba(255,255,255,.5);font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+  .recent div{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+  .recent b{font-weight:600;font-variant-numeric:tabular-nums}
+  .pixel{position:absolute;left:40px;top:70px;width:300px;height:640px;border-radius:46px;padding:3px;transform:translateZ(-40px) rotateY(10deg);background:linear-gradient(140deg,#c9cbcd,#7c8083 35%,#4a4e51 60%,#9ea1a4);box-shadow:0 0 0 1px rgba(0,0,0,.6),0 40px 80px rgba(0,0,0,.55)}
+  .pixel::after{content:"";position:absolute;right:-3px;top:150px;width:3px;height:56px;border-radius:0 2px 2px 0;background:#8a8e91;box-shadow:0 74px 0 #8a8e91}
+  .pixel .scr{width:100%;height:100%;border:8px solid #000;border-radius:43px;overflow:hidden;background:#f7f7f7;color:#16242c;padding:38px 16px 16px;position:relative;font-size:13px;line-height:18px}
+  .pixel .cam{position:absolute;top:10px;left:50%;width:11px;height:11px;margin-left:-5.5px;border-radius:50%;background:#0b0d0e}
+  .pixel h4{font:600 20px/24px Inter,sans-serif;margin:6px 0 2px}
+  .task{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #e6e6e6}
+  .task small{display:block;color:#6b7680}
+  .tick{width:22px;height:22px;border-radius:50%;border:1.5px solid #c9ced2;flex:none}
+  .tick.done{background:var(--navy);border-color:var(--navy);position:relative}
+  .tick.done::after{content:"";position:absolute;left:7px;top:3px;width:5px;height:10px;border:solid var(--lime);border-width:0 2px 2px 0;transform:rotate(45deg)}
+  .glass{position:absolute;z-index:3;display:flex;align-items:center;gap:12px;padding:12px 16px 12px 12px;border-radius:14px;background:rgba(14,26,33,.84);backdrop-filter:blur(10px);box-shadow:0 0 0 1px rgba(255,255,255,.14) inset,0 20px 40px rgba(0,0,0,.4);color:#fff;font-size:14px;line-height:18px;text-align:left;opacity:0;rotate:var(--tilt,0deg);transition:background .4s,box-shadow .4s}
+  /* card states, driven by the shared clock: due (falls in at an angle, settles with a bounce, floats),
+     done (pops and fills soft lime), gone (falls away, tipping, and fades) */
+  .glass[data-state="due"]{opacity:1;animation:fallIn .95s cubic-bezier(.2,.9,.25,1.05) both,float 7s ease-in-out .95s infinite}
+  .glass[data-state="done"]{opacity:1;animation:pop .55s cubic-bezier(.3,1.6,.5,1) both,float 7s ease-in-out .55s infinite;
+    background:rgba(64,90,20,.82);box-shadow:0 0 0 1px rgba(183,240,5,.6) inset,0 0 30px rgba(183,240,5,.18),0 20px 40px rgba(0,0,0,.4)}
+  .glass[data-state="gone"]{animation:fallOff .9s cubic-bezier(.55,0,.9,.45) both}
+  @keyframes fallIn{0%{opacity:0;translate:0 -70px;rotate:calc(var(--tilt,0deg) - 10deg)}55%{opacity:1;translate:0 8px;rotate:calc(var(--tilt,0deg) + 2deg)}78%{translate:0 -3px;rotate:calc(var(--tilt,0deg) - .5deg)}100%{opacity:1;translate:0 0;rotate:var(--tilt,0deg)}}
+  @keyframes pop{0%{scale:1}35%{scale:1.09}65%{scale:.97}100%{scale:1}}
+  @keyframes fallOff{0%{opacity:1;translate:0 0;rotate:var(--tilt,0deg)}100%{opacity:0;translate:var(--drift,24px) 120px;rotate:calc(var(--tilt,0deg) + 16deg)}}
+  @keyframes float{50%{transform:translateY(-6px)}}
+  /* a soft dark fade behind the headline so it reads over the streets */
+  .hero>.scrim{position:absolute;inset:0;pointer-events:none;background:radial-gradient(58% 34% at 50% 23%,rgba(5,13,18,.94) 0%,rgba(5,13,18,.78) 42%,rgba(5,13,18,0) 100%)}
+  .hero>.osm{position:absolute;right:16px;bottom:12px;z-index:4;font:500 11px/1 Inter,sans-serif;color:var(--mute)}
+  .glass small{display:block;margin-top:4px}
+  .glass .ic{width:36px;height:36px;border-radius:10px;background:rgba(245,158,11,.16);display:grid;place-items:center;color:var(--amber);font-weight:700;transition:background .4s,color .4s}
+  .glass .ic::before{content:"!"}
+  .glass .tx{font-weight:500}
+  /* a task the driver has just ticked off: lime, then it floats up and clears */
+  .glass[data-state="done"] .ic,.glass[data-state="gone"] .ic{background:var(--lime);color:#050d12}
+  .glass[data-state="done"] .ic::before,.glass[data-state="gone"] .ic::before{content:"✓"}
+  .glass .plate{font-size:11px;padding:4px 6px}
+
+  /* ---- the console, live ---- */
+  .console{border-radius:20px;background:var(--stage);box-shadow:0 0 0 1px var(--line) inset;display:grid;grid-template-columns:220px 1fr;overflow:hidden;text-align:left}
+  .side{padding:22px 14px;border-right:1px solid var(--line);font-size:14px}
+  .side .brand{display:flex;align-items:center;gap:10px;padding:0 10px 22px;font:600 14px/1 Inter,sans-serif}
+  .side .brand img{height:14px} .side .brand span{color:var(--mute);font-weight:500}
+  .side a{display:flex;justify-content:space-between;padding:9px 10px;border-radius:8px;color:var(--soft)}
+  .side a.on{background:rgba(255,255,255,.06);color:var(--ink)}
+  .side a em{font-style:normal;font:500 12px/20px Inter,sans-serif;color:var(--mute)} .side a.on em{color:var(--amber)}
+  .main{padding:22px 26px}
+  .top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px}
+  .top h3{font:600 22px/28px Inter,sans-serif} .top small{color:var(--mute);font-size:13px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+  .stat{padding:16px 18px;border-radius:12px;background:var(--panel)}
+  .stat b{display:block;font:600 32px/36px Inter,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .stat span{font-size:13px;color:var(--mute)} .stat.warn b{color:var(--amber)}
+  table{width:100%;border-collapse:collapse;font-size:14px;line-height:20px}
+  th{text-align:left;font:500 12px/1 Inter,sans-serif;color:var(--mute);padding:0 12px 12px}
+  td{padding:13px 12px;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
+  tbody tr{opacity:0;transform:translateY(6px);transition:opacity .4s,transform .4s} tbody tr.in{opacity:1;transform:none}
+  .who{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#2b3c46;font:600 11px/1 Inter,sans-serif;margin-right:8px;vertical-align:middle}
+  .st{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--soft)}
+  .st::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--mute)}
+  .st.due::before{background:var(--amber)} .st.ok::before{background:var(--lime)} .st.ok{color:var(--ink)}
+  td.amt{text-align:right}
+
+  /* ---- pillars, each one object ---- */
+  .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:left}
+  .pil{border-radius:24px;padding:28px 24px 26px;display:flex;flex-direction:column}
+  .pil .obj{height:200px;display:grid;place-items:center;margin-bottom:24px}
+  .pil h3{font:600 20px/26px Inter,sans-serif}
+  .pil p{font-size:15px;line-height:22px;color:var(--soft);margin-top:8px;flex:1}
+  .pil a{margin-top:18px;font:600 14px/1 Inter,sans-serif;color:var(--lime)}
+  .ring{width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--lime) 0 var(--p,0%),rgba(255,255,255,.1) 0);display:grid;place-items:center;transition:--p 1.4s}
+  .ring>span{width:100px;height:100px;border-radius:50%;background:#0b171e;display:grid;place-items:center;text-align:center;font:600 13px/16px Inter,sans-serif}
+  .ring b{display:block;font:600 26px/28px Inter,sans-serif}
+  .sheet{width:180px;border-radius:12px;background:#f7f7f7;color:#16242c;padding:14px;font-size:12px;line-height:16px;box-shadow:0 20px 40px rgba(0,0,0,.45);transform:rotate(-3deg)}
+  .sheet .r{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e3e3e3}
+  .sheet .r:last-child{border:0;font-weight:600}
+  .sheet small{display:block;font:600 10px/1 Inter,sans-serif;letter-spacing:.08em;color:#8a969d;margin-bottom:8px}
+  .chips{position:relative;width:200px;height:130px}
+  .chips span{position:absolute;left:0;top:0;width:172px;height:38px;box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 12px;border-radius:10px;background:var(--panel);font-size:13px;white-space:nowrap;--s:0;transform:translate(calc(var(--s) * 14px),calc(var(--s) * 46px))}
+  .queue{width:190px;font-size:12px}
+  .queue div{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-radius:10px;background:var(--panel);margin-bottom:6px}
+  .queue em{font-style:normal;font:600 10px/1 Inter,sans-serif;padding:4px 6px;border-radius:999px;background:rgba(183,240,5,.16);color:var(--lime)}
+
+  /* ---- the day, a white reading band ---- */
+  /* night to day: the page crosses the Thames. North bank is the night map on navy, south bank the day map on white */
+  .cross{position:relative;height:300px;margin-top:-80px}
+  .cross canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .light{background:#fff;color:var(--l-ink)}
+  .cross + .light .day{padding-top:24px}
+  .cross + .sec{padding-top:40px}
+  .cross + .paper .cta{padding-top:48px}
+  .light .kicker{color:var(--l-mute)}
+  .day{display:grid;grid-template-columns:4fr 8fr;gap:64px}
+  .count{position:sticky;top:120px;align-self:start}
+  .count b{display:block;font:600 120px/1 Inter,sans-serif;letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin:14px 0 8px;color:var(--amber);transition:color .4s}
+  .count b.zero{color:var(--l-ink)}
+  .count p{color:var(--l-body);max-width:300px}
+  .count .t{font:500 15px/1 Inter,sans-serif;color:var(--l-mute);margin-top:22px;font-variant-numeric:tabular-nums}
+  .m{display:grid;grid-template-columns:120px 1fr;gap:28px;padding:56px 0;border-top:1px solid var(--l-rule)}
+  .m time{font:600 28px/32px Inter,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .m h3{font:600 28px/34px Inter,sans-serif;letter-spacing:-.015em}
+  .m p{color:var(--l-body);margin:10px 0 22px;max-width:520px}
+  .ui{display:inline-flex;align-items:center;gap:14px;padding:14px 18px;border-radius:14px;background:var(--navy);color:#fff;font-size:15px;line-height:20px}
+  .ui .ok{font:600 12px/1 Inter,sans-serif;padding:6px 9px;border-radius:999px;background:rgba(183,240,5,.16);color:var(--lime)}
+
+  /* ---- coverage, the console filtering by ownership ---- */
+  .split{display:grid;grid-template-columns:5fr 7fr;gap:64px;align-items:start;text-align:left}
+  .split p.l{color:var(--soft);margin-top:18px;max-width:420px}
+  .grey-note{margin-top:32px;padding:18px 20px;border-radius:14px;background:var(--panel);font-size:15px;line-height:22px;color:var(--soft);max-width:420px}
+  .grey-note b{color:var(--ink);font-weight:600}
+  .cov{border-radius:20px;background:#09141a;box-shadow:0 0 0 1px var(--line) inset;padding:22px}
+  .seg{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+  .seg button{font:500 14px/1 Inter,sans-serif;color:var(--soft);background:var(--panel);border:0;border-radius:999px;padding:10px 14px;cursor:pointer}
+  .seg button b{font-weight:600;color:var(--ink);margin-left:6px}
+  .seg button.on{background:var(--ink);color:var(--stage)} .seg button.on b{color:var(--stage)}
+  .cov .r{display:grid;grid-template-columns:120px 1fr auto;gap:12px;align-items:center;padding:12px 4px;border-top:1px solid var(--line);font-size:14px;transition:opacity .35s}
+  .cov .r.off{opacity:.18} .cov .t{font-size:13px;color:var(--mute)}
+
+  /* ---- one place: the products as objects ---- */
+  .prods{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:left}
+  .prod .obj{height:240px;border-radius:24px;display:grid;place-items:center;margin-bottom:22px}
+  .prod h3{font:600 20px/26px Inter,sans-serif}
+  .prod p{font-size:15px;line-height:22px;color:var(--soft);margin-top:8px}
+  .mini-console{width:212px;border-radius:12px;background:var(--stage);box-shadow:0 0 0 1px var(--line) inset;padding:12px;font-size:11px}
+  .mini-console .row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-top:1px solid var(--line)}
+  .mini-console .row:first-child{border:0}
+  .mini-console .plate{font-size:9px;padding:3px 5px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--lime);display:inline-block} .dot.a{background:var(--amber)}
+  .mini-phone{position:absolute;left:50%;top:34px;width:172px;height:350px;margin-left:-86px;border-radius:34px;background:linear-gradient(145deg,#3a4248,#1b2024 40%,#2a3136);padding:7px;box-shadow:0 0 0 1px #6b737a inset,0 0 0 2px #0d1114 inset,0 30px 60px rgba(0,0,0,.55)}
+  .mini-phone .scr{position:relative;width:100%;height:100%;border-radius:28px;overflow:hidden;background:#16242c url(assets/caura-driver-app-screen.jpg) top/100% auto no-repeat}
+  .mini-phone .isl{position:absolute;left:50%;top:7px;width:50px;height:15px;margin-left:-25px;border-radius:10px;background:#000}
+  .mini-phone .lst{position:absolute;left:8px;right:8px;top:152px;display:grid;gap:6px;font:500 9px/1 Inter,sans-serif;color:#e8ecef}
+  .mini-phone .lst .r{display:flex;justify-content:space-between;align-items:center;padding:8px 9px;border-radius:9px;box-shadow:0 0 0 1px rgba(255,255,255,.12) inset}
+  .mini-phone .lst .need{justify-content:flex-start;gap:6px} .mini-phone .lst .need span{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--amber);display:grid;place-items:center;font-size:8px}
+  .mini-phone .lst .cap{font:600 7px/1 Inter,sans-serif;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-top:4px}
+  .mini-card{width:190px;height:120px;border-radius:12px;background:linear-gradient(140deg,#e2ff6b,#c3f514 40%,#a8dc00 75%,#c6f420);color:#16242c;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 20px 40px rgba(0,0,0,.5);position:relative;rotate:-8deg}
+  .mini-card img{position:absolute;left:14px;top:14px;height:9px}
+  .mini-card i{position:absolute;left:14px;top:46px;width:24px;height:18px;border-radius:4px;background:linear-gradient(135deg,#f7e9bd,#d2b06a 40%,#f4e3ad 60%,#b39150)}
+  .mini-card b{position:absolute;right:14px;bottom:12px;font:900 italic 14px/1 Inter,sans-serif}
+  .mini-map{position:relative;width:100%;height:100%;display:grid;place-items:center;border-radius:inherit;overflow:hidden}
+  .mini-map canvas{position:absolute;inset:0;width:100%;height:100%}
+  .mini-map>span{position:relative;display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(9,20,26,.86);box-shadow:0 0 0 1px rgba(255,255,255,.1) inset,0 10px 24px rgba(0,0,0,.4);font-size:12px;backdrop-filter:blur(6px)}
+  .mini-map>span b{font-variant-numeric:tabular-nums;color:var(--lime);font-weight:600}
+
+  /* ---- feature cards: one panel for all eight (dark gradient, a dot grid that fades out, lime light from the top, a lit edge) ---- */
+  .pil,.prod .obj{position:relative;isolation:isolate;overflow:hidden;
+    background:radial-gradient(120% 60% at 50% -12%,rgba(183,240,5,.1),transparent 62%),linear-gradient(180deg,#0e1b22,#09141a 55%,#071016);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 0 0 1px rgba(255,255,255,.07),0 30px 60px -32px rgba(0,0,0,.7);transition:box-shadow .5s,translate .5s cubic-bezier(.2,.7,.2,1)}
+  .pil::before,.prod .obj::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(rgba(255,255,255,.1) 1px,transparent 1.3px) 0 0/16px 16px;
+    -webkit-mask:radial-gradient(ellipse 70% 55% at 50% 24%,#000,transparent 75%);mask:radial-gradient(ellipse 70% 55% at 50% 24%,#000,transparent 75%)}
+  .prod .obj::before{-webkit-mask:radial-gradient(ellipse 65% 65% at 50% 45%,#000,transparent 78%);mask:radial-gradient(ellipse 65% 65% at 50% 45%,#000,transparent 78%)}
+  .pil::after,.prod .obj::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity .5s;background:radial-gradient(90% 50% at 50% 0,rgba(183,240,5,.14),transparent 70%)}
+  .pil:hover,.prod:hover .obj{translate:0 -4px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 0 0 1px rgba(183,240,5,.22),0 40px 70px -30px rgba(0,0,0,.8)}
+  .pil:hover::after,.prod:hover .obj::after{opacity:1}
+  .prod .obj:has(.mini-map)::before{display:none}
+  @keyframes bob{50%{translate:0 -6px}}
+  /* compliance: the ring fills, a dot circles it, a dashed orbit turns slowly */
+  .ring{position:relative;box-shadow:0 0 40px rgba(183,240,5,.18)}
+  .ring::before{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px dashed rgba(255,255,255,.14);animation:spin 40s linear infinite}
+  .ring::after{content:"";position:absolute;left:50%;top:-18px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px var(--lime);transform-origin:4px 78px;animation:spin 6s linear infinite}
+  @keyframes spin{to{rotate:360deg}}
+  /* SMR: the job sheet writes itself, then gets approved */
+  .sheet{position:relative;animation:bob 6s ease-in-out infinite}
+  .on .sheet .r,.on .sheet .stamp{animation:rowIn 8s ease both infinite}
+  .sheet .r:nth-of-type(2){animation-delay:.5s!important} .sheet .r:nth-of-type(3){animation-delay:1s!important}
+  .sheet .stamp{position:absolute;right:-12px;top:-12px;font:700 10px/1 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:6px 8px;border-radius:999px;background:var(--lime);color:#16242c;box-shadow:0 6px 14px rgba(0,0,0,.35);rotate:8deg;opacity:0}
+  .on .sheet .stamp{animation-name:stampIn;animation-delay:1.8s}
+  @keyframes rowIn{0%{opacity:0;translate:0 6px}6%,86%{opacity:1;translate:0 0}94%,100%{opacity:0}}
+  @keyframes stampIn{0%{opacity:0;scale:1.6}5%{opacity:1;scale:.92}8%,80%{opacity:1;scale:1}88%,100%{opacity:0;scale:1}}
+  /* payments: each new payment drops in at the top and pushes the others down */
+  .chips span{transition:transform .9s cubic-bezier(.22,.8,.24,1),opacity .7s ease;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+  .chips span.new{animation:payGlow 2s ease both}
+  .chips span.out{opacity:0}
+  @keyframes payGlow{0%,40%{box-shadow:inset 0 0 0 1px rgba(183,240,5,.6),0 0 24px rgba(183,240,5,.2)}}
+  /* reimbursement: claims get approved one by one */
+  .queue div{transition:background .5s}
+  .queue em{display:none} .queue .ok em{display:inline-block;animation:pop .45s cubic-bezier(.3,1.6,.5,1) both} .queue .ok b{display:none}
+  .queue .ok{background:rgba(183,240,5,.08)}
+  /* DriveOS: rows update in turn, a light scans the console */
+  .mini-console{position:relative;overflow:hidden;animation:bob 7s ease-in-out infinite}
+  .mini-console::after{content:"";position:absolute;left:0;right:0;top:-30%;height:30%;background:linear-gradient(transparent,rgba(183,240,5,.08),transparent);animation:scan 3.6s ease-in-out infinite}
+  @keyframes scan{to{top:110%}}
+  .mini-console .row{transition:background .5s} .mini-console .row.flash{background:rgba(183,240,5,.08)}
+  .mini-console .ms{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+  /* driver app: the screen scrolls, a notification drops in */
+  .mini-phone{animation:bob 6s ease-in-out infinite}
+  .mini-phone .note{position:absolute;left:14px;right:14px;top:30px;z-index:2;white-space:nowrap;padding:7px 8px;border-radius:10px;background:rgba(28,44,54,.96);box-shadow:0 0 0 1px rgba(255,255,255,.1) inset,0 8px 18px rgba(0,0,0,.4);font:600 9px/12px Inter,sans-serif;display:flex;gap:6px;align-items:center;opacity:0;animation:note 9s ease infinite 1.5s}
+  .mini-phone .note i{width:16px;height:16px;border-radius:5px;background:var(--lime);flex:none;display:grid;place-items:center;color:#16242c;font:700 10px/1 Inter,sans-serif;font-style:normal}
+  @keyframes note{0%{opacity:0;translate:0 -14px}6%,40%{opacity:1;translate:0 0}48%,100%{opacity:0;translate:0 -14px}}
+  /* Visa card: tap to pay, the payment lands */
+  .mini-card{animation:bob 5s ease-in-out infinite}
+  .tap{position:absolute;right:-30px;top:30px;width:40px;height:60px;pointer-events:none}
+  .tap span{position:absolute;inset:0;border:2px solid rgba(183,240,5,.7);border-left:0;border-top-color:transparent;border-bottom-color:transparent;border-radius:0 50% 50% 0;opacity:0;animation:wave 2.4s ease-out infinite}
+  .tap span:nth-child(2){animation-delay:.3s} .tap span:nth-child(3){animation-delay:.6s}
+  @keyframes wave{0%{opacity:0;scale:.4}30%{opacity:1}100%{opacity:0;scale:1.4}}
+  .paid{position:absolute;left:50%;bottom:22px;translate:-50% 0;display:inline-flex;gap:8px;align-items:center;padding:7px 11px;border-radius:999px;background:rgba(9,20,26,.9);box-shadow:0 0 0 1px rgba(183,240,5,.35) inset;font:500 11px/1 Inter,sans-serif;white-space:nowrap;opacity:0;animation:paid 4.8s ease infinite 1s}
+  .paid b{color:var(--lime);font-weight:600}
+  @keyframes paid{0%{opacity:0;translate:-50% 10px}8%,55%{opacity:1;translate:-50% 0}65%,100%{opacity:0;translate:-50% 0}}
+  @media (prefers-reduced-motion:reduce){ .ring::before,.ring::after,.sheet,.mini-console,.mini-console::after,.mini-phone,.mini-card,.tap span{animation:none} .on .sheet .r,.on .sheet .stamp,.mini-phone .note,.paid{animation:none;opacity:1} }
+
+  /* ---- the Visa card, sold on its rules ---- */
+  .fan{position:relative;height:800px;margin:72px auto 40px;max-width:1280px;perspective:1600px}
+  /* behind the cards: a lime and teal light that fades into the page */
+  .fan::before{content:"";position:absolute;left:50%;top:-140px;width:min(1500px,130vw);height:760px;translate:-50% 0;pointer-events:none;
+    background:radial-gradient(ellipse 38% 34% at 50% 46%,rgba(183,240,5,.28),transparent 70%),radial-gradient(ellipse 30% 30% at 26% 58%,rgba(40,150,180,.16),transparent 70%),
+      radial-gradient(ellipse 30% 30% at 74% 58%,rgba(120,140,160,.14),transparent 70%);filter:blur(24px)}
+  .card::after{content:"";position:absolute;left:8%;right:8%;bottom:-46px;height:40px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(18px);transform:translateZ(-1px)}
+  .card{position:absolute;left:50%;top:60px;width:470px;height:296px;margin-left:-235px;transition:transform 1.1s cubic-bezier(.2,.7,.1,1);text-align:left;transform:var(--t0);transform-style:preserve-3d}
+  /* each card is a metal face: base colour, brushed grain, a lit edge and a fixed highlight, no motion */
+  .face{position:absolute;inset:0;border-radius:20px;padding:28px;overflow:hidden;
+    background:var(--grain),var(--base);color:var(--print);
+    box-shadow:inset 0 1px 0 var(--lip),inset 0 0 0 1px var(--rim),inset 0 -1px 0 rgba(0,0,0,.35),0 1px 1px rgba(0,0,0,.3),0 12px 24px rgba(0,0,0,.35),0 40px 80px rgba(0,0,0,.5)}
+  .face::before{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:.5;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .face::after{content:"";position:absolute;inset:-1px;pointer-events:none;border-radius:inherit;mix-blend-mode:var(--blend,soft-light);
+    background:radial-gradient(420px circle at var(--gx,30%) var(--gy,20%),rgba(255,255,255,var(--glow,.55)),transparent 60%),
+      linear-gradient(115deg,transparent calc(var(--gx,30%) - 28%),rgba(255,255,255,var(--band,.22)) var(--gx,30%),transparent calc(var(--gx,30%) + 28%))}
+  .m-graphite{--base:linear-gradient(150deg,#353b40 0%,#16191c 48%,#24292d 100%);--grain:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px);--print:rgba(255,255,255,.88);--lip:rgba(255,255,255,.28);--rim:rgba(255,255,255,.08);--glow:.4}
+  .m-lime{--base:linear-gradient(140deg,#e2ff6b 0%,#c3f514 38%,#a8dc00 72%,#c6f420 100%);--grain:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,transparent 1px 3px);--print:#16242c;--lip:rgba(255,255,255,.7);--rim:rgba(22,36,44,.12);--glow:.75;--band:.35}
+  .m-titanium{--base:linear-gradient(140deg,#f6f7f8 0%,#cfd4d8 40%,#aeb5bb 70%,#e1e4e7 100%);--grain:repeating-linear-gradient(90deg,rgba(255,255,255,.18) 0 1px,transparent 1px 3px);--print:#16242c;--lip:rgba(255,255,255,.9);--rim:rgba(22,36,44,.1);--glow:.8;--band:.4}
+  .card .lg{height:17px;position:relative}
+  .card .ow{position:absolute;right:28px;top:30px;font:500 12px/1 Inter,sans-serif;letter-spacing:.02em;opacity:.62}
+  .card .chip{position:absolute;left:30px;top:108px;width:54px;height:41px}
+  .chip{border-radius:8px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.22),0 1px 1px rgba(0,0,0,.25);
+    background:linear-gradient(90deg,transparent 31%,rgba(60,40,10,.35) 31% 33%,transparent 33% 67%,rgba(60,40,10,.35) 67% 69%,transparent 69%),
+      linear-gradient(0deg,transparent 33%,rgba(60,40,10,.3) 33% 35.5%,transparent 35.5% 64.5%,rgba(60,40,10,.3) 64.5% 67%,transparent 67%),
+      linear-gradient(135deg,#f7e9bd 0%,#d2b06a 38%,#f4e3ad 58%,#b39150 100%)}
+  .m-titanium .chip{background:linear-gradient(90deg,transparent 31%,rgba(0,0,0,.25) 31% 33%,transparent 33% 67%,rgba(0,0,0,.25) 67% 69%,transparent 69%),
+      linear-gradient(0deg,transparent 33%,rgba(0,0,0,.2) 33% 35.5%,transparent 35.5% 64.5%,rgba(0,0,0,.2) 64.5% 67%,transparent 67%),linear-gradient(135deg,#fafafa,#b9bec2 45%,#eceeef 60%,#9aa0a5)}
+  .card .nfc{position:absolute;left:100px;top:117px;width:22px;height:24px;opacity:.55}
+  .card .num{position:absolute;left:28px;bottom:30px;font:500 16px/1 Inter,sans-serif;letter-spacing:.16em;font-variant-numeric:tabular-nums;opacity:.82}
+  .card .nm{position:absolute;left:28px;bottom:54px;font:500 11px/1 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;opacity:.5}
+  .card .visa{position:absolute;right:28px;bottom:24px;font:900 italic 28px/1 Inter,sans-serif;letter-spacing:-.02em}
+  .c1{--t0:translate(-180px,440px)} .c3{--t0:translate(-180px,460px)}    /* the stack fans up out of one card */
+  .fan.open .c1{transform:translate(-250px,350px)}
+  .fan.open .c3{transform:translate(-180px,412px)}
+  /* the company card, held: a generated illustration (dark arm and hand from the top right, a blank lime card, cut out), scaled so the card matches the others.
+     The live print is drawn flat at 1000×620, warped onto the card's four measured corners with matrix3d,
+     and masked by the card's visible area, so the thumb stays on top */
+  .held{position:absolute;top:-152px;right:-500px;width:1480px;aspect-ratio:1536/780;z-index:3;opacity:0;
+    transition:opacity .9s ease,right 1.2s cubic-bezier(.2,.7,.1,1)}
+  .fan.open .held{opacity:1;right:-404px}
+  .held .stage{position:absolute;left:0;top:0;width:1536px;height:780px;transform:scale(calc(1480 / 1536));transform-origin:0 0}
+  .held .hand{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 40px 50px rgba(0,0,0,.5))}
+  .held .clip{position:absolute;inset:0;-webkit-mask:url(assets/caura-hand-card-mask.png) 0 0/100% 100%;mask:url(assets/caura-hand-card-mask.png) 0 0/100% 100%}
+  .print{position:absolute;left:0;top:0;width:1000px;height:620px;transform-origin:0 0;color:#16242c;text-align:left;
+    transform:matrix3d(0.449371,-0.197414,0,6.77383e-06,0.187604,0.448755,0,4.35428e-20,0,0,1,0,151.733,398.776,0,1)}
+  .print>:not(.chip){position:absolute;mix-blend-mode:multiply}
+  .print .lg{left:64px;top:60px;height:50px}
+  .print .visa{right:70px;top:52px;font:900 italic 74px/1 Inter,sans-serif;letter-spacing:-.02em}
+  .print .chip{position:absolute;left:64px;top:220px;width:118px;height:90px;border-radius:16px}
+  .print .nfc{left:206px;top:236px;width:46px;height:52px;opacity:.6}
+  .print .nm{left:64px;bottom:136px;font:500 24px/1 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
+  .print .num{left:64px;bottom:72px;font:500 38px/1 Inter,sans-serif;letter-spacing:.16em;font-variant-numeric:tabular-nums;opacity:.85}
+  .bleed{overflow-x:clip}                                   /* the arm runs off the page edge without making the page scroll sideways */
+  .card-desc{position:relative;z-index:4;width:470px;margin:-330px 0 0 auto;text-align:left}
+  .card-desc .lede{margin:0;font-size:19px;line-height:29px}
+  .card-desc .rules{justify-content:flex-start;margin:24px 0 0} .card-desc .foot{text-align:left;margin-top:20px}
+  .rules{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:760px;margin:0 auto}
+  .rule{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);font:500 15px/1 Inter,sans-serif;color:var(--soft);opacity:.25;transition:opacity .5s,border-color .5s,color .5s}
+  .rule.on{opacity:1} .rule.ok.on{border-color:rgba(183,240,5,.6);color:var(--ink)}
+  .rule.ok::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--lime)}
+  .rule.no::before{content:"";width:10px;height:1.5px;background:var(--mute)}
+  .foot{margin-top:28px;font-size:15px;color:var(--mute);text-align:center}
+
+  /* ---- proof ---- */
+  .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;text-align:center}
+  .nums b{display:block;font:600 72px/1 Inter,sans-serif;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+  .nums b em{font-style:normal;color:var(--lime)}
+  .nums span{display:block;margin-top:12px;color:var(--soft)}
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:96px;text-align:left}
+  .q{border-radius:20px;background:#09141a;box-shadow:0 0 0 1px var(--line) inset;padding:28px}
+  .q p{font:500 18px/27px Inter,sans-serif}
+  .q small{display:block;margin-top:18px;color:var(--mute);font-size:14px}
+  /* the review flow: two rows of real reviews from caura.com drifting in opposite directions, paused on hover */
+  .flow{width:100vw;margin-left:calc(50% - 50vw);margin-top:88px;display:grid;gap:20px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+  .lane{overflow:hidden}
+  .track{display:flex;gap:20px;width:max-content;animation:flow 180s linear infinite}
+  .lane.rev .track{animation-direction:reverse;animation-duration:220s}
+  .flow:hover .track{animation-play-state:paused}
+  @keyframes flow{to{transform:translateX(-50%)}}
+  .rv{margin:0;width:380px;flex:none;border-radius:20px;background:#09141a;box-shadow:0 0 0 1px var(--line) inset;padding:26px;display:flex;flex-direction:column;justify-content:space-between;min-height:196px;text-align:left}
+  .rv p{font:500 17px/26px Inter,sans-serif;color:var(--ink)}
+  .rv mark{background:rgba(205,255,60,.1);color:#eaf6c4;padding:0 4px;border-radius:4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .rv .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:22px}
+  .rv .by{display:flex;flex-direction:column;align-items:flex-start;text-align:left}
+  .rv .by b{display:block;font:600 14px/20px Inter,sans-serif}
+  .rv .by small{font-size:13px;color:var(--mute)}
+  .rv .stars{color:var(--lime);font-size:13px;letter-spacing:3px;white-space:nowrap}
+  .vc{text-align:center;margin-top:96px}
+  .vc p{font:600 32px/38px Inter,sans-serif;letter-spacing:-.02em}
+  .vc small{display:block;margin-top:14px;color:var(--mute);font-size:15px}
+
+  /* ---- call to action + footer ---- */
+  /* the close of the page is white: Run your fleet on DriveOS, then the footer */
+  .paper{background:#fff;color:var(--l-ink)}
+  .paper .lede{color:var(--l-body)}
+  .paper .pill{box-shadow:none}
+  .paper .pill:hover{box-shadow:0 10px 26px rgba(5,13,18,.14)}
+  .cta{text-align:center;padding-top:140px;padding-bottom:140px}
+  .cta .row{display:flex;gap:20px;justify-content:center;align-items:center;margin-top:32px}
+  .cta .row a.alt{font:600 14px/1 Inter,sans-serif;color:var(--l-ink);text-decoration:underline;text-underline-offset:4px}
+  /* footer: big, with London inside the CAURA letters */
+  footer{border-top:1px solid var(--l-rule);padding-top:120px;padding-bottom:0;overflow:hidden;font-size:16px;line-height:26px;color:var(--l-body)}
+  footer .cols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+  footer .lead{font:600 28px/34px Inter,sans-serif;letter-spacing:-.015em;color:var(--l-ink);max-width:360px}
+  footer h4{font:600 12px/1 Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--l-mute);margin-bottom:16px}
+  footer a{display:block;padding:3px 0}
+  footer a:hover{color:var(--l-ink)}
+  footer .giant{padding:96px 0 0;margin-bottom:-4.4vw}
+  /* a little wider than the screen, so it's cut off left, right and bottom; sharp, with daytime London inside */
+  footer .giant canvas{display:block;width:106vw;margin-left:-3vw;aspect-ratio:147.302/25.8198}
+  footer .base{display:flex;justify-content:space-between;gap:24px;margin-top:72px;font-size:12px;line-height:18px;color:var(--l-mute)}
+  footer .base p{max-width:760px}
+
+  @media (max-width:1340px) and (min-width:901px){ .fan{scale:.8;transform-origin:top center;height:640px} .card-desc{width:430px;margin-top:-264px} }
+  @media (max-width:900px){
+    .card-desc{width:auto;max-width:520px;margin:24px auto 0;text-align:center} .card-desc .rules{justify-content:center} .card-desc .foot{text-align:center}
+    h1{font-size:40px;line-height:44px} h2{font-size:30px;line-height:34px}
+    nav{grid-template-columns:auto 1fr;padding:0 16px} nav .links{display:none}
+    .wrap{padding:0 16px} .hero{padding-top:168px} .sec{padding-top:96px;padding-bottom:96px} .sec-head{margin-bottom:48px}
+    .hero{padding-top:168px} .world{height:620px;margin-top:40px} .devices{transform-origin:top center;scale:.66;top:40px}
+    .glass{font-size:12px;padding:8px 12px 8px 8px} .glass .ic{width:28px;height:28px}
+    .console{grid-template-columns:1fr} .side{display:none} .stats{grid-template-columns:1fr 1fr} th:nth-child(3),td:nth-child(3),th:nth-child(2),td:nth-child(2){display:none}
+    .pillars,.prods,.quotes,.nums{grid-template-columns:1fr 1fr} .nums b{font-size:44px}
+    .day,.split{grid-template-columns:1fr;gap:32px}
+    .count{position:sticky;top:72px;z-index:6;background:#fff;display:flex;align-items:center;gap:14px;margin:0 -16px;padding:12px 16px;border-bottom:1px solid var(--l-rule)}
+    .count b{font-size:36px;margin:0} .count .kicker{margin:0} .count p:not(.kicker){display:none} .count .t{margin:0 0 0 auto} .m{grid-template-columns:1fr;gap:8px}
+    .fan{scale:.62;transform-origin:top center;height:400px;margin:48px auto 24px}
+    footer .cols{grid-template-columns:1fr 1fr} footer .lead{grid-column:1/-1;font-size:24px;line-height:30px} footer .giant{padding:56px 0 0;margin-bottom:-4.4vw} footer .base{flex-direction:column}
+  }
+  @media (max-width:1240px) and (min-width:561px){                       /* the phones take more of the width: cards step out of their way */
+    .glass.g1{left:12%!important} .glass.g2{right:10%!important;top:-6%!important} .glass.g3{left:3%!important}
+    .glass.g5{left:1.5%!important} .glass.g6{right:3%!important;bottom:6%!important}
+  }
+  @media (max-width:560px){
+    .fan{scale:.5;height:410px;margin:90px auto 0}                       /* phones: the held card in the middle, the other two peek out above it */
+    .held,.fan.open .held{right:auto;left:calc(50% - 416px)} .held{top:-110px}
+    .fan.open .c1{transform:translate(-30px,380px)} .fan.open .c3{transform:translate(30px,440px)}
+    .rv{width:290px;padding:22px} .rv p{font-size:16px;line-height:24px} .flow{margin-top:56px}
+    .cross{height:200px;margin-top:-40px}
+    .pillars,.prods,.quotes,.nums{grid-template-columns:1fr} .vc p{font-size:24px;line-height:30px}
+    .world{height:560px} .devices{scale:.5;top:120px} .glass.g3,.glass.g4,.glass.g5,.glass.g6{display:none}
+    .hero>.osm{right:auto;left:16px;font-size:10px}
+    .glass.g1{left:12px!important;top:14px!important} .glass.g2{left:auto!important;right:12px!important;top:auto!important;bottom:14px!important}
+  }
+  @media (prefers-reduced-motion:reduce){ .track{animation:none} .lane{overflow-x:auto} }
+  @media (prefers-reduced-motion:reduce){ .devices{transform:none!important} .glass,.glass[data-state],tbody tr{opacity:1;transform:none;transition:none;animation:none} .card,.rule,.cov .r{transition:none} }
+</style>
+</head>
+<body>
+<nav>
+  <div class="links"><a href="#">Consumer</a><a href="#">Enterprise</a><a href="#" class="on">Fleet</a></div>
+  <img src="assets/caura-logo-white.svg" alt="Caura">
+  <div class="right"><a class="login" href="#">Log in to DriveOS</a><a class="pill" href="#">Get started</a></div>
+</nav>
+
+<header class="hero">
+  <canvas class="map" id="map" aria-hidden="true"></canvas>
+  <div class="scrim" aria-hidden="true"></div>
+  <a class="osm" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a>
+  <div class="wrap">
+  <h1>One app. Every driver.<br>Zero chasing.</h1>
+  <p class="lede">The same app 500,000+ drivers already use now feeds a single console with everything you're responsible for.</p>
+  <a class="pill" href="#">Get started</a>
+  </div>
+
+  <div class="world" id="world">
+    <canvas class="phones3d" id="phones3d" aria-label="The Caura app on an iPhone and a driver's checks on a Pixel"></canvas>
+    <div class="glass g1" style="left:17%;top:-4%;--tilt:-5deg;--drift:-34px" data-step="0" data-todo="Walkaround due" data-done="Walkaround submitted"><span class="ic"></span><span><b class="tx">Walkaround due</b><small><span class="plate">BE57 YTK</span></small></span></div>
+    <div class="glass g2" style="right:16%;top:2%;--tilt:4deg;--drift:30px" data-step="3" data-todo="MOT due 14 Nov" data-done="MOT booked"><span class="ic"></span><span><b class="tx">MOT due 14 Nov</b><small><span class="plate">BE57 YTK</span></small></span></div>
+    <div class="glass g3" style="left:10%;bottom:8%;--tilt:-2deg;--drift:-18px" data-step="1" data-todo="Licence check due" data-done="Licence verified"><span class="ic"></span><span><b class="tx">Licence check due</b><small><span class="plate">BE57 YTK</span></small></span></div>
+    <div class="glass g4" style="right:2%;top:40%;--tilt:-4deg;--drift:26px" data-step="4" data-todo="Mileage to log" data-done="Mileage logged"><span class="ic"></span><span><b class="tx">Mileage to log</b><small><span class="plate">BE57 YTK</span></small></span></div>
+    <div class="glass g5" style="left:3%;top:31%;--tilt:3deg;--drift:-24px" data-step="2" data-todo="Dart Charge to pay" data-done="Dart Charge paid · £2.50"><span class="ic"></span><span><b class="tx">Dart Charge to pay</b><small><span class="plate">BE57 YTK</span></small></span></div>
+    <div class="glass g6" style="right:9%;bottom:3%;--tilt:2deg;--drift:22px" data-step="5" data-todo="Fuel receipt to add" data-done="Receipt added · £64.20"><span class="ic"></span><span><b class="tx">Fuel receipt to add</b><small><span class="plate">BE57 YTK</span></small></span></div>
+    <div class="devices" id="devices">
+      <div class="pixel">
+        <div class="scr"><span class="cam"></span>
+          <span class="plate">BE57 YTK</span>
+          <h4>Today's checks</h4>
+          <small style="color:#6b7680">Ford Transit · Company</small>
+          <div class="task"><div>Walkaround<small>Submitted 07:12</small></div><span class="tick done"></span></div>
+          <div class="task"><div>Licence check<small>Verified with DVLA</small></div><span class="tick done"></span></div>
+          <div class="task"><div>MOT<small>Due 14 Nov · book a garage</small></div><span class="tick"></span></div>
+          <div class="task"><div>Mileage<small>Log today's trips</small></div><span class="tick"></span></div>
+        </div>
+      </div>
+      <div class="iphone">
+        <div class="scr"><span class="island"></span>
+          <img class="shot" src="assets/caura-driver-app-screen.jpg" alt="The Caura app: C4 URA, a Land Rover Defender, with MOT, service, insurance and tax">
+          <div class="att"><b>2</b>2 items need attention for C4 URA</div>
+          <div class="tiles"><div class="tile"><span><i>P</i>Parking</span></div><div class="tile"><span><i>£</i>Fuel prices</span></div></div>
+          <div class="recent"><small>Paid this week</small><div><span>Dart Charge</span><b>£2.50</b></div><div><span>Parking · Waterloo</span><b>£7.49</b></div><div><span>EV charging</span><b>£32.00</b></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="sec wrap" id="console">
+  <div class="sec-head">
+    <p class="kicker">DriveOS</p>
+    <h2>Everything flows in, nothing slips out.</h2>
+    <p class="lede">Every vehicle, driver and job, live in one view. Compliance status, maintenance jobs, spend and mileage update as they land, then export straight to your accounts.</p>
+  </div>
+  <div class="console" id="con">
+    <aside class="side">
+      <div class="brand"><img src="assets/caura-logo-white.svg" alt="Caura"><span>DriveOS</span></div>
+      <a class="on" href="#">Compliance <em id="navNeed">14</em></a><a href="#">SMR <em>3</em></a><a href="#">Payments <em>£2.4k</em></a><a href="#">Reimbursement <em>10</em></a>
+      <a href="#" style="margin-top:18px">Vehicles <em>32</em></a><a href="#">Drivers <em>41</em></a>
+    </aside>
+    <div class="main">
+      <div class="top"><h3>Compliance</h3><small>Updated just now</small></div>
+      <div class="stats">
+        <div class="stat"><b>41</b><span>Active drivers</span></div>
+        <div class="stat warn"><b id="need">14</b><span>Need attention</span></div>
+        <div class="stat"><b>32</b><span>Vehicles</span></div>
+        <div class="stat"><b id="booked">0</b><span>Booked today</span></div>
+      </div>
+      <table>
+        <thead><tr><th>Vehicle</th><th>Driver</th><th>Type</th><th>Status</th><th style="text-align:right">Spend this month</th></tr></thead>
+        <tbody id="rows">
+          <tr><td><span class="plate">ND20 ABF</span></td><td><span class="who">JM</span>Company car</td><td>Company</td><td><span class="st due" data-flip="MOT booked · Mon 9 Sept">MOT due</span></td><td class="amt">£58.76</td></tr>
+          <tr><td><span class="plate">OV22 UJM</span></td><td><span class="who">SP</span>Leased</td><td>Leased</td><td><span class="st ok">Insured · taxed</span></td><td class="amt">£97.60</td></tr>
+          <tr><td><span class="plate">WE72 UIO</span></td><td><span class="who">AK</span>Own car</td><td>Grey fleet</td><td><span class="st due" data-flip="Licence verified">Licence check due</span></td><td class="amt">£301.40</td></tr>
+          <tr><td><span class="plate">RF69 RKL</span></td><td><span class="who">RT</span>Salary sacrifice</td><td>Salsac</td><td><span class="st ok">EV charge £32.00 · reconciled</span></td><td class="amt">£32.00</td></tr>
+          <tr><td><span class="plate">FL75 WES</span></td><td><span class="who">LH</span>Company car</td><td>Company</td><td><span class="st due" data-flip="Service booked · £275.00">Service due</span></td><td class="amt">£139.50</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="sec wrap" id="pillars" style="padding-top:0">
+  <div class="sec-head"><p class="kicker">Features</p><h2>Caura handles all 4 pillars your fleet can't skip</h2></div>
+  <div class="pillars">
+    <div class="pil"><div class="obj"><div class="ring" id="ring"><span><span><b>324</b>MOT · Service<br>Insure · Tax</span></span></div></div>
+      <h3>Compliance</h3><p>Stay on top of MOTs, DVLA licence checks, insurance, tax for every vehicle, including grey fleet.</p><a href="#">Find out more →</a></div>
+    <div class="pil"><div class="obj"><div class="sheet"><span class="stamp">Approved</span><small>JOB SHEET · BOOKED MON 9 SEPT</small><div class="r"><span>Front pads</span><span>£180.00</span></div><div class="r"><span>Oil &amp; filter</span><span>£95.00</span></div><div class="r"><span>Total</span><span>£275.00</span></div></div></div>
+      <h3>SMR</h3><p>Book vehicle maintenance into one of 6,500 garages, watch the job move through the workshop, and approve additional work if something is found.</p><a href="#">Find out more →</a></div>
+    <div class="pil"><div class="obj"><div class="chips" id="pays"><span style="--s:0">Dart Charge<b>£2.50</b></span><span style="--s:1">EV charging<b>£32.00</b></span><span style="--s:2">Parking<b>£7.49</b></span></div></div>
+      <h3>Payments</h3><p>Pay tolls, congestion and Clean Air charges, parking, EV charging and fuel.</p><a href="#">Find out more →</a></div>
+    <div class="pil"><div class="obj"><div class="queue" id="queue"><div><span>ND20 ABF · AMAP</span><b>£58.76</b><em>Approved</em></div><div><span>OV22 UJM · AFR</span><b>£97.60</b><em>Approved</em></div><div><span>WE72 UIO · AER</span><b>£41.20</b><em>Approved</em></div></div></div>
+      <h3>Reimbursement</h3><p>Capture mileage, AMAP, AFR, AER, BIK and expenses, ready to approve in one place.</p><a href="#">Find out more →</a></div>
+  </div>
+</section>
+
+<div class="cross" data-top="dark" data-x0="850" data-x1="2000" aria-hidden="true"><canvas></canvas></div>
+<section class="light">
+  <div class="wrap sec day">
+    <div class="count">
+      <p class="kicker">Need attention</p>
+      <b id="n">14</b>
+      <p>A Tuesday at a 40-vehicle fleet. By the evening, nothing is waiting on you.</p>
+      <div class="t" id="t">07:00</div>
+    </div>
+    <div>
+      <article class="m" data-n="11" data-t="07:12"><time>07:12</time><div><h3>Driver self-serve, admin disappears.</h3><p>Three drivers submit their walkarounds from the app before they leave the depot. Nobody prints a checklist.</p><div class="ui"><span class="plate">VN69 WDZ</span> Walkaround · 3 of 3 <span class="ok">Done</span></div></div></article>
+      <article class="m" data-n="8" data-t="09:30"><time>09:30</time><div><h3>Licence checks run themselves.</h3><p>DVLA checks come back for the grey fleet, the cars your staff own and drive for work.</p><div class="ui"><span class="plate">WE72 UIO</span> Licence <span class="ok">Verified</span></div></div></article>
+      <article class="m" data-n="5" data-t="12:40"><time>12:40</time><div><h3>Payments as they happen, not weeks later.</h3><p>Tolls, parking and charging go on the Caura Visa card and land against the vehicle, reconciled on the spot.</p><div class="ui">Dart Charge £2.50 · EV charging £32.00 <span class="ok">Reconciled</span></div></div></article>
+      <article class="m" data-n="2" data-t="15:15"><time>15:15</time><div><h3>Everything flows in, nothing slips out.</h3><p>Two MOTs and a service are booked into garages from 6,500, and you approve the extra work from your phone.</p><div class="ui"><span class="plate">FL75 WES</span> Front pads + oil · £275.00 <span class="ok">Approved</span></div></div></article>
+      <article class="m" data-n="0" data-t="18:00"><time>18:00</time><div><h3>The car speaks up, you stay ahead.</h3><p>Connected cars report mileage and health on their own, so tomorrow's list is already true.</p><div class="ui">Need attention <span class="ok">0</span></div></div></article>
+    </div>
+  </div>
+</section>
+
+<div class="cross" data-top="white" data-x0="1150" data-x1="2000" aria-hidden="true"><canvas></canvas></div>
+<section class="sec wrap" id="coverage">
+  <div class="split">
+    <div>
+      <p class="kicker">Coverage</p>
+      <h2>Every vehicle. One system.</h2>
+      <p class="l">Whoever owns it, however it's funded, DriveOS onboards and manages it the same way.</p>
+      <p class="grey-note"><b>Grey fleet is still your fleet.</b> Duty of care under the Health and Safety at Work Act applies to any vehicle used for work, including the driver's own.</p>
+    </div>
+    <div class="cov" id="cov">
+      <div class="seg"><button class="on" data-f="all">All<b>32</b></button><button data-f="Company">Company<b>16</b></button><button data-f="Leased">Leased<b>9</b></button><button data-f="Grey fleet">Grey<b>3</b></button><button data-f="Salary sacrifice">Salsac<b>4</b></button></div>
+      <div class="r" data-t="Company"><span class="plate">ND20 ABF</span><span><span class="who">JM</span>Company car</span><span class="t">Company</span></div>
+      <div class="r" data-t="Leased"><span class="plate">OV22 UJM</span><span><span class="who">SP</span>Leased</span><span class="t">Leased</span></div>
+      <div class="r" data-t="Grey fleet"><span class="plate">WE72 UIO</span><span><span class="who">AK</span>Own car</span><span class="t">Grey fleet</span></div>
+      <div class="r" data-t="Salary sacrifice"><span class="plate">RF69 RKL</span><span><span class="who">RT</span>Salary sacrifice</span><span class="t">Salary sacrifice</span></div>
+      <div class="r" data-t="Company"><span class="plate">FL75 WES</span><span><span class="who">LH</span>Company car</span><span class="t">Company</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec wrap" id="platform" style="padding-top:0">
+  <div class="sec-head"><p class="kicker">Operating system</p><h2>One place to control your fleet.</h2></div>
+  <div class="prods">
+    <div class="prod"><div class="obj"><div class="mini-console" id="mc"><div class="row" data-todo="MOT due" data-done="MOT booked"><span class="plate">ND20 ABF</span><span class="ms"><span class="dot a"></span><span class="tx">MOT due</span></span></div><div class="row" data-todo="Licence due" data-done="Licence verified"><span class="plate">WE72 UIO</span><span class="ms"><span class="dot a"></span><span class="tx">Licence due</span></span></div><div class="row" data-todo="Service due" data-done="Service booked"><span class="plate">FL75 WES</span><span class="ms"><span class="dot a"></span><span class="tx">Service due</span></span></div><div class="row" data-todo="To match" data-done="Reconciled"><span class="plate">RF69 RKL</span><span class="ms"><span class="dot a"></span><span class="tx">To match</span></span></div></div></div>
+      <h3>DriveOS</h3><p>Every vehicle, driver and job, live in one view. Nothing waits for month end.</p></div>
+    <div class="prod"><div class="obj"><div class="mini-phone"><div class="scr"><i class="isl"></i><div class="lst"><div class="r need"><span>1</span>item needs attention</div><div class="cap">PAID THIS WEEK</div><div class="r"><span>Congestion</span><b>£15.00</b></div><div class="r"><span>Dart Charge</span><b>£2.50</b></div></div></div><span class="note"><i>✓</i>MOT booked</span></div></div>
+      <h3>Driver app for iOS &amp; Android</h3><p>Driver actionable products for compliance, payments, SMR and reimbursement.</p></div>
+    <div class="prod"><div class="obj"><div class="mini-card"><img src="assets/caura-logo-navy.svg" alt=""><i></i><b>VISA</b><span class="tap"><span></span><span></span><span></span></span></div><span class="paid">Dart Charge <b>£2.50 · paid</b></span></div>
+      <h3>Visa Card</h3><p>A fleet payment card that covers EV charging, tolls and parking, reconciled on the spot.</p></div>
+    <div class="prod"><div class="obj"><div class="mini-map"><canvas id="mmap"></canvas><span><span class="plate" style="font-size:9px;padding:3px 5px">BE57 YTK</span> <b id="miles">38.4</b> miles today</span></div></div>
+      <h3>Connected Car</h3><p>Telematics from the car itself. Mileage, health and usage, so everything runs on real data.</p></div>
+  </div>
+</section>
+
+<div class="bleed"><section class="sec wrap" id="card" style="padding-top:0;text-align:center">
+  <p class="kicker">Visa card</p>
+  <h2>Payments as they happen, not weeks later.</h2>
+  <div class="fan" id="fan">
+    <div class="card c1"><div class="face m-graphite"><img class="lg" src="assets/caura-logo-white.svg" alt=""><span class="ow">Leased · OV22 UJM</span><span class="chip"></span><svg class="nfc" viewBox="0 0 22 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8.5a5 5 0 0 1 0 7"/><path d="M8 5.5a10 10 0 0 1 0 13"/><path d="M13 2.5a15 15 0 0 1 0 19"/></svg><span class="nm">Fleet card</span><span class="num">•••• 4471</span><span class="visa">VISA</span></div></div>
+    <div class="card c3"><div class="face m-titanium"><img class="lg" src="assets/caura-logo-navy.svg" alt=""><span class="ow">Grey fleet · WE72 UIO</span><span class="chip"></span><svg class="nfc" viewBox="0 0 22 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8.5a5 5 0 0 1 0 7"/><path d="M8 5.5a10 10 0 0 1 0 13"/><path d="M13 2.5a15 15 0 0 1 0 19"/></svg><span class="nm">Fleet card</span><span class="num">•••• 9024</span><span class="visa">VISA</span></div></div>
+    <div class="held"><div class="stage"><img class="hand" src="assets/caura-hand-card.webp" alt="An illustrated hand reaching in with the lime Caura fleet card"><div class="clip"><div class="print"><img class="lg" src="assets/caura-logo-navy.svg" alt=""><span class="visa">VISA</span><span class="chip"></span><svg class="nfc" viewBox="0 0 22 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8.5a5 5 0 0 1 0 7"/><path d="M8 5.5a10 10 0 0 1 0 13"/><path d="M13 2.5a15 15 0 0 1 0 19"/></svg><span class="nm">Fleet card · Company · ND20 ABF</span><span class="num">•••• 2187</span></div></div></div></div>
+  </div>
+  <div class="card-desc">
+    <p class="lede">A fleet card for EV charging, tolls and parking, reconciled on the spot. You set what it can be used for before anyone spends.</p>
+    <div class="rules"><span class="rule ok">EV charging</span><span class="rule ok">Fuel</span><span class="rule ok">Tolls</span><span class="rule ok">Parking</span><span class="rule ok">Dart Charge</span><span class="rule no">Everything else</span></div>
+    <p class="foot">Every transaction lands against the vehicle and the driver. Nothing waits for month end.</p>
+  </div>
+</section></div>
+
+<section class="sec wrap" id="proof" style="padding-top:0">
+  <div class="sec-head"><p class="kicker">Customers</p><h2>Half a million drivers already rely on it</h2></div>
+  <div class="nums">
+    <div><b data-to="500000" data-suffix="+">500,000<em>+</em></b><span>drivers on the app</span></div>
+    <div><b data-to="6500">6,500</b><span>garages to book into</span></div>
+    <div><b data-to="200" data-suffix="+">200<em>+</em></b><span>UK insurance providers</span></div>
+  </div>
+  <div class="flow" id="flow" aria-label="Reviews from Caura drivers"><div class="lane"><div class="track"></div></div><div class="lane rev"><div class="track"></div></div></div>
+  <div class="vc"><p>"Setting a new benchmark for the industry."</p><small>Sebastian Peck, Partner, Kompas VC</small></div>
+</section>
+
+<div class="cross" data-top="dark" data-x0="900" data-x1="1560" aria-hidden="true"><canvas></canvas></div>
+<div class="paper">
+<section class="cta wrap">
+  <h2>Run your fleet on DriveOS</h2>
+  <p class="lede">See what DriveOS does with your fleet, whatever the size.</p>
+  <div class="row"><a class="pill" href="#">Get started</a><a class="alt" href="#">Log in to DriveOS</a></div>
+</section>
+
+<footer>
+  <div class="wrap cols">
+    <p class="lead">Manage all things car.</p>
+    <div><h4>Company</h4><a href="#">About</a><a href="#">FAQs</a><a href="#">Blog</a></div>
+    <div><h4>Legal</h4><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookie settings</a></div>
+    <div><h4>Talk to us</h4><a href="#">Contact us</a><a href="#">Log in to DriveOS</a></div>
+  </div>
+  <div class="wrap base">
+    <p>© Caura 2026. Caura Ltd, 1 Horse Guards Avenue, London, SW1A 2HU. Registered in England and Wales (11520538) and regulated by the FCA (923662).</p>
+    <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">Map © OpenStreetMap contributors</a>
+  </div>
+  <div class="giant"><canvas id="map2" role="img" aria-label="Caura"></canvas></div>
+</footer>
+</div>
+
+<script type="module" src="assets/phones3d.js"></script>
+<script src="assets/london-map.js"></script>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const once = (el, fn, threshold = .35) => new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { fn(); o.disconnect(); } }), {threshold}).observe(el);
+
+  // the nav's Get started only shows once the hero's own button has scrolled away
+  // (and stays away while the closing call to action is on screen, so there's only ever one)
+  const ctas = [...document.querySelectorAll('.hero .pill, .cta .pill')], shown = new Set();
+  const ctaIO = new IntersectionObserver(es => { es.forEach(e => e.isIntersecting ? shown.add(e.target) : shown.delete(e.target));
+    document.body.classList.toggle('past', !shown.size && scrollY > 200); });
+  ctas.forEach(c => ctaIO.observe(c));
+
+  // hero: the phones turn to face you as you scroll, the glass cards land on the map
+  const dev = document.getElementById('devices'), ease = t => 1 - Math.pow(1 - t, 3);
+  const turn = () => { const t = ease(Math.min(1, Math.max(0, scrollY / 560))); dev.style.setProperty('--ry', (-24 * (1 - t)) + 'deg'); dev.style.setProperty('--rx', (10 * (1 - t)) + 'deg'); };
+  if (reduce) { dev.style.setProperty('--ry', '0deg'); dev.style.setProperty('--rx', '0deg'); } else { addEventListener('scroll', () => requestAnimationFrame(turn), {passive:true}); turn(); }
+  const glass = [...document.querySelectorAll('.glass')];
+  // the cards follow the driver's checklist on the Pixel (same clock as assets/phones3d.js):
+  // each task is ticked at its step, its card turns lime, then floats up and clears; the loop resets the map
+  const LOOP = 19000, STEPS = [1800, 4200, 6600, 9000, 11400, 13800];
+  const setState = (g, st) => { if (g.dataset.state === st) return; g.dataset.state = st;
+    g.querySelector('.tx').textContent = st === 'due' ? g.dataset.todo : g.dataset.done; };
+  if (reduce) glass.forEach(g => setState(g, 'due'));
+  else once(document.getElementById('world'), () => setInterval(() => {
+    const t = performance.now() % LOOP;
+    glass.forEach((g, i) => { const at = STEPS[+g.dataset.step];
+      setState(g, t < 300 + i * 450 ? 'hidden' : t < at ? 'due' : t < at + 2400 ? 'done' : 'gone'); });
+  }, 50), .2);
+
+  // console: rows land, then due items flip to done and the count goes down
+  const rows = [...document.querySelectorAll('#rows tr')], need = document.getElementById('need'), navNeed = document.getElementById('navNeed'), booked = document.getElementById('booked');
+  once(document.getElementById('con'), () => {
+    rows.forEach((r, i) => setTimeout(() => r.classList.add('in'), reduce ? 0 : 300 + i * 140));
+    let n = 14, b = 0;
+    [...document.querySelectorAll('[data-flip]')].forEach((s, i) => setTimeout(() => {
+      s.classList.replace('due', 'ok'); s.textContent = s.dataset.flip; n -= 1; b += 1;
+      need.textContent = n; navNeed.textContent = n; booked.textContent = b;
+    }, reduce ? 0 : 1800 + i * 1100));
+  }, .3);
+
+  // compliance ring fills
+  const ring = document.getElementById('ring');
+  once(ring, () => { if (reduce) { ring.style.setProperty('--p', '78%'); return; } let p = 0; const step = () => { p = Math.min(78, p + 2); ring.style.setProperty('--p', p + '%'); if (p < 78) requestAnimationFrame(step); }; step(); }, .6);
+
+  // the day: as each moment reaches the middle, the clock and the count move
+  const n = document.getElementById('n'), t = document.getElementById('t');
+  const day = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const m = e.target;
+    n.textContent = m.dataset.n; t.textContent = m.dataset.t; n.classList.toggle('zero', m.dataset.n === '0'); }), {rootMargin:'-45% 0px -45% 0px'});
+  document.querySelectorAll('.m').forEach(m => day.observe(m));
+
+  // coverage: the console cycles through ownership types, or follows a click
+  const seg = [...document.querySelectorAll('#cov .seg button')], crow = [...document.querySelectorAll('#cov .r')];
+  const pick = f => { seg.forEach(x => x.classList.toggle('on', x.dataset.f === f)); crow.forEach(r => r.classList.toggle('off', f !== 'all' && r.dataset.t !== f)); };
+  let k = 0, auto = null; const order = seg.map(x => x.dataset.f);
+  seg.forEach(x => x.addEventListener('click', () => { clearInterval(auto); pick(x.dataset.f); }));
+  if (!reduce) once(document.getElementById('cov'), () => { auto = setInterval(() => pick(order[k = (k + 1) % order.length]), 1800); }, .4);
+
+  // the Visa card: three cards fan out, the rules light up
+  const fan = document.getElementById('fan'), rules = [...document.querySelectorAll('.rule')];
+  once(fan, () => { fan.classList.add('open'); rules.forEach((r, i) => setTimeout(() => r.classList.add('on'), reduce ? 0 : 500 + i * 160)); });
+
+  // proof: the numbers count up once
+  document.querySelectorAll('.nums b[data-to]').forEach(b => once(b, () => {
+    if (reduce) return; const to = +b.dataset.to, suf = b.dataset.suffix ? '<em>' + b.dataset.suffix + '</em>' : ''; const t0 = performance.now();
+    const tick = now => { const p = Math.min(1, (now - t0) / 1400), v = Math.round(to * ease(p)); b.innerHTML = v.toLocaleString('en-GB') + suf; if (p < 1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  }, .6));
+})();
+
+// ---- the living map: central London from OpenStreetMap, traffic on the real roads, a light that follows you ----
+// livingMap(canvas, options) draws it into any canvas. Used twice: the header, and inside the CAURA letters in the footer.
+function livingMap(cv, o = {}){
+  const M = window.LONDON; if (!cv || !M) return;
+  const host = o.host || cv.parentElement, ctx = cv.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ROAD = o.road || '150,184,202', LIME = '183,240,5', AMBER = '245,158,11', LW = o.lw || 1, DOT = o.dot || 1;
+  const FOCUS = o.focus || [840, 720], HQ = [763, 714];   // map-grid positions (agency/scripts/osm-map.py)
+  const LABELS = [['Waterloo', 914, 755], ['Westminster', 690, 850], ['The City', 1217, 513], ['Southwark', 1120, 770], ['Soho', 624, 518], ['Lambeth', 880, 960]];
+  let W = 0, H = 0, dpr = 1, s = 1, tx = 0, ty = 0, roads = [], base, lit, spot, mask = null, cars = [], lime = [], pings = [], last = 0, running = true, respawn = c => c;
+  const mouse = {x: 0, y: 0, tx: 0, ty: 0, seen: 0};
+  const rnd = (seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; })(o.seed || 11);
+  const toPts = flat => { const p = []; for (let i = 0; i < flat.length; i += 2) p.push([flat[i] * s + tx, flat[i + 1] * s + ty]); return p; };
+  const road = (pts, kind) => { const len = [0]; for (let i = 1; i < pts.length; i++) len.push(len[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1])); return {pts, kind, len, total: len[len.length - 1]}; };
+
+  function build(){
+    W = cv.clientWidth; H = cv.clientHeight; if (!W || !H) return; dpr = Math.min(2, devicePixelRatio || 1); cv.width = W * dpr; cv.height = H * dpr;
+    const zoom = (W < 700 ? o.zoomMobile : o.zoom) || 1.4; s = Math.max(W / M.w, H / M.h) * zoom;
+    tx = Math.min(0, Math.max(W - M.w * s, W * .5 - FOCUS[0] * s)); ty = Math.min(0, Math.max(H - M.h * s, H * (o.fy || .42) - FOCUS[1] * s));
+    roads = [...M.major.map(f => road(toPts(f), 'major')), ...M.minor.map(f => road(toPts(f), 'minor'))];
+    const river = M.river.map(toPts);
+    const visible = rd => rd.pts.some(([x, y]) => x > -50 && x < W + 50 && y > -50 && y < H + 50);
+    const k = o.bright || 1;
+    const layer = (minorA, majorA, riverA, labels) => {
+      const c = document.createElement('canvas'); c.width = W * dpr; c.height = H * dpr; const g = c.getContext('2d'); g.scale(dpr, dpr);
+      g.lineCap = g.lineJoin = 'round';
+      g.strokeStyle = `rgba(${o.river || '42,84,108'},${riverA})`; g.lineWidth = Math.max(18, 52 * s);   // the Thames, about 250m wide
+      for (const r of river) { g.beginPath(); r.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.stroke(); }
+      for (const kind of ['minor', 'major']) {
+        g.strokeStyle = `rgba(${ROAD},${Math.min(1, (kind === 'major' ? majorA : minorA) * k)})`; g.lineWidth = (kind === 'major' ? 1.5 : .6) * LW; g.beginPath();
+        for (const rd of roads) if (rd.kind === kind) rd.pts.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1]));
+        g.stroke();
+      }
+      if (labels) { g.font = '500 11px Inter, system-ui, sans-serif'; g.fillStyle = 'rgba(170,200,215,.38)'; g.textAlign = 'center';
+        for (const [t, x, y] of LABELS) g.fillText(t.toUpperCase().split('').join(String.fromCharCode(8202)), x * s + tx, y * s + ty); }
+      return c;
+    };
+    base = layer(o.minorA || .1, o.majorA || .3, o.riverA || .28, !!o.labels); lit = layer(.55, .95, .55, false);
+    spot = document.createElement('canvas'); spot.width = W * dpr; spot.height = H * dpr;
+    if (o.mask) { mask = document.createElement('canvas'); mask.width = W * dpr; mask.height = H * dpr; mask.getContext('2d').drawImage(o.mask, 0, 0, W * dpr, H * dpr); }
+
+    // each car fades in somewhere, drives one way for a short stretch, fades out, and comes back later somewhere else
+    const pool = roads.filter(rd => rd.total > 60 && visible(rd)).flatMap(rd => rd.kind === 'major' ? [rd, rd, rd] : (rnd() < .35 ? [rd] : []));
+    const spawn = (c, first) => {
+      const rd = pool[Math.floor(Math.random() * pool.length)], dir = Math.random() < .5 ? 1 : -1;
+      const v = (rd.kind === 'major' ? 20 : 11) * (.75 + Math.random() * .5), run = Math.min(rd.total * .9, 90 + Math.random() * 170);
+      const start = dir > 0 ? Math.random() * (rd.total - run) : run + Math.random() * (rd.total - run);
+      Object.assign(c, {rd, dir, v, s: start, run, life: 0, dur: run / v, wait: first ? Math.random() * 6 : 1 + Math.random() * 4});
+      if (first) { c.life = Math.random() * c.dur; c.s = start + dir * v * c.life; c.wait = Math.random() < .6 ? 0 : c.wait; }
+      return c;
+    };
+    const n = Math.round(Math.min(120, (W * H) / (o.density || 11000))); cars = [];
+    for (let i = 0; i < n && pool.length; i++) { const r = rnd(); cars.push(spawn({col: r < .2 ? (o.lime || LIME) : r < .26 ? AMBER : (o.car || '235,242,245')}, true)); }
+    respawn = c => spawn(c, false);
+    lime = cars.filter(c => c.col === (o.lime || LIME)); pings = [];
+    const start = o.hq ? [HQ[0] * s + tx, HQ[1] * s + ty] : [W * .5, H * .5];
+    mouse.x = mouse.tx = start[0]; mouse.y = mouse.ty = start[1];
+  }
+
+  const at = (rd, d) => { let lo = 0, hi = rd.len.length - 1; while (lo < hi - 1) { const m = (lo + hi) >> 1; if (rd.len[m] <= d) lo = m; else hi = m; }
+    const a = rd.pts[lo], b = rd.pts[hi], f = (d - rd.len[lo]) / ((rd.len[hi] - rd.len[lo]) || 1); return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f]; };
+  const ease = t => t * t * (3 - 2 * t);
+
+  function frame(now){
+    if (!running || !W) return;
+    const dt = Math.min(.05, (now - (last || now)) / 1000); last = now;
+    if (now - mouse.seen > 2500) { const t = now / 1000; mouse.tx = W * (.5 + .3 * Math.sin(t * .21)); mouse.ty = H * (.4 + .16 * Math.sin(t * .29 + 1)); }
+    mouse.x += (mouse.tx - mouse.x) * .06; mouse.y += (mouse.ty - mouse.y) * .06;
+    const ox = (mouse.x / W - .5) * -12, oy = (mouse.y / H - .5) * -8;
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.globalCompositeOperation = 'source-over'; ctx.clearRect(0, 0, W, H);
+    if (o.fill) { ctx.fillStyle = o.fill; ctx.fillRect(0, 0, W, H); }
+    ctx.drawImage(base, ox, oy, W, H);
+    const sg = spot.getContext('2d'); sg.setTransform(1, 0, 0, 1, 0, 0); sg.globalCompositeOperation = 'source-over'; sg.clearRect(0, 0, spot.width, spot.height);
+    sg.drawImage(lit, ox * dpr, oy * dpr); sg.globalCompositeOperation = 'destination-in';
+    const R = Math.max(240, Math.min(W, H) * .34), rg = sg.createRadialGradient(mouse.x * dpr, mouse.y * dpr, 0, mouse.x * dpr, mouse.y * dpr, R * dpr);
+    rg.addColorStop(0, 'rgba(0,0,0,1)'); rg.addColorStop(1, 'rgba(0,0,0,0)'); sg.fillStyle = rg; sg.fillRect(0, 0, spot.width, spot.height);
+    ctx.drawImage(spot, 0, 0, W, H);
+
+    for (const c of cars) {
+      if (c.wait > 0) { if (!reduce) c.wait -= dt; c.a = 0; continue; }
+      if (!reduce) { c.life += dt; c.s += c.v * dt * c.dir; }
+      if (c.life >= c.dur || c.s < 0 || c.s > c.rd.total) { respawn(c); c.a = 0; continue; }
+      const kk = c.life / c.dur, a = reduce ? .8 : ease(Math.min(1, kk / .25)) * ease(Math.min(1, (1 - kk) / .35));
+      const [x, y] = at(c.rd, c.s), px = x + ox, py = y + oy; c.x = px; c.y = py; c.a = a;
+      const near = Math.hypot(px - mouse.x, py - mouse.y) < R * .8, A = a * (near ? 1 : .8);
+      let prev = [px, py];
+      for (let i = 1; i <= 6; i++) {
+        const back = c.s - c.dir * i * 4; if (back < 0 || back > c.rd.total) break;
+        const [bx, by] = at(c.rd, back); ctx.strokeStyle = `rgba(${c.col},${A * (1 - i / 7) * .55})`; ctx.lineWidth = near ? 2 : 1.6;
+        ctx.beginPath(); ctx.moveTo(prev[0], prev[1]); ctx.lineTo(bx + ox, by + oy); ctx.stroke(); prev = [bx + ox, by + oy];
+      }
+      ctx.fillStyle = `rgba(${c.col},${Math.min(1, A * (DOT > 1 ? 1.25 : 1))})`; ctx.beginPath(); ctx.arc(px, py, (near ? 2.4 : 1.8) * DOT, 0, 6.283); ctx.fill();
+    }
+    if (o.hq) {   // Caura's office, 1 Horse Guards Avenue
+      const hx = HQ[0] * s + tx + ox, hy = HQ[1] * s + ty + oy, beat = reduce ? 0 : (now / 1000) % 2.4 / 2.4;
+      ctx.strokeStyle = `rgba(${LIME},${(1 - beat) * .6})`; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(hx, hy, 5 + beat * 22, 0, 6.283); ctx.stroke();
+      ctx.fillStyle = `rgb(${LIME})`; ctx.beginPath(); ctx.arc(hx, hy, 4, 0, 6.283); ctx.fill();
+      ctx.font = '600 11px Inter, system-ui, sans-serif'; ctx.fillStyle = 'rgba(255,255,255,.75)'; ctx.textAlign = 'left'; ctx.fillText('Caura HQ', hx + 10, hy + 4);
+    }
+    if (!reduce && pings.length < 3 && Math.random() < dt * .7) { const on = lime.filter(c => c.a > .85); if (on.length) pings.push({c: on[Math.floor(Math.random() * on.length)], t: 0}); }
+    pings = pings.filter(p => (p.t += dt) < 1.6);
+    for (const p of pings) { const q = p.t / 1.6; ctx.strokeStyle = `rgba(${LIME},${(1 - q) * .7})`; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(p.c.x, p.c.y, 4 + q * 26, 0, 6.283); ctx.stroke(); }
+
+    if (mask) { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'destination-in'; ctx.drawImage(mask, 0, 0); ctx.globalCompositeOperation = 'source-over'; }
+    if (!reduce) requestAnimationFrame(frame);
+  }
+
+  build(); requestAnimationFrame(frame);
+  host.addEventListener('pointermove', e => { const b = cv.getBoundingClientRect(); mouse.tx = e.clientX - b.left; mouse.ty = e.clientY - b.top; mouse.seen = performance.now(); });
+  let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { build(); if (reduce) requestAnimationFrame(frame); }, 200); });
+  new IntersectionObserver(es => es.forEach(e => { const was = running; running = e.isIntersecting; if (running && !was && !reduce) { last = 0; requestAnimationFrame(frame); } })).observe(host);
+}
+
+livingMap(document.getElementById('map'), {labels: true, hq: true, zoom: 1.4, zoomMobile: 1.15});
+
+// the river crossings between dark and white sections: a stretch of the real Thames bank, flattened to a gentle swing.
+// The dark bank shows the night map (light streets on navy), the white bank the day map (dark streets on white).
+function crossRiver(cv, opt){
+  const M = window.LONDON; if (!cv || !M) return;
+  const X0 = +opt.x0, X1 = +opt.x1, topDark = opt.top !== 'white';
+  const NAVY = '#050d12', LABELS = [['THE CITY', 1217, 560], ['WATERLOO', 960, 800], ['SOUTHWARK', 1300, 830], ['WESTMINSTER', 650, 860], ['LAMBETH', 880, 980], ['SOHO', 624, 518], ['BANKSIDE', 1150, 720]];
+  const draw = () => {
+    const W = cv.clientWidth, H = cv.clientHeight, dpr = Math.min(2, devicePixelRatio || 1); if (!W) return;
+    cv.width = W * dpr; cv.height = H * dpr; const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const s = W / (X1 - X0);
+    // the bank, in map scale first, then flattened and centred so it always sits inside the band
+    let bank = []; const f = M.river[0]; for (let i = 0; i < f.length; i += 2) bank.push([(f[i] - X0) * s, f[i + 1]]);
+    bank = bank.filter(([x]) => x > -W * .3 && x < W * 1.3); if (bank[0][0] > bank[bank.length - 1][0]) bank.reverse();
+    const ys = bank.filter(([x]) => x >= 0 && x <= W).map(p => p[1]), lo = Math.min(...ys), hi = Math.max(...ys), mid = (lo + hi) / 2;
+    const flat = Math.min(1, (H * .28) / Math.max(1, (hi - lo) * s));                        // gentle: the swing is at most 28% of the band
+    bank = bank.map(([x, y]) => [x, H * .5 + (y - mid) * s * flat]);
+    const P = (x, y) => [(x - X0) * s, H * .5 + (y - mid) * s];                              // streets keep their true layout
+    const bankAt = x => { for (let i = 0; i < bank.length - 1; i++) if (bank[i][0] <= x && x <= bank[i + 1][0]) { const t = (x - bank[i][0]) / ((bank[i + 1][0] - bank[i][0]) || 1); return bank[i][1] + (bank[i + 1][1] - bank[i][1]) * t; } return H * .5; };
+    const edge = new Path2D(); edge.moveTo(-10, bank[0][1]);
+    for (let i = 0; i < bank.length - 1; i++) { const [x1, y1] = bank[i], [x2, y2] = bank[i + 1]; edge.quadraticCurveTo(x1, y1, (x1 + x2) / 2, (y1 + y2) / 2); }
+    edge.lineTo(W + 10, bank[bank.length - 1][1]);
+    const below = new Path2D(edge); below.lineTo(W + 10, H + 10); below.lineTo(-10, H + 10); below.closePath();
+    const above = new Path2D(edge); above.lineTo(W + 10, -10); above.lineTo(-10, -10); above.closePath();
+    const streets = (col, aMinor, aMajor, fadeTop) => { const c = document.createElement('canvas'); c.width = W * dpr; c.height = H * dpr; const q = c.getContext('2d'); q.scale(dpr, dpr); q.lineCap = q.lineJoin = 'round';
+      for (const [list, a, lw] of [[M.minor, aMinor, .7], [M.major, aMajor, 1.6]]) { q.strokeStyle = `rgba(${col},${a})`; q.lineWidth = lw; q.beginPath();
+        for (const fl of list) { const p = []; for (let i = 0; i < fl.length; i += 2) p.push(P(fl[i], fl[i + 1]));
+          if (!p.some(([x, y]) => x > -20 && x < W + 20 && y > -20 && y < H + 20)) continue; p.forEach(([x, y], i) => i ? q.lineTo(x, y) : q.moveTo(x, y)); }
+        q.stroke(); }
+      q.setTransform(1, 0, 0, 1, 0, 0); q.globalCompositeOperation = 'destination-in';                // fade toward the section it meets
+      const gr = q.createLinearGradient(0, 0, 0, H * dpr);
+      if (fadeTop) { gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(.7, '#000'); } else { gr.addColorStop(.3, '#000'); gr.addColorStop(1, 'rgba(0,0,0,0)'); }
+      q.fillStyle = gr; q.fillRect(0, 0, W * dpr, H * dpr); return c; };
+    const bank2 = (path, dark, fadeTop) => { g.save(); g.fillStyle = dark ? NAVY : '#fff'; g.fill(path); g.clip(path);
+      g.drawImage(dark ? streets('150,184,202', .14, .4, fadeTop) : streets('22,36,44', .16, .5, fadeTop), 0, 0, W, H); g.restore(); };
+    g.clearRect(0, 0, W, H);
+    bank2(above, topDark, true); bank2(below, !topDark, false);
+    g.strokeStyle = 'rgba(150,190,210,.9)'; g.lineWidth = 2.5; g.stroke(edge);                       // the river's edge
+    g.font = '600 10px Inter, sans-serif'; g.textAlign = 'center';
+    for (const [t, x, y] of LABELS) {
+      const [px, py] = P(x, y), txt = t.split('').join(String.fromCharCode(8202)), half = g.measureText(txt).width / 2 + 8, by = bankAt(px);
+      if (px - half < 0 || px + half > W || py < 14 || py > H - 14 || Math.abs(py - by) < 18) continue;   // only where it fits, never on the bank
+      const dark = (py < by) === topDark; g.fillStyle = dark ? 'rgba(170,200,215,.5)' : 'rgba(22,36,44,.45)'; g.fillText(txt, px, py);
+    }
+  };
+  draw(); let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(draw, 200); });
+}
+document.querySelectorAll('.cross').forEach(el => crossRiver(el.querySelector('canvas'), el.dataset));
+
+// the review flow: real reviews from caura.com (name, source, quote, Caura's highlighted phrase, app-store stars)
+(() => {
+  const REVIEWS = [["Doug", "App review", "Use the app to pay tax, keep an eye on MOTs & to pay charges. So easy to use & so much quicker than dealing with different websites", "So easy to use", 1], ["Cameron", "£45 saved · User since 2023", "The hassle-free service and excellent communication was great.", "hassle-free service", 0], ["Sherief", "£1,164 saved · User since 2023", "I saved £1,164 by renewing on Caura! I really liked the feature of seeing all my insurance details in the app, too", "I saved £1,164", 0], ["Daz", "£100 saved · User since 2024", "I was delighted with the ease of service provided by Caura and the experience was amazing.", "ease of service", 0], ["Steven Bolwerk", "App review", "Very easy and simple to do. A lot easier than using the government website", "A lot easier than using the government website", 1], ["Andrew", "£500 saved · User since 2021", "Overall I have probably saved about £500 on 2 cars. Very easy to navigate the quote engine, too!", "saved about £500 on 2 cars", 0], ["Ajeesh", "£50 saved · User since 2024", "I really liked the process, it was easy. Will definitely recommend Caura to my friends.", "it was easy", 0], ["Helen Brett", "App review", "Paid my car tax and it was an absolute doddle! Will definitely do it this way going forward", "an absolute doddle!", 1], ["Ricardo Colombo", "App review", "A truly handy app; reminders of road tax, insurance, MOT as well as all city charges on a single place", "reminders of road tax, insurance, MOT", 1], ["Saeed Ahmed", "App review", "Took me less than a minute to tax my vehicle", "less than a minute", 1], ["Paul McGillvray", "App review", "Very useful app, much quicker than logging in to all the different sites when you just want to quickly pay a charge", "much quicker than logging in to all the different sites", 1], ["Glenn", "App review", "Sort out everything you need to sort and pay for tolls and crossings. It’s peace of mind 10/10", "It’s peace of mind 10/10", 1], ["Welch Simon", "App review", "Love Caura, means I can forget about missing charges or worrying about the complications of paying them", "forget about missing charges", 1], ["Mrs Grace Nee", "App review", "Having all the car information in one place is amazing. The reminders are the best part of this app", "The reminders are the best part of this app", 1], ["Stephen Beck", "App review", "Very useful & easy to use. Ensures all aspects of vehicle management are carried out timely from servicing to tax, MOT and insurance", "all aspects of vehicle management are carried out timely", 1], ["Marion Pavli", "App review", "So easy to set up my account and making a payment, again so easy! Would definitely recommend", "So easy to set up my account", 1], ["Sultan Chowdhury", "App review", "Quick and hassle free", "hassle free", 1], ["Trevor Hackett", "App review", "I’ve used it a few times for airport stops and paying for tunnel charges, it was effortless. No issues", "it was effortless.", 1], ["Jemma Tickner", "App review", "Takes the worry out of getting tolls paid", "Takes the worry out", 1], ["Jonathan Harvey", "App review", "Really easy way of paying for city charges", "Really easy", 1], ["Ms Linda Morris", "App review", "Easy to use. One stop for paying tolls, info on insurance, tax, MOT and more", "One stop for paying tolls, info on insurance, tax, MOT and more", 1], ["Mr Manu John", "App review", "Payments are stress free", "stress free", 1], ["Robert Rapley", "App review", "Set up account and paid all within 5 minutes. Definitely recommend this app!", "paid all within 5 minutes.", 1], ["Ian", "App review", "Very handy to have all the information for all cars in our household. Have renewed insurances on two cars", "all the information for all cars in our household.", 1]];
+  const esc = t => t.replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+  const card = ([name, src, q, hl, stars]) => { let body = esc(q); if (hl) body = body.replace(esc(hl), `<mark>${esc(hl)}</mark>`);
+    return `<figure class="rv"><p>\u201c${body}\u201d</p><figcaption class="foot"><span class="by"><b>${esc(name)}</b><small>${esc(src)}</small></span>${stars ? '<span class="stars" aria-label="5 stars">\u2605\u2605\u2605\u2605\u2605</span>' : ''}</figcaption></figure>`; };
+  const tracks = document.querySelectorAll('#flow .track'), half = Math.ceil(REVIEWS.length / 2);
+  [REVIEWS.slice(0, half), REVIEWS.slice(half)].forEach((list, i) => { const html = list.map(card).join(''); tracks[i].innerHTML = html + html.replace(/<figure class="rv">/g, '<figure class="rv" aria-hidden="true">'); });
+})();
+// the footer: the same London, only inside the CAURA letters
+(() => {
+  const cv = document.getElementById('map2'); if (!cv) return;
+  const logo = new Image();
+  logo.onload = () => livingMap(cv, {mask: logo, fill: '#e6edf0', road: '22,36,44', minorA: .3, majorA: .82, river: '150,190,210', riverA: .75, car: '22,36,44', lime: '120,170,0', lw: 1.4, dot: 1.5, zoom: 2.4, zoomMobile: 2.6, fy: .5, focus: [860, 690], density: 4500, seed: 23});
+  logo.src = 'assets/caura-logo-white.svg';
+})();
+</script>
+<script>
+// feature cards: each object runs its own small loop while it is on screen
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const watch = (el, start, stop) => { if (!el) return; new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? start() : stop && stop()), {threshold: .3}).observe(el); };
+  document.querySelectorAll('.pil .obj, .prod .obj').forEach(o => watch(o, () => o.classList.add('on')));
+  if (reduce) { document.querySelectorAll('#queue div').forEach(d => d.classList.add('ok')); return; }
+  const every = (el, ms, tick) => { let id = 0; watch(el, () => { if (!id) { tick(); id = setInterval(tick, ms); } }, () => { clearInterval(id); id = 0; }); };
+  // payments: a new one lands at the top every 2.2s
+  const pays = document.getElementById('pays'), PAY = [['Congestion', '£15.00'], ['Fuel · Shell', '£64.20'], ['ULEZ', '£12.50'], ['Dart Charge', '£2.50'], ['EV charging', '£32.00'], ['Parking', '£7.49']];
+  let pi = 0;
+  // rows sit in fixed slots and slide one slot down; nothing reflows, so the motion stays smooth
+  every(pays, 2600, () => { const [l, v] = PAY[pi++ % PAY.length], n = document.createElement('span');
+    n.innerHTML = l + '<b>' + v + '</b>'; n.style.setProperty('--s', -1); n.style.opacity = 0; pays.append(n);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      [...pays.children].forEach(c => { const k = +c.style.getPropertyValue('--s') + 1; c.style.setProperty('--s', k); if (k > 2) { c.classList.add('out'); setTimeout(() => c.remove(), 900); } });
+      n.style.opacity = ''; n.classList.add('new'); })); });
+  // reimbursement: approve one claim at a time, then start again
+  const q = [...document.querySelectorAll('#queue div')]; let qi = 0;
+  every(document.getElementById('queue'), 1500, () => { if (qi < q.length) q[qi].classList.add('ok'); if (++qi > q.length + 1) { q.forEach(d => d.classList.remove('ok')); qi = 0; } });
+  // DriveOS: rows go from amber to done in turn, then reset
+  const mr = [...document.querySelectorAll('#mc .row')]; let mi = 0;
+  const set = (r, done) => { r.querySelector('.dot').classList.toggle('a', !done); r.querySelector('.tx').textContent = done ? r.dataset.done : r.dataset.todo; };
+  every(document.getElementById('mc'), 1400, () => {
+    if (mi < mr.length) { const r = mr[mi]; set(r, true); r.classList.add('flash'); setTimeout(() => r.classList.remove('flash'), 700); }
+    if (++mi > mr.length + 2) { mr.forEach(r => set(r, false)); mi = 0; } });
+  // connected car: the live London map, and today's miles ticking up
+  const mm = document.getElementById('mmap'), miles = document.getElementById('miles');
+  if (mm && window.livingMap) livingMap(mm, {zoom: 3.2, zoomMobile: 3.2, focus: [1060, 640], density: 2200, seed: 31, fy: .5});
+  let m = 38.4; every(miles, 900, () => { m += .1; miles.textContent = m.toFixed(1); });
+})();
+</script>
+</body>
+</html>
