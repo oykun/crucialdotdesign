@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Caura · Fleet · Crucial.Design</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="icon" type="image/jpeg" href="../../images/avatar.jpg">
+<link rel="icon" type="image/jpeg" href="/images/avatar.jpg">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;900&display=swap" rel="stylesheet">
@@ -198,7 +198,7 @@
   .mini-console .plate{font-size:9px;padding:3px 5px}
   .dot{width:7px;height:7px;border-radius:50%;background:var(--lime);display:inline-block} .dot.a{background:var(--amber)}
   .mini-phone{position:absolute;left:50%;top:34px;width:172px;height:350px;margin-left:-86px;border-radius:34px;background:linear-gradient(145deg,#3a4248,#1b2024 40%,#2a3136);padding:7px;box-shadow:0 0 0 1px #6b737a inset,0 0 0 2px #0d1114 inset,0 30px 60px rgba(0,0,0,.55)}
-  .mini-phone .scr{position:relative;width:100%;height:100%;border-radius:28px;overflow:hidden;background:#16242c url(assets/caura-driver-app-screen.jpg) top/100% auto no-repeat}
+  .mini-phone .scr{position:relative;width:100%;height:100%;border-radius:28px;overflow:hidden;background:#16242c url(/client/caura/assets/caura-driver-app-screen.jpg) top/100% auto no-repeat}
   .mini-phone .isl{position:absolute;left:50%;top:7px;width:50px;height:15px;margin-left:-25px;border-radius:10px;background:#000}
   .mini-phone .lst{position:absolute;left:8px;right:8px;top:152px;display:grid;gap:6px;font:500 9px/1 Inter,sans-serif;color:#e8ecef}
   .mini-phone .lst .r{display:flex;justify-content:space-between;align-items:center;padding:8px 9px;border-radius:9px;box-shadow:0 0 0 1px rgba(255,255,255,.12) inset}
@@ -313,7 +313,7 @@
   .fan.open .held{opacity:1;right:-404px}
   .held .stage{position:absolute;left:0;top:0;width:1536px;height:780px;transform:scale(calc(1480 / 1536));transform-origin:0 0}
   .held .hand{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 40px 50px rgba(0,0,0,.5))}
-  .held .clip{position:absolute;inset:0;-webkit-mask:url(assets/caura-hand-card-mask.png) 0 0/100% 100%;mask:url(assets/caura-hand-card-mask.png) 0 0/100% 100%}
+  .held .clip{position:absolute;inset:0;-webkit-mask:url(/client/caura/assets/caura-hand-card-mask.png) 0 0/100% 100%;mask:url(/client/caura/assets/caura-hand-card-mask.png) 0 0/100% 100%}
   .print{position:absolute;left:0;top:0;width:1000px;height:620px;transform-origin:0 0;color:#16242c;text-align:left;
     transform:matrix3d(0.449371,-0.197414,0,6.77383e-06,0.187604,0.448755,0,4.35428e-20,0,0,1,0,151.733,398.776,0,1)}
   .print>:not(.chip){position:absolute;mix-blend-mode:multiply}
@@ -422,7 +422,7 @@
 <body>
 <nav>
   <div class="links"><a href="#">Consumer</a><a href="#">Enterprise</a><a href="#" class="on">Fleet</a></div>
-  <img src="assets/caura-logo-white.svg" alt="Caura">
+  <img src="/client/caura/assets/caura-logo-white.svg" alt="Caura">
   <div class="right"><a class="login" href="#">Log in to DriveOS</a><a class="pill" href="#">Get started</a></div>
 </nav>
 
@@ -458,7 +458,7 @@
       </div>
       <div class="iphone">
         <div class="scr"><span class="island"></span>
-          <img class="shot" src="assets/caura-driver-app-screen.jpg" alt="The Caura app: C4 URA, a Land Rover Defender, with MOT, service, insurance and tax">
+          <img class="shot" src="/client/caura/assets/caura-driver-app-screen.jpg" alt="The Caura app: C4 URA, a Land Rover Defender, with MOT, service, insurance and tax">
           <div class="att"><b>2</b>2 items need attention for C4 URA</div>
           <div class="tiles"><div class="tile"><span><i>P</i>Parking</span></div><div class="tile"><span><i>£</i>Fuel prices</span></div></div>
           <div class="recent"><small>Paid this week</small><div><span>Dart Charge</span><b>£2.50</b></div><div><span>Parking · Waterloo</span><b>£7.49</b></div><div><span>EV charging</span><b>£32.00</b></div></div>
@@ -476,7 +476,7 @@
   </div>
   <div class="console" id="con">
     <aside class="side">
-      <div class="brand"><img src="assets/caura-logo-white.svg" alt="Caura"><span>DriveOS</span></div>
+      <div class="brand"><img src="/client/caura/assets/caura-logo-white.svg" alt="Caura"><span>DriveOS</span></div>
       <a class="on" href="#">Compliance <em id="navNeed">14</em></a><a href="#">SMR <em>3</em></a><a href="#">Payments <em>£2.4k</em></a><a href="#">Reimbursement <em>10</em></a>
       <a href="#" style="margin-top:18px">Vehicles <em>32</em></a><a href="#">Drivers <em>41</em></a>
     </aside>
@@ -562,7 +562,7 @@
       <h3>DriveOS</h3><p>Every vehicle, driver and job, live in one view. Nothing waits for month end.</p></div>
     <div class="prod"><div class="obj"><div class="mini-phone"><div class="scr"><i class="isl"></i><div class="lst"><div class="r need"><span>1</span>item needs attention</div><div class="cap">PAID THIS WEEK</div><div class="r"><span>Congestion</span><b>£15.00</b></div><div class="r"><span>Dart Charge</span><b>£2.50</b></div></div></div><span class="note"><i>✓</i>MOT booked</span></div></div>
       <h3>Driver app for iOS &amp; Android</h3><p>Driver actionable products for compliance, payments, SMR and reimbursement.</p></div>
-    <div class="prod"><div class="obj"><div class="mini-card"><img src="assets/caura-logo-navy.svg" alt=""><i></i><b>VISA</b><span class="tap"><span></span><span></span><span></span></span></div><span class="paid">Dart Charge <b>£2.50 · paid</b></span></div>
+    <div class="prod"><div class="obj"><div class="mini-card"><img src="/client/caura/assets/caura-logo-navy.svg" alt=""><i></i><b>VISA</b><span class="tap"><span></span><span></span><span></span></span></div><span class="paid">Dart Charge <b>£2.50 · paid</b></span></div>
       <h3>Visa Card</h3><p>A fleet payment card that covers EV charging, tolls and parking, reconciled on the spot.</p></div>
     <div class="prod"><div class="obj"><div class="mini-map"><canvas id="mmap"></canvas><span><span class="plate" style="font-size:9px;padding:3px 5px">BE57 YTK</span> <b id="miles">38.4</b> miles today</span></div></div>
       <h3>Connected Car</h3><p>Telematics from the car itself. Mileage, health and usage, so everything runs on real data.</p></div>
@@ -573,9 +573,9 @@
   <p class="kicker">Visa card</p>
   <h2>Payments as they happen, not weeks later.</h2>
   <div class="fan" id="fan">
-    <div class="card c1"><div class="face m-graphite"><img class="lg" src="assets/caura-logo-white.svg" alt=""><span class="ow">Leased · OV22 UJM</span><span class="chip"></span><svg class="nfc" viewBox="0 0 22 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8.5a5 5 0 0 1 0 7"/><path d="M8 5.5a10 10 0 0 1 0 13"/><path d="M13 2.5a15 15 0 0 1 0 19"/></svg><span class="nm">Fleet card</span><span class="num">•••• 4471</span><span class="visa">VISA</span></div></div>
-    <div class="card c3"><div class="face m-titanium"><img class="lg" src="assets/caura-logo-navy.svg" alt=""><span class="ow">Grey fleet · WE72 UIO</span><span class="chip"></span><svg class="nfc" viewBox="0 0 22 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8.5a5 5 0 0 1 0 7"/><path d="M8 5.5a10 10 0 0 1 0 13"/><path d="M13 2.5a15 15 0 0 1 0 19"/></svg><span class="nm">Fleet card</span><span class="num">•••• 9024</span><span class="visa">VISA</span></div></div>
-    <div class="held"><div class="stage"><img class="hand" src="assets/caura-hand-card.webp" alt="An illustrated hand reaching in with the lime Caura fleet card"><div class="clip"><div class="print"><img class="lg" src="assets/caura-logo-navy.svg" alt=""><span class="visa">VISA</span><span class="chip"></span><svg class="nfc" viewBox="0 0 22 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8.5a5 5 0 0 1 0 7"/><path d="M8 5.5a10 10 0 0 1 0 13"/><path d="M13 2.5a15 15 0 0 1 0 19"/></svg><span class="nm">Fleet card · Company · ND20 ABF</span><span class="num">•••• 2187</span></div></div></div></div>
+    <div class="card c1"><div class="face m-graphite"><img class="lg" src="/client/caura/assets/caura-logo-white.svg" alt=""><span class="ow">Leased · OV22 UJM</span><span class="chip"></span><svg class="nfc" viewBox="0 0 22 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8.5a5 5 0 0 1 0 7"/><path d="M8 5.5a10 10 0 0 1 0 13"/><path d="M13 2.5a15 15 0 0 1 0 19"/></svg><span class="nm">Fleet card</span><span class="num">•••• 4471</span><span class="visa">VISA</span></div></div>
+    <div class="card c3"><div class="face m-titanium"><img class="lg" src="/client/caura/assets/caura-logo-navy.svg" alt=""><span class="ow">Grey fleet · WE72 UIO</span><span class="chip"></span><svg class="nfc" viewBox="0 0 22 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8.5a5 5 0 0 1 0 7"/><path d="M8 5.5a10 10 0 0 1 0 13"/><path d="M13 2.5a15 15 0 0 1 0 19"/></svg><span class="nm">Fleet card</span><span class="num">•••• 9024</span><span class="visa">VISA</span></div></div>
+    <div class="held"><div class="stage"><img class="hand" src="/client/caura/assets/caura-hand-card.webp" alt="An illustrated hand reaching in with the lime Caura fleet card"><div class="clip"><div class="print"><img class="lg" src="/client/caura/assets/caura-logo-navy.svg" alt=""><span class="visa">VISA</span><span class="chip"></span><svg class="nfc" viewBox="0 0 22 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8.5a5 5 0 0 1 0 7"/><path d="M8 5.5a10 10 0 0 1 0 13"/><path d="M13 2.5a15 15 0 0 1 0 19"/></svg><span class="nm">Fleet card · Company · ND20 ABF</span><span class="num">•••• 2187</span></div></div></div></div>
   </div>
   <div class="card-desc">
     <p class="lede">A fleet card for EV charging, tolls and parking, reconciled on the spot. You set what it can be used for before anyone spends.</p>
@@ -618,8 +618,8 @@
 </footer>
 </div>
 
-<script type="module" src="assets/phones3d.js"></script>
-<script src="assets/london-map.js"></script>
+<script type="module" src="/client/caura/assets/phones3d.js"></script>
+<script src="/client/caura/assets/london-map.js"></script>
 <script>
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -867,7 +867,7 @@ document.querySelectorAll('.cross').forEach(el => crossRiver(el.querySelector('c
   const cv = document.getElementById('map2'); if (!cv) return;
   const logo = new Image();
   logo.onload = () => livingMap(cv, {mask: logo, fill: '#e6edf0', road: '22,36,44', minorA: .3, majorA: .82, river: '150,190,210', riverA: .75, car: '22,36,44', lime: '120,170,0', lw: 1.4, dot: 1.5, zoom: 2.4, zoomMobile: 2.6, fy: .5, focus: [860, 690], density: 4500, seed: 23});
-  logo.src = 'assets/caura-logo-white.svg';
+  logo.src = '/client/caura/assets/caura-logo-white.svg';
 })();
 </script>
 <script>
