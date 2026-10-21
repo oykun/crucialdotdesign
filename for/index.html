@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>For · Crucial.Design</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/jpeg" href="/images/avatar.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{background:#fff;color:#111;font:400 14px/1.6 'Geist',-apple-system,BlinkMacSystemFont,sans-serif}
+a{color:inherit}
+.top{display:flex;justify-content:space-between;padding:28px 32px}
+.top a{text-decoration:none}
+.intro{max-width:520px;margin:96px auto 120px;padding:0 24px}
+.intro b{font-weight:500}
+.list{max-width:1280px;margin:0 auto;padding:0 32px 160px;display:grid;gap:112px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.shot{display:block;text-decoration:none}
+.frame{aspect-ratio:16/10;overflow:hidden;border-radius:12px;background:#f4f4f2}
+.frame img{display:block;width:100%;height:auto;transition:transform .9s cubic-bezier(.45,0,.55,1)}
+.shot:hover .frame img,.shot:focus-visible .frame img{transform:translateY(var(--y,0));transition-duration:var(--d,6s);transition-timing-function:linear}
+.lab{display:block;margin-top:10px;color:#777}
+.meta{margin-top:20px}
+.meta b{font-weight:500}
+.meta span{color:#777}
+.shot:focus-visible{outline:2px solid #111;outline-offset:4px;border-radius:12px}
+@media (max-width:760px){
+  .top{padding:20px 16px}
+  .intro{margin:56px auto 72px;padding:0 16px}
+  .list{padding:0 16px 96px;gap:72px}
+  .pair{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.frame img{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a href="/">Oykun · Crucial.Design</a>
+  <a href="mailto:hey@crucial.design">hey@crucial.design</a>
+</header>
+
+<p class="intro">Pages I designed and built for one company each, unasked. <b>Before</b> is their live site on the day I captured it. <b>After</b> is my version, live. Hover a picture to scroll the whole page.</p>
+
+<main class="list">
+  <!-- Newest first. Shots: agency/crucial-canvas/capture-before-after.mjs, then copy the two -full.jpg files to for/shots/<client>-before.jpg and -after.jpg. -->
+  <article>
+    <div class="pair">
+      <a class="shot" href="/for/shots/nuet-before.jpg" target="_blank" rel="noopener">
+        <div class="frame"><img src="/for/shots/nuet-before.jpg" alt="nuet.ai home page, full length, as captured on 21 Oct 2026" loading="lazy"></div>
+        <span class="lab">Before · nuet.ai</span>
+      </a>
+      <a class="shot" href="/for/nuet" target="_blank" rel="noopener">
+        <div class="frame"><img src="/for/shots/nuet-after.jpg" alt="The reimagined Nuet home page, full length" loading="lazy"></div>
+        <span class="lab">After · crucial.design/for/nuet</span>
+      </a>
+    </div>
+    <p class="meta"><b>Nuet</b> <span>· Home page · 21 Oct 2026 · captured 21 Oct 2026</span></p>
+  </article>
+
+  <article>
+    <div class="pair">
+      <a class="shot" href="/for/shots/caura-before.jpg" target="_blank" rel="noopener">
+        <div class="frame"><img src="/for/shots/caura-before.jpg" alt="caura.com Fleet page, full length, as captured on 21 Oct 2026" loading="lazy"></div>
+        <span class="lab">Before · caura.com/fleet</span>
+      </a>
+      <a class="shot" href="/for/caura" target="_blank" rel="noopener">
+        <div class="frame"><img src="/for/shots/caura-after.jpg" alt="The reimagined Caura Fleet page, full length" loading="lazy"></div>
+        <span class="lab">After · crucial.design/for/caura</span>
+      </a>
+    </div>
+    <p class="meta"><b>Caura</b> <span>· Fleet page · 19 Oct 2026 · captured 21 Oct 2026</span></p>
+  </article>
+</main>
+
+<script>
+// Hover scrolls each full-page capture from top to bottom at a steady reading pace.
+const fit = img => {
+  const frame = img.parentElement, travel = img.offsetHeight - frame.clientHeight;
+  img.style.setProperty('--y', -Math.max(0, travel) + 'px');
+  img.style.setProperty('--d', Math.min(16, Math.max(3, travel / 400)).toFixed(1) + 's');
+};
+const all = [...document.querySelectorAll('.frame img')];
+all.forEach(img => img.complete ? fit(img) : img.addEventListener('load', () => fit(img)));
+addEventListener('resize', () => all.forEach(fit));
+</script>
+</body>
+</html>
