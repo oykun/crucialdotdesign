@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/for/:client/:who", "destination": "/for/:client/" }
+  ]
+}
