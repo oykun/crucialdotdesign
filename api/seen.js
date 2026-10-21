@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
   let body = req.body;
   if (typeof body === 'string') { try { body = JSON.parse(body); } catch { body = { p: body }; } }
-  const p = String(body?.p || '').toLowerCase().replace(/\/+$/, '') || '/for';
+  const p = String(body?.p || '').toLowerCase().replace(/(.)\/+$/, '$1');
   if (!PATH.test(p)) return res.status(400).json({ error: 'Bad path' });
 
   const r = await fetch(`${process.env.KV_REST_API_URL}/pipeline`, {
