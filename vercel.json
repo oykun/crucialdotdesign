@@ -1,5 +1,12 @@
 {
   "rewrites": [
-    { "source": "/for/:client/:who", "destination": "/for/:client/" }
+    {
+      "source": "/for/:client/:who",
+      "destination": "/for/:client/"
+    },
+    {
+      "source": "/handover/:client/:who",
+      "destination": "/handover/:client/"
+    }
   ]
 }
