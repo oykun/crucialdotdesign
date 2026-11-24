@@ -277,21 +277,21 @@ document.querySelectorAll('.fade-in').forEach(function(el) {
 
   // Cards in the deck. Ordered to alternate landscape / portrait / square shapes.
   var IMAGES = [
-    'images/motion/motion07.jpg',
-    'images/motion/motion02.jpg',
-    'images/motion/motion04.jpg',
-    'images/motion/motion10.jpg',
-    'images/motion/motion15.jpg',
-    'images/motion/motion12.jpg',
-    'images/motion/motion08.jpg',
-    'images/motion/motion03.jpg',
-    'images/motion/motion05.jpg',
-    'images/motion/motion11.jpg',
-    'images/motion/motion14.jpg',
-    'images/motion/motion06.jpg',
-    'images/motion/motion09.jpg',
-    'images/motion/motion13.jpg',
-    'images/motion/motion01.jpg'
+    '/images/motion/motion07.jpg',
+    '/images/motion/motion02.jpg',
+    '/images/motion/motion04.jpg',
+    '/images/motion/motion10.jpg',
+    '/images/motion/motion15.jpg',
+    '/images/motion/motion12.jpg',
+    '/images/motion/motion08.jpg',
+    '/images/motion/motion03.jpg',
+    '/images/motion/motion05.jpg',
+    '/images/motion/motion11.jpg',
+    '/images/motion/motion14.jpg',
+    '/images/motion/motion06.jpg',
+    '/images/motion/motion09.jpg',
+    '/images/motion/motion13.jpg',
+    '/images/motion/motion01.jpg'
   ];
 
   var heroImage = deck.closest('.hero-image');

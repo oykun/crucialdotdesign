@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1154 1442" width="1154" height="1442">
+<rect width="1154" height="1442" fill="#0a0a0a"/>
+<svg x="299.0" y="120.25" width="556" height="1201.5" viewBox="321 199 556 1201.5" font-family="-apple-system, 'SF Pro Text', Inter, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <clipPath id="phone"><rect x="321" y="199" width="556" height="1201.5"/></clipPath>
+    <clipPath id="cardA"><rect x="1393" y="425" width="502" height="502" rx="14"/></clipPath>
+    <clipPath id="cardZ"><rect x="1705" y="671" width="502" height="502" rx="14"/></clipPath>
+    <linearGradient id="redFill" gradientUnits="userSpaceOnUse" x1="0" y1="684" x2="0" y2="927">
+      <stop offset="0" stop-color="#fdcfc8"/>
+      <stop offset=".5" stop-color="#ffe6e1"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <linearGradient id="greenFill" gradientUnits="userSpaceOnUse" x1="0" y1="898" x2="0" y2="1173">
+      <stop offset="0" stop-color="#bff1dc"/>
+      <stop offset=".5" stop-color="#dcf6ec"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <!-- coin glyphs, drawn around 0,0 for a 17.5 radius coin -->
+    <path id="zGlyph" d="M-6.5 -6H6.5L-6 6.5H6.5M-2 -6V-11M1.6 -6V-11M-1.6 6.5V11.5M2 6.5V11.5" fill="none" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="aGlyph" d="M-7.5 9V-2.5A7.5 7.5 0 0 1 7.5 -2.5V9M-7.5 0.2H7.5M-7.5 3.2H7.5" fill="none" stroke-width="2.4"/>
+  </defs><defs id="device"><!-- v124: device shadows pre-blurred -->
+    <linearGradient id="dev-ti" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8e8e93"/><stop offset=".18" stop-color="#e6e6eb"/><stop offset=".45" stop-color="#7c7c81"/><stop offset=".72" stop-color="#cfcfd4"/><stop offset="1" stop-color="#6c6c71"/></linearGradient>
+    
+  </defs>
+  <rect x="321" y="199" width="556" height="1201.5" fill="#fff"/>
+  <g id="phone-screen">
+    <rect x="321" y="199" width="556" height="1201.5" fill="#fff"/>
+    <g clip-path="url(#phone)">
+      <text x="347" y="240.5" font-size="22" font-weight="600" letter-spacing="-.3" fill="#000">10:19</text>
+      <g fill="#000">
+        <rect x="757" y="236.5" width="3.6" height="5.5" rx="1"/>
+        <rect x="761.7" y="234.5" width="3.6" height="7.5" rx="1"/>
+        <rect x="766.4" y="232.5" width="3.6" height="9.5" rx="1"/>
+        <rect x="771.1" y="230.5" width="3.6" height="11.5" rx="1" fill="#9a9a9a"/>
+        <path transform="translate(800.3 237) scale(1.2) translate(-800.3 -237)" d="M791.5 233.3a13 13 0 0 1 17.6 0l-1.9 2a10.2 10.2 0 0 0-13.8 0zM794.6 236.6a8.5 8.5 0 0 1 11.4 0l-2 2a5.7 5.7 0 0 0-7.4 0zM797.8 239.9a4 4 0 0 1 5 0l-2.5 2.5z"/>
+        <rect x="822.6" y="229.6" width="27.4" height="11.8" rx="3.2" fill="none" stroke="#8a8a8a" stroke-width="1.2"/>
+        <rect x="824.6" y="231.6" width="15.4" height="7.8" rx="1.8"/>
+        <path d="M851.4 233.4c1.2.3 1.9 1.2 1.9 2.1s-.7 1.8-1.9 2.1z" fill="#8a8a8a"/>
+      </g>
+      <text x="417" y="309.5" font-size="25.5" textLength="377" fill="#000">How much do you want to sell?</text>
+
+      <g id="ruler"><g id="ruler-ticks"></g><path d="M757.5 750.5H890" stroke="#fc5c38" stroke-width="9.5" stroke-linecap="round"/></g>
+
+      <g id="amount" fill="#fc5c38">
+        <text x="399" y="749.5" font-size="45" font-weight="600">$</text>
+        <text id="amt" x="438" y="788" font-size="107" font-weight="500" letter-spacing="-1" textLength="285">50.00</text>
+        <text x="447.5" y="847" font-size="24" font-weight="600" fill="#f2694f">ZTC</text>
+        <text id="ztc" x="507.5" y="847" font-size="24" font-weight="600" fill="#f2694f">0.068</text>
+      </g>
+
+      <g id="sell">
+        <rect x="337" y="1255" width="523.5" height="73.5" rx="36.75" fill="#fc5c38"/>
+        <circle cx="435" cy="1292" r="17.5" fill="#fff"/>
+        <use href="#zGlyph" transform="translate(435 1292) scale(.95)" stroke="#fc5c38"/>
+        <text id="selltx" x="468.5" y="1301.5" font-size="27" font-weight="500" textLength="311" fill="#fff">Sell $50.00 worth Zitcoin</text>
+      </g>
+
+      <rect x="499" y="1380.5" width="200" height="7" rx="3.5" fill="#000"/>
+    </g>
+    
+  </g>
+  <script><![CDATA[
+(function () {
+  var NS = 'http://www.w3.org/2000/svg', U = 19.1, Y0 = 750.5, RATE = 0.068 / 50, T = 12;
+  // the swipes: hold at $50, swipe up to $63.40, hold, swipe down to $38.80, hold, back to $50 (seconds, value)
+  var K = [[0, 50], [0.9, 50], [2.5, 63.4], [4.3, 63.4], [6.3, 38.8], [8.2, 38.8], [10.1, 50], [12, 50]];
+  var ease = function (p) { return p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; };
+  function value(t) {
+    t = ((t % T) + T) % T;
+    for (var i = 0; i < K.length - 1; i++) if (t <= K[i + 1][0]) {
+      var a = K[i], b = K[i + 1], p = (t - a[0]) / (b[0] - a[0]); return a[1] + (b[1] - a[1]) * ease(p);
+    }
+    return 50;
+  }
+  var ticks = document.getElementById('ruler-ticks'), amt = document.getElementById('amt'),
+      ztc = document.getElementById('ztc'), sell = document.getElementById('selltx');
+  function el(tag, at, text) { var e = document.createElementNS(NS, tag); for (var k in at) e.setAttribute(k, at[k]); if (text) e.textContent = text; return e; }
+  function render(t) {
+    var v = value(t), shown = Math.round(v * 10) / 10;
+    while (ticks.firstChild) ticks.removeChild(ticks.firstChild);
+    for (var u = Math.floor(v) - 30; u <= Math.ceil(v) + 30; u++) {
+      if (u % 2) continue;
+      var y = Y0 - (u - v) * U;
+      if (y < 190 || y > 1420) continue;
+      if (u % 10 === 0) {
+        ticks.appendChild(el('rect', {x: 799, y: (y - 3).toFixed(1), width: 78, height: 6, fill: '#b2b2b2'}));
+        ticks.appendChild(el('text', {x: u >= 50 && u < 60 ? 799.5 : 803.5, y: (y + 42).toFixed(1), 'font-size': 23.5, fill: '#b0b0b0'}, String(u)));
+      } else {
+        ticks.appendChild(el('rect', {x: 857, y: (y - 1.5).toFixed(1), width: 20, height: 3, fill: '#d6d6d6'}));
+      }
+    }
+    amt.textContent = shown.toFixed(2);
+    ztc.textContent = (shown * RATE).toFixed(3);
+    sell.textContent = 'Sell $' + shown.toFixed(2) + ' worth Zitcoin';
+  }
+  window.__seek = function (t) { window.__manual = true; render(t); };
+  render(0);
+  var t0 = null;
+  (function loop(now) { if (window.__manual) return; if (t0 === null) t0 = now; render((now - t0) / 1000); requestAnimationFrame(loop); })(performance.now());
+})();
+]]></script>
+</svg>
+</svg>

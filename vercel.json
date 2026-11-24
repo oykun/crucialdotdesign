@@ -8,5 +8,17 @@
       "source": "/handover/:client/:who",
       "destination": "/handover/:client/"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/one",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/one/:path*",
+      "destination": "/",
+      "permanent": false
+    }
   ]
 }

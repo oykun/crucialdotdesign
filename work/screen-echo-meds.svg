@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1150 1438" width="1150" height="1438">
+<rect width="1150" height="1438" fill="#0a0a0a"/>
+<svg x="299.0" y="120.0" width="552" height="1198" viewBox="1323 201 552 1198" font-family="-apple-system, 'SF Pro Text', Inter, 'Helvetica Neue', Arial, sans-serif">
+  <!-- Echo 3: medication adherence chart and the Medicines screen. Vector rebuild of echo-3.jpg, 18 Oct 2026. Everything is vector; text is live. -->
+  <defs>
+    <style>.taken{fill:#02d6a4}.missed{fill:#ff6456;stroke:#ff6456;stroke-width:2;stroke-linejoin:round}.none{fill:#c8cfd0}</style>
+    <clipPath id="phone"><rect x="1523" y="201" width="552" height="1198"/></clipPath>
+    <clipPath id="list"><rect x="1523" y="201" width="552" height="1050"/></clipPath>
+    <filter id="card" x="-5%" y="-8%" width="110%" height="120%"><feDropShadow dx="0" dy="1.5" stdDeviation="2.2" flood-color="#000" flood-opacity=".11"/></filter>
+    <g id="status"><rect x="0" y="10" width="4.6" height="6.8" rx="1.2"/><rect x="7" y="8" width="4.6" height="8.8" rx="1.2"/><rect x="14" y="4.2" width="4.6" height="12.6" rx="1.2"/><rect x="20.8" y="1" width="4.6" height="15.8" rx="1.2" fill="#a6a6a6"/><path d="M34 5.6a14.6 14.6 0 0 1 20 0l-2.3 2.4a11.2 11.2 0 0 0-15.4 0zM38.1 9.9a8.6 8.6 0 0 1 11.8 0l-2.4 2.4a5.2 5.2 0 0 0-7 0zM44 17l-2.9-2.9a4.1 4.1 0 0 1 5.8 0z"/><rect x="65.8" y="1.2" width="30.8" height="14.6" rx="4.2" fill="none" stroke="#999" stroke-width="1.5"/><rect x="67.6" y="3.4" width="16.4" height="10.4" rx="2"/><path d="M98 6.2a2.6 2.6 0 0 1 0 5.2z" fill="#999"/></g>
+    <g id="pill"><g transform="translate(27 11) rotate(32)"><rect x="-10" y="-10" width="42.5" height="20" rx="10" fill="#02d6a4"/><rect x="-7" y="-7" width="22.5" height="14" rx="7" fill="#fff"/></g><circle cx="13.5" cy="37.5" r="11" fill="#fff" stroke="#02d6a4" stroke-width="2.2"/><path d="M9 39.8l10-3.6" stroke="#02d6a4" stroke-width="2.2" stroke-linecap="round"/></g>
+  </defs>
+  <!-- v117: no grey frame; the piece sits on the page colour -->
+
+<!-- v119: iPhone body -->
+  <defs id="device"><!-- v124: device shadows pre-blurred -->
+    <linearGradient id="dev-ti" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8e8e93"/><stop offset=".18" stop-color="#e6e6eb"/><stop offset=".45" stop-color="#7c7c81"/><stop offset=".72" stop-color="#cfcfd4"/><stop offset="1" stop-color="#6c6c71"/></linearGradient>
+    
+  </defs>
+  <!-- v144: phones straight -->
+<!-- v119: phones closer, angled, artboard cropped -->
+  <g transform="translate(330 0)">
+  <!-- LEFT: adherence chart -->
+  <g id="chart">
+    <rect x="101" y="519" width="997" height="559" rx="30" fill="#fff" stroke="#efefef" stroke-width="2"/>
+    <g id="select">
+      <rect x="131.5" y="548.5" width="282" height="49" rx="24.5" fill="#fff" stroke="#dfdfdf" stroke-width="3"/>
+      <text x="155.5" y="581" font-size="20.2" fill="#082c2f">Select Medications</text>
+      <path d="M373.2 568.6h13.6l-6.8 10z" fill="#8f9798" stroke="#8f9798" stroke-width="1.6" stroke-linejoin="round"/>
+    </g>
+    <g id="legend" font-size="20.2" fill="#767c7d">
+      <circle class="taken" cx="705" cy="574" r="8"/><text x="720.5" y="581">Taken</text>
+      <path class="missed" d="M839.6 569.4l6 11h-12z"/><text x="859.5" y="581">Missed</text>
+      <circle class="none" cx="974" cy="574" r="6"/><text x="996.5" y="581">No meds</text>
+    </g>
+    <g id="guides" stroke="#cfcfcf" stroke-width="1.6" stroke-dasharray="3.6 7.63">
+      <path d="M397 710V961"/>
+      <path d="M442 710V961"/>
+      <path d="M487 710V961"/>
+      <path d="M532 710V961"/>
+      <path d="M577 710V961"/>
+      <path d="M622 710V961"/>
+      <path d="M667 710V961"/>
+      <path d="M712 710V961"/>
+      <path d="M757 710V961"/>
+      <path d="M802 710V961"/>
+      <path d="M847 710V961"/>
+      <path d="M892 710V961"/>
+      <path d="M937 710V961"/>
+      <path d="M982 710V961"/>
+      <path d="M1027 710V961"/>
+      <path d="M1072 710V961"/>
+    </g>
+    <g id="row-metamorfin">
+      <text x="144.5" y="690" font-size="22.6" fill="#082c2f">Metamorfin</text>
+      <text x="144.5" y="725" font-size="20.6" letter-spacing=".35" fill="#737a7b">25mg tablets</text>
+      <g class="days">
+        <circle class="taken" data-day="1" cx="396.5" cy="691" r="9"/>
+        <circle class="taken" data-day="2" cx="441.5" cy="691" r="9"/>
+        <circle class="taken" data-day="3" cx="486.5" cy="691" r="9"/>
+        <circle class="taken" data-day="4" cx="531.5" cy="691" r="9"/>
+        <circle class="taken" data-day="5" cx="576.5" cy="691" r="9"/>
+        <circle class="taken" data-day="6" cx="621.5" cy="691" r="9"/>
+        <circle class="taken" data-day="7" cx="666.5" cy="691" r="9"/>
+        <circle class="taken" data-day="8" cx="711.5" cy="691" r="9"/>
+        <circle class="taken" data-day="9" cx="756.5" cy="691" r="9"/>
+        <circle class="taken" data-day="10" cx="801.5" cy="691" r="9"/>
+        <path class="missed" data-day="11" d="M846.5 683.4l6.4 11.6h-12.8z"/>
+        <circle class="taken" data-day="12" cx="891.5" cy="691" r="9"/>
+        <circle class="taken" data-day="13" cx="936.5" cy="691" r="9"/>
+        <circle class="taken" data-day="14" cx="981.5" cy="691" r="9"/>
+        <path class="missed" data-day="15" d="M1026.5 683.4l6.4 11.6h-12.8z"/>
+        <path class="missed" data-day="16" d="M1071.5 683.4l6.4 11.6h-12.8z"/>
+      </g>
+    </g>
+    <g id="row-simvastatin">
+      <text x="144.5" y="800" font-size="22.6" fill="#082c2f">Simvastatin</text>
+      <text x="144.5" y="835" font-size="20.6" letter-spacing=".35" fill="#737a7b">40mg tablets</text>
+      <g class="days">
+        <circle class="taken" data-day="1" cx="396.5" cy="801" r="9"/>
+        <circle class="none" data-day="2" cx="441.5" cy="801" r="4.5"/>
+        <circle class="taken" data-day="3" cx="486.5" cy="801" r="9"/>
+        <circle class="none" data-day="4" cx="531.5" cy="801" r="4.5"/>
+        <circle class="taken" data-day="5" cx="576.5" cy="801" r="9"/>
+        <circle class="none" data-day="6" cx="621.5" cy="801" r="4.5"/>
+        <path class="missed" data-day="7" d="M666.5 793.4l6.4 11.6h-12.8z"/>
+        <circle class="none" data-day="8" cx="711.5" cy="801" r="4.5"/>
+        <circle class="taken" data-day="9" cx="756.5" cy="801" r="9"/>
+        <circle class="none" data-day="10" cx="801.5" cy="801" r="4.5"/>
+        <circle class="taken" data-day="11" cx="846.5" cy="801" r="9"/>
+        <circle class="none" data-day="12" cx="891.5" cy="801" r="4.5"/>
+        <circle class="taken" data-day="13" cx="936.5" cy="801" r="9"/>
+        <circle class="none" data-day="14" cx="981.5" cy="801" r="4.5"/>
+        <circle class="taken" data-day="15" cx="1026.5" cy="801" r="9"/>
+        <circle class="none" data-day="16" cx="1071.5" cy="801" r="4.5"/>
+      </g>
+    </g>
+    <g id="row-ibuprofen">
+      <text x="144.5" y="909" font-size="22.6" fill="#082c2f">Ibuprofen</text>
+      <text x="144.5" y="944" font-size="20.6" letter-spacing=".35" fill="#737a7b">80mg tablets</text>
+      <g class="days">
+        <circle class="taken" data-day="1" cx="396.5" cy="913" r="9"/>
+        <circle class="taken" data-day="2" cx="441.5" cy="913" r="9"/>
+        <circle class="taken" data-day="3" cx="486.5" cy="913" r="9"/>
+        <circle class="taken" data-day="4" cx="531.5" cy="913" r="9"/>
+        <circle class="taken" data-day="5" cx="576.5" cy="913" r="9"/>
+        <path class="missed" data-day="6" d="M621.5 905.4l6.4 11.6h-12.8z"/>
+        <path class="missed" data-day="7" d="M666.5 905.4l6.4 11.6h-12.8z"/>
+        <circle class="taken" data-day="8" cx="711.5" cy="913" r="9"/>
+        <circle class="taken" data-day="9" cx="756.5" cy="913" r="9"/>
+        <circle class="taken" data-day="10" cx="801.5" cy="913" r="9"/>
+        <circle class="taken" data-day="11" cx="846.5" cy="913" r="9"/>
+        <circle class="taken" data-day="12" cx="891.5" cy="913" r="9"/>
+        <circle class="taken" data-day="13" cx="936.5" cy="913" r="9"/>
+        <circle class="taken" data-day="14" cx="981.5" cy="913" r="9"/>
+        <circle class="taken" data-day="15" cx="1026.5" cy="913" r="9"/>
+        <circle class="none" data-day="16" cx="1071.5" cy="913" r="4.5" style="fill:#dadede"/>
+      </g>
+    </g>
+    <g id="xaxis" font-size="20.2" fill="#868b8c" text-anchor="middle">
+      <text x="397" y="985">1</text>
+      <text x="442" y="985">2</text>
+      <text x="487" y="985">3</text>
+      <text x="532" y="985">4</text>
+      <text x="577" y="985">5</text>
+      <text x="622" y="985">6</text>
+      <text x="667" y="985">7</text>
+      <text x="712" y="985">8</text>
+      <text x="757" y="985">9</text>
+      <text x="802" y="985">10</text>
+      <text x="847" y="985">11</text>
+      <text x="892" y="985">12</text>
+      <text x="937" y="985">13</text>
+      <text x="982" y="985">14</text>
+      <text x="1027" y="985">15</text>
+      <text x="1072" y="985">16</text>
+      <text x="387.5" y="1040" text-anchor="start" letter-spacing=".45" fill="#7a7f80">January</text>
+    </g>
+  </g>
+
+  </g>
+  <g transform="translate(-200 0)">
+  
+  <!-- RIGHT: Medicines screen -->
+  <g id="phone-medicines">
+    <rect x="1523" y="201" width="552" height="1198" fill="#f7f7f7"/>
+    <g clip-path="url(#phone)">
+      <text x="1545.5" y="240" font-size="21" font-weight="500" letter-spacing="-.1" fill="#000">06:23</text>
+      <use href="#status" transform="translate(1956 226)" fill="#000"/>
+      <text x="1547" y="311" font-size="25.8" fill="#000">Medicines</text>
+      <g id="add"><circle cx="2021" cy="298.5" r="33" fill="#02d6a4"/><path d="M2021.5 289.5v19M2012 299h19" stroke="#fff" stroke-width="2.6"/></g>
+      <g clip-path="url(#list)">
+        <g id="med-simvastatin">
+          <rect x="1546" y="357" width="506" height="282" rx="32" fill="#fff" filter="url(#card)"/>
+          <use href="#pill" x="1600" y="396"/>
+          <text x="1711" y="410" font-size="25.9" font-weight="600" letter-spacing="-.1" fill="#000">Simvastatin</text>
+          <text x="1711" y="450" font-size="22.4" letter-spacing=".1" fill="#767676">40mg tablets</text>
+          <g id="tag-simvastatin"><rect x="1569.5" y="491" width="118" height="36" rx="9" fill="#ffebea"/><text x="1628.5" y="517" font-size="20.2" font-weight="500" text-anchor="middle" fill="#f53b2c">Left 1/20</text></g>
+          <g id="progress-simvastatin"><rect x="1711" y="505.5" width="300" height="8" rx="4" fill="#dedfe1"/><rect class="fill" x="1711" y="503" width="58.5" height="12.5" rx="6.25" fill="#ff3b2d"/></g>
+          <g id="btn-order"><rect x="1569" y="560" width="460" height="55" rx="27.5" fill="#02d6a4"/><text x="1799" y="596" font-size="22.8" font-weight="500" text-anchor="middle" fill="#fff">Order Now</text></g>
+        </g>
+        <g id="med-metamorfin">
+          <rect x="1546" y="657" width="506" height="282" rx="32" fill="#fff" filter="url(#card)"/>
+          <use href="#pill" x="1600" y="696"/>
+          <text x="1711" y="710" font-size="25.9" font-weight="600" letter-spacing="-.1" fill="#000">Metamorfin</text>
+          <text x="1711" y="750" font-size="22.4" letter-spacing=".1" fill="#767676">Sidanafil 25mg tablets</text>
+          <g id="tag-metamorfin"><rect x="1569.5" y="791" width="118" height="36" rx="9" fill="#c7fff2"/><text x="1628.5" y="817" font-size="20.2" font-weight="500" text-anchor="middle" fill="#0ca87e">Approved</text></g>
+          <g id="progress-metamorfin"><rect x="1722" y="805" width="298" height="8" rx="4" fill="#dedfe1"/><rect class="fill" x="1722" y="805" width="149" height="8" fill="#02d6a4"/><circle cx="1722" cy="809" r="10" fill="#02d6a4"/><circle cx="1871" cy="809" r="10" fill="#02d6a4"/><circle cx="2020" cy="809" r="10" fill="#dedfe1"/></g>
+          <g id="btn-pay"><rect x="1569" y="860" width="460" height="55" rx="27.5" fill="#02d6a4"/><text x="1799" y="896" font-size="22.8" font-weight="500" text-anchor="middle" fill="#fff">Pay to Dispatch</text></g>
+        </g>
+        <g id="med-bristile">
+          <rect x="1546" y="957" width="506" height="202" rx="32" fill="#fff" filter="url(#card)"/>
+          <use href="#pill" x="1600" y="996"/>
+          <text x="1711" y="1010" font-size="25.9" font-weight="600" letter-spacing="-.1" fill="#000">Bristile</text>
+          <text x="1711" y="1050" font-size="22.4" letter-spacing=".1" fill="#767676">50mg tablets</text>
+          <g id="tag-bristile"><rect x="1569.5" y="1091" width="118" height="36" rx="9" fill="#c9fef1"/><text x="1627" y="1117.5" font-size="20.2" font-weight="500" text-anchor="middle" fill="#0ca87e">Ordered</text></g>
+          <g id="progress-bristile"><rect x="1721" y="1105" width="299" height="8" rx="4" fill="#dedfe1"/><circle cx="1870" cy="1109" r="10" fill="#dedfe1"/><circle cx="2020" cy="1109" r="10" fill="#dedfe1"/><rect class="fill" x="1721" y="1105" width="86" height="8" rx="4" fill="#02d6a4"/><circle cx="1721" cy="1109" r="10" fill="#02d6a4"/></g>
+        </g>
+        <g id="med-cana">
+          <rect x="1546" y="1177" width="506" height="202" rx="32" fill="#fff" filter="url(#card)"/>
+          <use href="#pill" x="1600" y="1216"/>
+          <text x="1711" y="1230" font-size="25.9" font-weight="600" letter-spacing="-.1" fill="#000">Cana</text>
+        </g>
+      </g>
+      <g id="tabbar">
+        <rect x="1523" y="1251" width="552" height="148" fill="#fff"/>
+        <path d="M1523 1251.5h552" stroke="#e7e7e7"/>
+        <g font-size="15.3" text-anchor="middle" fill="#8f9393">
+          <g id="tab-reminder"><circle cx="1592.8" cy="1295.2" r="18.3" fill="none" stroke="#8f9393" stroke-width="2.3"/><path d="M1592.6 1282.6v12.6l7.2 5.6" fill="none" stroke="#8f9393" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><text x="1593.5" y="1335.5">Reminder</text></g>
+          <g id="tab-medicine" fill="#02d6a4"><use href="#pill" transform="translate(1711.5 1277.5) scale(.672)"/><text x="1730" y="1335.5">Medicine</text></g>
+          <g id="tab-activity"><g transform="translate(1867.3 1306.2) rotate(18.8)" fill="none" stroke="#8f9393" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round"><path d="M-18 0C-12.5-3-11-7.5-11-13.5C-11-21.5-6-26.5 0-26.5S11-21.5 11-13.5C11-7.5 12.5-3 18 0Z"/><path d="M0-26.5v-3.2M-5 0.6a5 4.6 0 0 0 10 0"/></g><text x="1867.5" y="1335.5">Activity</text></g>
+          <g id="tab-profile"><circle cx="2005.4" cy="1295.4" r="18.3" fill="none" stroke="#8f9393" stroke-width="2.3"/><circle cx="1996.8" cy="1291.2" r="2.4" fill="#8f9393"/><circle cx="2010.3" cy="1291.2" r="2.4" fill="#8f9393"/><path d="M2005.4 1288.6c-1.6 2.6-2.2 6.4-1.2 12.2" fill="none" stroke="#8f9393" stroke-width="2.4" stroke-linecap="round"/><text x="2005.5" y="1335.5">Profile</text></g>
+        </g>
+        <rect id="home" x="1699" y="1380.5" width="200" height="8" rx="4" fill="#000"/>
+      </g>
+    </g>
+  </g>
+  
+  </g>
+</svg>
+</svg>

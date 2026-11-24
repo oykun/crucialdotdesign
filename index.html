@@ -22,329 +22,376 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crucial.Design — Design Partner for AI Founders</title>
-  <meta name="description" content="Your AI is impressive, but most of your users get lost before they ever reach the value. I find the straight line from confusion to clarity. Thinking first, then design.">
+  <title>Crucial.Design — One client at a time</title>
+  <meta name="description" content="Design partner for founders who need complete focus. One client at a time, since 1998. London.">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Crucial.Design — Design Partner for AI Founders">
-  <meta property="og:description" content="Your AI is impressive, but most of your users get lost before they ever reach the value. I find the straight line from confusion to clarity. Thinking first, then design.">
+  <meta property="og:title" content="Crucial.Design — One client at a time">
+  <meta property="og:description" content="Design partner for founders who need complete focus. One client at a time, since 1998. London.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://crucial.design">
   <meta property="og:image" content="https://crucial.design/images/crucialdesign-og.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Crucial.Design — Design Partner for AI Founders">
-  <meta name="twitter:description" content="Your AI is impressive, but most of your users get lost before they ever reach the value. I find the straight line from confusion to clarity. Thinking first, then design.">
+  <meta name="twitter:title" content="Crucial.Design — One client at a time">
+  <meta name="twitter:description" content="Design partner for founders who need complete focus. One client at a time, since 1998. London.">
   <meta name="twitter:image" content="https://crucial.design/images/crucialdesign-og.jpg">
 
-  <link rel="icon" type="image/jpeg" href="images/avatar.jpg">
+  <link rel="icon" type="image/jpeg" href="/images/avatar.jpg">
+  <style>
+    /* One size, one colour, plain text. */
+    :root { --pad: 14px; --strip: clamp(170px, 30dvh, 330px); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      background: #fff;
+      color: #000;
+      font: 400 18px/1.3 'Times New Roman', Times, serif;
+      -webkit-font-smoothing: antialiased;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      height: 100dvh;
+    }
+    a { color: inherit; text-decoration: none; }
+    a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+    a:hover { text-decoration: none; }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    .lead { padding-top: var(--pad); min-height: 0; overflow: hidden; }
+    .ruled {
+      line-height: 1.28;
+      padding: 0 var(--pad);
+    }
+    .ruled p { text-wrap: pretty; }
+    /* The ———— divider, drawn as one solid line. */
+    .rule {
+      display: inline-block;
+      width: 2.8em;
+      margin: 0 0.25em;
+      border-top: 1px solid currentColor;
+      vertical-align: 0.32em;
+      overflow: hidden;
+      white-space: nowrap;
+      text-indent: 100%;
+      line-height: 0;
+    }
 
-  <link rel="stylesheet" href="style.css?v=35">
+    .strip {
+      height: var(--strip);
+      overflow: hidden;
+      cursor: grab;
+      touch-action: pan-y;
+      user-select: none;
+      -webkit-user-select: none;
+      margin-bottom: var(--pad);
+    }
+    .strip.dragging { cursor: grabbing; }
+    .track { display: flex; height: 100%; width: max-content; will-change: transform; }
+    .track figure { height: 100%; padding-right: 10px; flex: none; }
+    .track img, .track video {
+      height: 100%;
+      width: auto;
+      display: block;
+      background: #111;
+      pointer-events: none;
+    }
+
+    /* Hover a piece: a line about it in the middle of the screen, set like the text at the top. */
+    .about {
+      position: fixed;
+      left: var(--pad); right: var(--pad);
+      top: 50%;                      /* moved onto the dots' line by layout() */
+      transform: translateY(-50%);
+      line-height: 1.28;
+      text-wrap: pretty;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .about.on { opacity: 1; }
+
+    /* Easter eggs: four black dots on one line, halfway between the text and the work. They're little bodies:
+       hover one and it grows both ways into a black pill that shoves its neighbours aside; click and it does the thing.
+       Click the white space and they get flung, bounce off each other and settle somewhere new. */
+    .dots { position: fixed; inset: 0; pointer-events: none; transition: opacity .25s; }
+    body.peek .dots { opacity: 0; pointer-events: none; }
+    body.peek .dot { pointer-events: none; }
+    .dot {
+      position: absolute;
+      height: 9px; width: 9px;
+      background: #000; color: #fff;
+      text-decoration: none;
+      font-size: 16px; line-height: 30px;
+      white-space: nowrap; overflow: hidden;
+      pointer-events: auto;
+      cursor: pointer;
+      transform: translateY(-50%);
+      transition: height .22s cubic-bezier(.22,1,.36,1);   /* width and position are run by the physics below */
+    }
+    .dot::before { content: ''; position: absolute; inset: -10px; }   /* a bigger target than the 9px dot */
+    .dot[data-kind="time"] { cursor: default; }
+    .dot span { display: block; width: max-content; padding: 0 15px; opacity: 0; transition: opacity .15s; }
+    .dot.open { height: 30px; z-index: 1; }
+    .dot.open span { opacity: 1; transition-delay: .06s; }
+    .dot:hover { text-decoration: none; }
+
+    @media (max-width: 700px) {
+      :root { --strip: clamp(130px, 22dvh, 210px); }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ============ Top status line ============ -->
-  <div class="topline">
-    <div class="container-narrow">
-      <p class="topline-context"><span class="topline-lead">Founders building AI-native products,</span>I've got 2 spots open for <span class="topline-flip" data-topline-flip></span>.<span class="topline-meta">25+ years, 500+ projects, $1B+ raised for clients.</span></p>
+  <main class="lead">
+    <div class="ruled">
+    <p>
+      <a href="/">Crucial.Design</a> is a design partner for founders who need complete focus.
+      <span class="rule">————</span> Most agencies juggle 10+ clients at once; I take one, and give it everything I've learned since 1998,
+      across 500+ projects and more than $1B raised for the founders I've worked with.
+      <span class="rule">————</span> The next spot opens on December 01, 2026. It's <a href="https://buy.stripe.com/28E8wDf8O1k99LY7gs0gw0w" target="_blank" rel="noopener">$3,978 every two weeks</a> and goes to whoever books first, so
+      <a href="https://buy.stripe.com/28E8wDf8O1k99LY7gs0gw0w" target="_blank" rel="noopener">book today to secure it</a>,
+      or if you'd rather talk first, <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">book a call</a>,
+      email me at <a href="mailto:hey@crucial.design">hey@crucial.design</a>, or find me on X at
+      <a href="https://x.com/oykun" target="_blank" rel="noopener">@oykun</a>.
+    </p>
     </div>
-    <a class="cta-bar cta-bar--primary" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">
-      <span class="container-narrow">Let's talk</span>
-    </a>
-    <a class="cta-bar cta-bar--secondary" href="mailto:hey@crucial.design">
-      <span class="container-narrow">hey@crucial.design</span>
-    </a>
+  </main>
+
+  <p class="about" id="about" aria-hidden="true"></p>
+
+  <div class="dots" id="dots">
+    <a class="dot" data-kind="time" role="note" aria-label="Where I am"><span>Based in London, <b id="clock" style="font-weight:400"></b> local time</span></a>
+    <a class="dot" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" aria-label="Book a call"><span>Book a 15-minute call</span></a>
+    <a class="dot" href="mailto:hey@crucial.design" aria-label="Email"><span>hey@crucial.design</span></a>
+    <a class="dot" href="https://buy.stripe.com/28E8wDf8O1k99LY7gs0gw0w" target="_blank" rel="noopener" aria-label="Start"><span>Start now, $3,978 every two weeks</span></a>
   </div>
 
-  <!-- ============ Floating action bar (stacked rows, pinned on scroll) ============ -->
-  <div class="float-bar" id="float-cta">
-    <a class="cta-bar cta-bar--primary" href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener">
-      <span class="container-narrow">Let's talk</span>
-    </a>
-    <a class="cta-bar cta-bar--secondary" href="#process">
-      <span class="container-narrow">Process and Pricing</span>
-    </a>
-  </div>
-
-  <!-- ============ Hero ============ -->
-  <section class="hero">
-    <div class="container-wide hero-image fade-in">
-      <div class="hero-deck" id="hero-deck" aria-hidden="true"></div>
-      <img class="hero-deck-fallback" src="images/motion/motion07.jpg" alt="Product design showcase">
-    </div>
-    <div class="container-narrow">
-      <h1 class="hero-headline fade-in">Your AI is impressive.<br>But most of your users never get to see it.<br>They get lost before they reach the value.</h1>
-      <p class="hero-sub fade-in">They land and start guessing.<br>One path. Then another. Then another.<br>Each one dead-ends somewhere confusing.<br>Most give up before they reach the value.<br><br>The few who push through are your retention number.<br>The rest churn silently.<br><br>This is where I come in with Crucial.Design.<br>I find the straight line from confusion to clarity.<br>I don't start with pixels. I start with the thinking. Then I design.</p>
-      <a href="https://x.com/oykun" target="_blank" rel="noopener" class="hero-avatar fade-in"><img src="images/avatar.jpg" alt="Oykun"></a>
-      <p class="hero-byline fade-in"><a href="https://x.com/oykun" target="_blank" rel="noopener">Oykun</a>. Design partner for AI founders, since 1998. London.</p>
-    </div>
+  <section class="strip" id="strip" aria-label="Selected work">
+    <div class="track" id="track"></div>
   </section>
 
-  <!-- ============ Selected Work ============ -->
-  <section class="work" id="work">
-    <!-- Arcade -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>Arcade.dev</strong> &nbsp; <strong>The only MCP runtime for secure, reliable AI agent deployments.</strong> &nbsp; $12M seed-funded. Built by former Okta and AI infrastructure engineers to solve secure authentication, the missing layer that lets AI agents take action.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/arcade001.jpg" alt="Arcade product interface" loading="lazy">
-          <img src="images/arcade002.jpg" alt="Arcade dashboard" loading="lazy">
-          <img src="images/arcade003.jpg" alt="Arcade deployment view" loading="lazy">
-          <img src="images/arcade004.jpg" alt="Arcade agent management" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- MultiOn -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>MultiOn.ai</strong> &nbsp; <strong>AI agents that act on your behalf.</strong> &nbsp; Leading AI Agent featured in Forbes, VentureBeat and more. Recently secured $20 million funding at a $100 million valuation.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/multion-1.jpg" alt="MultiOn product interface" loading="lazy">
-          <img src="images/multion-2.jpg" alt="MultiOn dashboard" loading="lazy">
-          <img src="images/multion-3.jpg" alt="MultiOn agent interaction" loading="lazy">
-          <img src="images/multion-4.jpg" alt="MultiOn settings and account" loading="lazy">
-          <img src="images/multion-5.jpg" alt="MultiOn NYSE and press" loading="lazy">
-          <img src="images/multion-6.jpg" alt="MultiOn TED AI and awards" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- cubic.dev -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>cubic.dev</strong> &nbsp; <strong>Code Review For The AI Era.</strong> &nbsp; Backed by YCombinator. cubic helps modern software teams ship higher-quality code, 3x faster.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/cubic-1.jpg" alt="cubic.dev code review interface" loading="lazy">
-          <img src="images/cubic-2.jpg" alt="cubic.dev pull request analysis" loading="lazy">
-          <img src="images/cubic-3.jpg" alt="cubic.dev team collaboration" loading="lazy">
-          <img src="images/cubic-4.jpg" alt="cubic.dev workflow view" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- Echo -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>Echo</strong> &nbsp; <strong>NHS prescriptions without the hassle.</strong> &nbsp; Featured at the Apple App Store, BBC, Wired, The Times, TechCrunch and much more. Acquired by Lloyds Pharmacy.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/echo-1.jpg" alt="Echo prescription app interface" loading="lazy">
-          <img src="images/echo-2.jpg" alt="Echo press coverage" loading="lazy">
-          <img src="images/echo-3.jpg" alt="Echo reviews and App Store" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- Cooin -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p><strong>Cooin App.</strong> &nbsp; <strong>Buy, Sell, Trade Crypto.</strong> &nbsp; Collaboration with Adobe to design a Crypto trading platform for web and mobile.</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/cooin-1.jpg" alt="Cooin trading interface" loading="lazy">
-          <img src="images/cooin-2.jpg" alt="Cooin portfolio dashboard" loading="lazy">
-          <img src="images/cooin-3.jpg" alt="Cooin mobile app" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- Others -->
-    <div class="project fade-in">
-      <div class="project-info">
-        <p class="others-intro"><strong>Want to see even more work?</strong> &nbsp; Sure thing, scroll down…</p>
-      </div>
-      <div class="project-card">
-        <div class="project-card-inner">
-          <img src="images/work-extra-1.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-2.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-3.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-4.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-5.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-6.jpg" alt="Additional work sample" loading="lazy">
-          <img src="images/work-extra-7.jpg" alt="Additional work sample" loading="lazy">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ How I Work / Flow ============ -->
-  <section class="flow" id="process">
-    <div class="container-narrow">
-      <h2 class="flow-title fade-in">Here's how we take your AI Product<br>from impressive tech to a product people reach for</h2>
-      <div class="flow-timeline">
-
-        <!-- Step: Say hello (optional) -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Say hello</h3>
-            <div class="flow-body">
-              <p>Want to chat before committing? Totally fine. <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="flow-link">Book a free call</a> or drop me a line at <a href="mailto:hey@crucial.design" class="flow-link">hey@crucial.design</a></p>
-              <p class="flow-optional">This step is optional. If you already know what you need and want to move fast, skip straight to picking a plan.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step: Pick a plan -->
-        <div class="flow-step fade-in" id="pricing">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Pick a plan</h3>
-            <div class="flow-plan-box">
-              <a href="https://buy.stripe.com/cNi9AH2m24wl0bo44g0gw0v" target="_blank" rel="noopener" class="cta-bar cta-bar--dark cta-bar--plan">Start with Priority for $7,986/mth</a>
-              <p class="flow-plan-desc">4 design sessions per week. Every other day including weekends.</p>
-              <p class="flow-good-for">Good for teams moving fast who need a design partner keeping pace with them.</p>
-            </div>
-            <div class="flow-plan-box">
-              <a href="https://buy.stripe.com/3cIfZ55yefaZf6i0S40gw0u" target="_blank" rel="noopener" class="cta-bar cta-bar--primary cta-bar--plan">Start with Standard for $4,987/mth</a>
-              <p class="flow-plan-desc">2 design sessions per week. Tuesdays and Fridays.</p>
-              <p class="flow-good-for">Good for teams who want the same quality and thinking at a steadier rhythm.</p>
-            </div>
-            <p class="flow-note">Cancel or pause anytime. 75% back if not a fit after week one.</p>
-            <p class="flow-oneoff">Prefer a one-off project? <a href="https://cal.com/crucialdesign/15min" target="_blank" rel="noopener" class="flow-link">Book a call</a> or <a href="mailto:hey@crucial.design" class="flow-link">email</a> to discuss.</p>
-          </div>
-        </div>
-
-        <!-- Step: Connect and Sync -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Connect and Sync</h3>
-            <div class="flow-body">
-              <p>I set up a private Slack channel. This becomes our hub. Everything lives here: project context, Figma links, calendar link for booking calls, updates, feedback. One place for everything</p>
-              <p>You share your goals and product vision. I start digging in.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step: Product Strategy -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Product Strategy</h3>
-            <div class="flow-body">
-              <p>I get into the product properly. Talk to your team, map the workflows, understand what your AI actually does and where users lose the thread. Then I tell you honestly what's broken and what to fix first.</p>
-              <p>This is where most designers go quiet and just start designing. I don't.</p>
-            </div>
-            <p class="flow-good-for">Good for early-stage founders who aren't sure what the product needs to be yet, or teams stuck between too many priorities.</p>
-          </div>
-        </div>
-
-        <!-- Step: Design Execution -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Design Execution</h3>
-            <div class="flow-body">
-              <p>Once we're clear on direction, I move fast. Clean, opinionated, buildable design. Every decision comes with the reasoning behind it.</p>
-              <p>No handoff to a junior. No account manager in between. Just me.</p>
-            </div>
-            <p class="flow-good-for">Good for funded teams who know what they're building and need a principal-level designer embedded in the product.</p>
-          </div>
-        </div>
-
-        <!-- Step: Investor Ready -->
-        <div class="flow-step fade-in">
-          <div class="flow-dot"></div>
-          <div class="flow-card">
-            <h3 class="flow-name">Investor Ready</h3>
-            <div class="flow-body">
-              <p>Sometimes the product works but it doesn't show well. Demos fall flat. Investors see potential but can't picture it. I've been in that room. I know what makes a product land in a funding conversation.</p>
-              <p>I help you close that gap.</p>
-            </div>
-            <p class="flow-good-for">Good for pre-raise teams who need the product to look and feel as strong as the underlying technology.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ Footer ============ -->
-  <footer class="footer" id="about">
-    <div class="footer-photos">
-      <a href="https://x.com/oykun/status/1971126280386138421" target="_blank" rel="noopener" class="footer-photo" style="--rot: -4deg; --x: -5%; --y: 0;"><img src="images/about-1.jpg" alt="Oykun selfie"></a>
-      <a href="https://x.com/oykun/status/2023450450947960847" target="_blank" rel="noopener" class="footer-photo" style="--rot: 3deg; --x: 8%; --y: -10px;"><img src="images/about-2.jpg" alt="Cat and laptop"></a>
-      <a href="https://x.com/oykun/status/1971126280386138421" target="_blank" rel="noopener" class="footer-photo" style="--rot: -2deg; --x: -3%; --y: 5px;"><img src="images/about-3.jpg" alt="Big Ben, London"></a>
-      <a href="https://x.com/oykun/status/2025862092352360735" target="_blank" rel="noopener" class="footer-photo" style="--rot: 5deg; --x: 6%; --y: -8px;"><img src="images/about-4.jpg" alt="Working from rooftop"></a>
-      <a href="https://x.com/oykun" target="_blank" rel="noopener" class="footer-photo" style="--rot: -3deg; --x: -4%; --y: 12px;"><img src="images/about-5.jpg" alt="On a flight"></a>
-    </div>
-    <div class="footer-inner">
-      <div class="footer-bio fade-in">
-        <p>I'm Oykun. Shaping products since 1998.</p>
-        <p>First as a full-stack developer and designer, then design only.</p>
-        <p>I've worked at every scale, from early-stage startups to Fortune 100s. Complex data, complex systems, making them make sense.</p>
-        <p>I started Crucial.Design because I kept seeing the same thing: brilliant AI, terrible product experience.</p>
-        <p>Founders who'd spent months on the technology but days on the design. That gap is where I work best.</p>
-        <p>AI has the hardest and most interesting design problems right now. That's why it's all I do.</p>
-      </div>
-      <a href="https://x.com/oykun" target="_blank" rel="noopener" class="footer-avatar fade-in"><img src="images/avatar.jpg" alt="Oykun"></a>
-      <p class="footer-name fade-in"><strong>Öykün Yılmaz</strong><br>Designer & Founder, Crucial.Design · London</p>
-    </div>
-    <div class="footer-links fade-in">
-      <a class="cta-bar cta-bar--secondary" href="https://x.com/oykun" target="_blank" rel="noopener"><span class="container-narrow">@oykun</span></a>
-      <a class="cta-bar cta-bar--secondary" href="https://x.com/crucialaidesign" target="_blank" rel="noopener"><span class="container-narrow">@crucialaidesign</span></a>
-      <a class="cta-bar cta-bar--secondary" href="mailto:hey@crucial.design"><span class="container-narrow">hey@crucial.design</span></a>
-    </div>
-  </footer>
-
-  <script src="main.js?v=7"></script>
   <script>
-    (function(){
-      var words = ['product design','branding','web design','UX strategy','design systems'];
-      var slot = document.querySelector('[data-topline-flip]');
-      if(!slot) return;
-      var idx = 0;
-      var busy = false;
+    // What each project did, shown mid-screen on hover (wording and numbers from the Q4 redesign, checked 9 Nov).
+    var PROJECTS = {
+      arcade:  'Arcade.dev, the MCP runtime for secure, reliable AI agent deployments. $72M raised, backed by Morgan Stanley, Wipro, SYN Ventures and Laude Ventures.',
+      multion: 'MultiOn.ai, AI agents that act on your behalf. Backed by Amazon and General Catalyst, featured in Forbes and VentureBeat.',
+      cubic:   'cubic.dev, code review for the AI era. Backed by Y Combinator, helping teams ship higher-quality code 3x faster.',
+      echo:    'Echo, NHS prescriptions without the hassle. Featured by Apple, BBC, Wired, The Times and TechCrunch, then acquired by McKesson, owner of LloydsPharmacy.',
+      cooin:   'Cooin, a platform to buy, sell and trade crypto on web and mobile, built with Adobe.',
+      mod:     'mod.computer, a real-time workspace for orchestrating AI coding agents.'
+    };
 
-      function randDelay(){ return Math.floor(Math.random() * 400) + 'ms'; }
+    // The strip, in order: [file, project, width / height]. .mp4 files are the animated pieces from Q4.
+    var WORK = [
+      ['v-arcade001.mp4', 'arcade', 2400/1528], ['screen-multion-chat.svg', 'multion'], ['v-cubic-4.mp4', 'cubic', 2200/1400],
+      ['screen-echo-today.svg', 'echo'], ['v-cooin-dash.mp4', 'cooin', 744/520], ['v-arcade002.mp4', 'arcade', 2400/1400],
+      ['mod-brand-small.svg', 'mod'], ['v-multion-1-signin.mp4', 'multion', 1200/1844], ['v-cubic-card-2.mp4', 'cubic', 1130/1150],
+      ['screen-cooin-sell.svg', 'cooin'], ['screen-multion-home.svg', 'multion'], ['v-arcade003.mp4', 'arcade', 2400/1528],
+      ['multion-3_00.jpg', 'multion'], ['v-cubic-card-4.mp4', 'cubic', 1130/1150], ['v-cooin-terrace.mp4', 'cooin', 1280/1600],
+      ['screen-echo-meds.svg', 'echo'], ['v-arcade004.mp4', 'arcade', 2400/1528], ['v-cubic-card-1.mp4', 'cubic', 1130/1150],
+      ['v-cubic-card-5.mp4', 'cubic', 1130/1150]
+    ];
 
-      function wrapLetters(text){
-        return text.split('').map(function(ch){
-          if(ch === ' ') return '<span class="topline-ch" style="transition-delay:'+randDelay()+'">&nbsp;</span>';
-          return '<span class="topline-ch" style="transition-delay:'+randDelay()+'">'+ch+'</span>';
-        }).join('');
-      }
+    var strip = document.getElementById('strip');
+    var track = document.getElementById('track');
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      slot.innerHTML = wrapLetters(words[0]);
-      requestAnimationFrame(function(){
-        slot.querySelectorAll('.topline-ch').forEach(function(el){ el.classList.add('topline-ch-in'); });
+    // Two copies of the set, so the loop never shows an end.
+    for (var copy = 0; copy < 2; copy++) {
+      WORK.forEach(function (w) {
+        var fig = document.createElement('figure');
+        var el;
+        if (/\.mp4$/.test(w[0])) {
+          el = document.createElement('video');
+          el.src = '/work/' + w[0];
+          el.poster = '/work/' + w[0].replace('.mp4', '.jpg');
+          el.muted = true; el.loop = true; el.playsInline = true; el.preload = 'metadata';
+          el.setAttribute('muted', ''); el.setAttribute('playsinline', '');
+          el.style.aspectRatio = w[2];
+        } else {
+          el = document.createElement('img');
+          el.src = '/work/' + w[0];
+          el.draggable = false;
+        }
+        el.setAttribute('aria-label', copy ? '' : PROJECTS[w[1]]);
+        fig.dataset.project = w[1];
+        fig.appendChild(el);
+        track.appendChild(fig);
       });
+    }
 
-      setInterval(function(){
-        if(busy) return;
-        busy = true;
-        slot.querySelectorAll('.topline-ch').forEach(function(el){
-          el.style.transitionDelay = randDelay();
-          el.classList.remove('topline-ch-in');
+    // Only the videos on screen play.
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          var v = e.target;
+          if (e.isIntersecting && !still) { var p = v.play(); if (p) p.catch(function () {}); } else v.pause();
         });
-        setTimeout(function(){
-          idx = (idx + 1) % words.length;
-          slot.innerHTML = wrapLetters(words[idx]);
-          requestAnimationFrame(function(){
-            requestAnimationFrame(function(){
-              slot.querySelectorAll('.topline-ch').forEach(function(el){ el.classList.add('topline-ch-in'); });
-              busy = false;
-            });
-          });
-        }, 600);
-      }, 2500);
-    })();
-  </script>
+      }, { root: strip, rootMargin: '0px 300px' });
+      track.querySelectorAll('video').forEach(function (v) { io.observe(v); });
+    }
 
+    // Hover: the line about that piece fades in mid-screen.
+    var about = document.getElementById('about'), aboutTimer = 0;
+    track.addEventListener('mouseover', function (e) {
+      var fig = e.target.closest('figure');
+      if (!fig || dragging) return;
+      clearTimeout(aboutTimer);
+      about.textContent = PROJECTS[fig.dataset.project];
+      about.classList.add('on'); document.body.classList.add('peek');
+    });
+    strip.addEventListener('mouseleave', function () {
+      aboutTimer = setTimeout(function () { about.classList.remove('on'); document.body.classList.remove('peek'); }, 120);
+    });
+
+    var pos = 0;            // px scrolled
+    var speed = 0.9;        // px per frame of idle drift
+    var hovering = false, dragging = false, lastX = 0;
+
+    function frame() {
+      var half = track.scrollWidth / 2;
+      if (!hovering && !dragging && !still) pos += speed;
+      if (half > 0) pos = ((pos % half) + half) % half;
+      track.style.transform = 'translate3d(' + (-pos) + 'px,0,0)';
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+
+    strip.addEventListener('mouseenter', function () { hovering = true; });
+    strip.addEventListener('mouseleave', function () { hovering = false; });
+
+    // The page never scrolls, so the wheel anywhere moves the work.
+    window.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      pos += Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    }, { passive: false });
+
+    strip.addEventListener('pointerdown', function (e) {
+      dragging = true; lastX = e.clientX;
+      strip.classList.add('dragging');
+      strip.setPointerCapture(e.pointerId);
+    });
+    strip.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      pos -= e.clientX - lastX; lastX = e.clientX;
+    });
+    ['pointerup', 'pointercancel'].forEach(function (t) {
+      strip.addEventListener(t, function () { dragging = false; strip.classList.remove('dragging'); });
+    });
+
+
+    // ---- The dots: four bodies on one line, halfway between the text and the work.
+    // Each is pulled towards a resting spot by a soft spring; when two touch they push each other apart and trade
+    // speed, like billiard balls on a rail. A hovered dot grows into a pill from its centre and shoves the others away.
+    var dots = [].slice.call(document.querySelectorAll('.dot'));
+    var CONTENT = dots.map(function (d) {
+      return { html: d.innerHTML, href: d.getAttribute('href'), target: d.getAttribute('target'),
+               kind: d.dataset.kind || '', label: d.getAttribute('aria-label') };
+    });
+    function wear(d, c) {                                   // give a body a different job
+      d.innerHTML = c.html; d.setAttribute('aria-label', c.label);
+      if (c.href) d.setAttribute('href', c.href); else d.removeAttribute('href');
+      if (c.target) { d.setAttribute('target', c.target); d.setAttribute('rel', 'noopener'); } else d.removeAttribute('target');
+      if (c.kind) { d.dataset.kind = c.kind; d.setAttribute('role', 'note'); } else { delete d.dataset.kind; d.removeAttribute('role'); }
+    }
+    var DOT = 9, GAP = 8, EDGE = 14;
+    var bodies = dots.map(function (d) { return { el: d, x: 0, v: 0, rest: 0, w: DOT, tw: DOT }; });
+    var lineY = 0;
+
+    function restSpots() {                                   // spread across the line, at least 10% apart;
+      var p;                                                 // they only bump when a pill opens or they get flung
+      do { p = bodies.map(function () { return .06 + Math.random() * .88; }).sort(); }
+      while (p.some(function (v, i) { return i && v - p[i - 1] < .10; }));
+      return p;
+    }
+    var spots = restSpots();
+    function layout() {
+      var top = document.querySelector('.ruled').getBoundingClientRect().bottom;
+      var bottom = strip.getBoundingClientRect().top;
+      lineY = (top + bottom) / 2;
+      about.style.top = lineY + 'px';
+      bodies.forEach(function (b, i) { b.rest = spots[i] * innerWidth; b.el.style.top = lineY + 'px'; });
+    }
+    layout();
+    bodies.forEach(function (b) { b.x = b.rest; });
+    addEventListener('resize', layout);
+    if (document.fonts) document.fonts.ready.then(layout);
+
+    // White space click: new jobs, new resting spots, and a hard random kick so they fly and collide.
+    function fling() {
+      bodies.forEach(close);
+      var order = CONTENT.slice().sort(function () { return Math.random() - .5; });
+      bodies.forEach(function (b, i) { wear(b.el, order[i]); });
+      tick();
+      spots = restSpots(); layout();
+      bodies.forEach(function (b) { b.v += (Math.random() < .5 ? -1 : 1) * (1400 + Math.random() * 1800); });
+    }
+
+    var last = performance.now();
+    function step(now) {
+      var dt = Math.min((now - last) / 1000, 1 / 30); last = now;
+      var W = innerWidth;
+      bodies.forEach(function (b) {
+        b.w += (b.tw - b.w) * Math.min(1, dt * 26);           // grow / shrink smoothly
+        var k = 120, c = 17;                                    // spring to the resting spot, with damping
+        b.v += (k * (b.rest - b.x) - c * b.v) * dt;
+        b.x += b.v * dt;
+        var lo = EDGE + b.w / 2, hi = W - EDGE - b.w / 2;     // the screen edges are walls
+        if (b.x < lo) { b.x = lo; if (b.v < 0) b.v *= -.6; }
+        if (b.x > hi) { b.x = hi; if (b.v > 0) b.v *= -.6; }
+      });
+      for (var pass = 0; pass < 4; pass++) {                  // neighbours push each other apart
+        for (var i = 0; i < bodies.length - 1; i++) {
+          var a = bodies[i], b = bodies[i + 1];
+          var min = (a.w + b.w) / 2 + GAP, gap = b.x - a.x;
+          if (gap < min) {
+            var over = min - gap;
+            var ma = a.tw > DOT ? 0 : 1, mb = b.tw > DOT ? 0 : 1;   // an open pill holds its ground, the dot gets shoved
+            if (!ma && !mb) ma = mb = 1;
+            a.x -= over * ma / (ma + mb); b.x += over * mb / (ma + mb);
+            if (a.v > b.v) { var t = a.v; a.v = b.v * .85; b.v = t * .85; }   // trade speed, lose a little
+          }
+        }
+        bodies.forEach(function (b) {                         // and nobody gets pushed through a wall
+          b.x = Math.min(Math.max(b.x, EDGE + b.w / 2), W - EDGE - b.w / 2);
+        });
+      }
+      bodies.forEach(function (b) {
+        b.el.style.width = b.w + 'px';
+        b.el.style.left = (b.x - b.w / 2) + 'px';
+      });
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+
+    function open(b) {
+      if (b.tw > DOT) return;
+      bodies.forEach(function (o) { if (o !== b) close(o); });
+      b.el.classList.add('open');
+      b.tw = Math.ceil(b.el.querySelector('span').getBoundingClientRect().width) + 1;
+    }
+    function close(b) { if (b.tw === DOT) return; b.el.classList.remove('open'); b.tw = DOT; }
+
+    var canHover = matchMedia('(hover: hover)').matches;
+    bodies.forEach(function (b) {
+      var d = b.el;
+      d.addEventListener('mouseenter', function () { if (canHover) open(b); });
+      d.addEventListener('mouseleave', function () { if (canHover) close(b); });
+      d.addEventListener('click', function (e) {
+        if (d.dataset.kind === 'time') { e.preventDefault(); if (!canHover) (b.tw > DOT ? close : open)(b); return; }
+        if (!canHover && b.tw === DOT) { e.preventDefault(); open(b); }   // touch: first tap shows, second acts
+      });
+    });
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('.dot')) return;
+      if (e.target.closest('a, .strip')) { bodies.forEach(close); return; }
+      fling();
+    });
+
+    // London time for the first dot.
+    var fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit' });
+    function tick() { var c = document.getElementById('clock'); if (c) c.textContent = fmt.format(new Date()); }
+    tick(); setInterval(tick, 15000);
+  </script>
 </body>
 </html>
